@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.sm.dao.SchoolMapper">
+ 	<!-- <resultMap type="com.znsd.sm.pojo.School" id="schoolMap">
+ 		<result column="t_id" property="tId"/>
+ 		<result column="t_name" property="tName"/>
+ 	</resultMap>
+ 	根据id查询一条数据
+ 	<select id="selectAll" resultMap="schoolMap">
+ 		select * from school where t_id=#{id}
+ 	</select> -->
+ 	
+ </mapper>

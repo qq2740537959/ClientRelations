@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+   		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx
+	  	http://www.springframework.org/schema/tx/spring-tx.xsd
+	">
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<context:component-scan base-package="com.znsd.client.service" />
+	<context:component-scan base-package="com.znsd.client.dao" />
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password"  value="${jdbc.password}"></property>
+		
+		<!-- 队列中的最小连接数 -->
+		<property name="minPoolSize"  value="15"/>
+		<!-- 队列中的最大连接数 -->
+		<property name="maxPoolSize" value="25" />
+		<!-- 当连接耗尽时创建的连接数 -->
+		<property name="acquireIncrement" value="15" />
+		<!-- 等待时间 -->
+		<property name="checkoutTimeout" value="10000" />
+		<!-- 初始化连接数 -->
+		<property name="initialPoolSize" value="20" />
+		<!-- 最大空闲时间，超出时间连接将被放弃 -->
+		<property name="maxIdleTime" value="20" />
+		<!-- 每隔60秒检测空闲连接 -->
+		<property name="idleConnectionTestPeriod" value="60000" />
+	</bean>
+	
+	<!-- mybatis session工厂 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- mybatis 接口 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- mybatis 接口包路径 （如果有多个可以用,逗号隔开）-->
+		<property name="basePackage" value="com.znsd.sm.dao" />
+		<!-- sqlSession工厂beanId -->
+		<property name="sqlSessionFactoryBeanName" value="sessionFactory" />
+		<property name="annotationClass" value="org.springframework.stereotype.Repository" />
+	</bean>
+	<!-- 定义事务管理器（声明式的事务）-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean> 
+	<!-- mybatis spring sqlSessionTemplate 使用是直接通过构造注入sessionFactory即可 
+	  <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	      <constructor-arg index="0" ref="sessionFactory"></constructor-arg>
+	  </bean>-->
+	
+	<!-- 开启注解事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+</beans>
