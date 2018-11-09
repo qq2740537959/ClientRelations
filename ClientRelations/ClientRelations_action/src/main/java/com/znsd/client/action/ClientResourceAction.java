@@ -5,5 +5,6 @@ public class ClientResourceAction {
 		System.out.println("测试哦");
 		System.out.println("111111111");
 		System.out.println("12222222");
+		System.out.println("-------------");
 	}
 }
