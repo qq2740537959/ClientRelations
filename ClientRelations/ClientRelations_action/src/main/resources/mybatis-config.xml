@@ -7,4 +7,8 @@
         <!-- changes from the defaults -->
         <setting name="lazyLoadingEnabled" value="false" />
     </settings>
+    <!-- 分页 -->
+    <plugins>
+		<plugin interceptor="com.znsd.client.interceptor.Plugins" />    
+	</plugins>
 </configuration>
