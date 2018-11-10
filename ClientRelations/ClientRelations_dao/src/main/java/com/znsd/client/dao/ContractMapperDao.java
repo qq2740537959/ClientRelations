@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.znsd.client.bean.Shape;
 
-public interface ContractDao {
+public interface ContractMapperDao {
 	
 	public List<Shape> selectShape();
 }
