@@ -61,7 +61,7 @@
                         </a>
                         <dl class="layui-nav-child">
                         	<dd><a href="">角色管理</a></dd>
-                        	<dd><a href="">组织结构</a></dd>
+                        	<dd><a href="views/organizationManager/organization.html">组织结构</a></dd>
                         	<dd><a href="">员工管理</a></dd>
                         	<dd><a href="">公告管理</a></dd>
                         	<dd><a href="">个人信息</a></dd>
@@ -74,12 +74,12 @@
                             <em>销售管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                        	<dd><a href="salesManager/salesPlan.html">销售计划</a></dd>
-                        	<dd><a href="salesManager/salesForecast.html">销售预测</a></dd>
-                        	<dd><a href="salesManager/salesPerformance.html">销售绩效</a></dd>
-                        	<dd><a href="salesManager/chanceManager.html">机会管理</a></dd>
-                        	<dd><a href="salesManager/contacts.html">联系人管理</a></dd>
-                        	<dd><a href="salesManager/vieManager.html">竞争管理</a></dd>
+                        	<dd><a href="views/salesManager/salesPlan.html">销售计划</a></dd>
+                        	<dd><a href="views/salesManager/salesForecast.html">销售预测</a></dd>
+                        	<dd><a href="views/salesManager/salesPerformance.html">销售绩效</a></dd>
+                        	<dd><a href="views/salesManager/chanceManager.html">机会管理</a></dd>
+                        	<dd><a href="views/salesManager/contacts.html">联系人管理</a></dd>
+                        	<dd><a href="views/salesManager/vieManager.html">竞争管理</a></dd>
                         	<dd><a href="">销售分析</a></dd>
                         </dl>
                     </li>
@@ -89,12 +89,12 @@
                             <em>客户管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="">客户资源管理</a></dd>
-                            <dd><a href="">客户发展管理</a></dd>
-                            <dd><a href="">客户价值管理</a></dd>
-                            <dd><a href="">客户满意度管理</a></dd>
-                            <dd><a href="">客户信誉管理</a></dd>
-                            <dd><a href="">客户关怀</a></dd>
+                            <dd><a href="views/clientManager/chanceManager.html">客户资源管理</a></dd>
+                            <dd><a href="views/clientManager/developPlan.html">客户发展计划</a></dd>
+                            <dd><a href="views/clientManager/worthManager.html">客户价值管理</a></dd>
+                            <dd><a href="views/clientManager/satisfactionManager.html">客户满意度管理</a></dd>
+                            <dd><a href="views/clientManager/creditManager.html">客户信誉管理</a></dd>
+                            <dd><a href="views/clientManager/clientGreetings.html">客户关怀</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -117,9 +117,9 @@
                             <em>订单管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="orderManager/selectClient.jsp">代下订单</a></dd>
-                            <dd><a href="orderManager/orderQuery.jsp">订单查询</a></dd>
-                            <dd><a href="orderManager/orderStatistics.jsp">订单统计</a></dd>
+                            <dd><a href="views/orderManager/selectClient.jsp">代下订单</a></dd>
+                            <dd><a href="views/orderManager/orderQuery.jsp">订单查询</a></dd>
+                            <dd><a href="views/orderManager/orderStatistics.jsp">订单统计</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -128,7 +128,7 @@
                             <em>合同管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="">合同创建</a></dd>
+                            <dd><a href="views/contractManager/compact.jsp">合同创建</a></dd>
                             <dd><a href="">合同审核</a></dd>
                             <dd><a href="">合同管理</a></dd>
                         </dl>
@@ -148,7 +148,7 @@
                 </ul>
                 <ul style="margin-top: 10px;">
                 	<li>
-                        <a href="login.html" style="margin-left:18px;color: rgba(255,255,255,.7);padding-top: 5px;padding-bottom: 5px;" class="exit-a">
+                        <a href="login.jsp" style="margin-left:18px;color: rgba(255,255,255,.7);padding-top: 5px;padding-bottom: 5px;" class="exit-a">
                             <i class="layui-icon" style="margin-right: 5px;">&#x1006;</i>
                            	 退出系统
                         </a>
