@@ -21,7 +21,7 @@
  		<parameter property="clientName"/>
  		<parameter property="phone"/>
  	</parameterMap>
- 	<select id="selectAllClient" resultMap="clientResourceMap" parameterMap="clientInfoMap">
+ 	<select id="selectAllClientByPage" resultMap="clientResourceMap" parameterMap="clientInfoMap">
  		select client_id,client_name,sex,client_type,state,allot_state,in_time,entry_person from client_resource
  		<where>
  			<if test="clientName != null || clientName != ''">
