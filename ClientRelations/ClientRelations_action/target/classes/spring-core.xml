@@ -15,7 +15,7 @@
 	  	http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
 	<context:property-placeholder location="classpath:jdbc.properties"/>
-	<context:component-scan base-package="com.znsd.client.service" />
+	<context:component-scan base-package="com.znsd.client.service.impl" />
 	<context:component-scan base-package="com.znsd.client.dao" />
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
@@ -49,7 +49,7 @@
 	<!-- mybatis 接口 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- mybatis 接口包路径 （如果有多个可以用,逗号隔开）-->
-		<property name="basePackage" value="com.znsd.sm.dao" />
+		<property name="basePackage" value="com.znsd.client.dao" />
 		<!-- sqlSession工厂beanId -->
 		<property name="sqlSessionFactoryBeanName" value="sessionFactory" />
 		<property name="annotationClass" value="org.springframework.stereotype.Repository" />

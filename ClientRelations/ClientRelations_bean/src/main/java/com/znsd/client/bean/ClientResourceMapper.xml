@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.ClientResourceMapperDao">
+ 	
+ 	<select id="selectClientInfo" resultType="clientVo">
+ 		select c.client_id,c.client_name,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s where c.staff_id = s.staff_id and c.staff_id=#{staffId}
+		<if test="clientName != null and clientName != ''">
+			and client_name like #{clientName}
+		</if>
+		<if test="phone != null and phone != ''">
+			and phone = #{phone}
+		</if>
+ 	</select>
+ 	
+ </mapper>
