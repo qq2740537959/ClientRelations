@@ -6,9 +6,9 @@
 		<meta charset="UTF-8">
 		<title></title>
 	</head>
-	<link rel="stylesheet" href="layui/css/layui.css" />
-	<script src="layui/layui.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+	<link rel="stylesheet" href="../../layui/css/layui.css" />
+	<script src="../../layui/layui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
 	<style>
 			div.layui-form.layui-border-box.layui-table-view{
 				width: 840px;
