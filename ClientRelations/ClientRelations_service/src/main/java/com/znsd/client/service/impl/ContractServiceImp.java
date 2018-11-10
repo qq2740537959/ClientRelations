@@ -1,4 +1,4 @@
-package com.znsd.client.service.imp;
+package com.znsd.client.service.impl;
 
 import java.util.List;
 
