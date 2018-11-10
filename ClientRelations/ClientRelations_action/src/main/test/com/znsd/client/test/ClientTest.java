@@ -26,7 +26,7 @@ public class ClientTest {
 		ClientResource client = new ClientResource();
 		client.setStaffId(1);
 		client.setClientName("");
-		client.setPhone("13345697832");
+		client.setPhone("13245697852");
 		List<ClientVo> clientVo = service.selectClientInfo(client);
 		for (ClientVo clientVo2 : clientVo) {
 			System.out.println("-=--"+clientVo2.getClientName()+"  "+clientVo2.getStaffName());

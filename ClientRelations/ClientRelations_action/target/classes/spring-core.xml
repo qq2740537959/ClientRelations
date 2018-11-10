@@ -44,6 +44,8 @@
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:com/znsd/client/dao/*.xml"/>
+		<property name="typeAliasesPackage" value="com.znsd.client.bean" />
 	</bean>
 	
 	<!-- mybatis 接口 -->
@@ -62,7 +64,6 @@
 	  <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 	      <constructor-arg index="0" ref="sessionFactory"></constructor-arg>
 	  </bean>-->
-	
 	<!-- 开启注解事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 </beans>

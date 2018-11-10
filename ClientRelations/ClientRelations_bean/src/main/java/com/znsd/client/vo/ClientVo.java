@@ -3,6 +3,7 @@ package com.znsd.client.vo;
 public class ClientVo {
 	private Integer clientId;
 	private String clientName;
+	private String phone;
 	private String sex;
 	private Integer clientType;
 	private Integer state;
@@ -11,11 +12,12 @@ public class ClientVo {
 	private Integer staffId;
 	private String staffName;
 	
-	public ClientVo(Integer clientId, String clientName, String sex, Integer clientType, Integer state,
+	public ClientVo(Integer clientId, String clientName,String phone, String sex, Integer clientType, Integer state,
 			Integer consumptionTimes, double totalConsumptionAmount, Integer staffId, String staffName) {
 		super();
 		this.clientId = clientId;
 		this.clientName = clientName;
+		this.phone = phone;
 		this.sex = sex;
 		this.clientType = clientType;
 		this.state = state;
@@ -77,6 +79,12 @@ public class ClientVo {
 	}
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 }
