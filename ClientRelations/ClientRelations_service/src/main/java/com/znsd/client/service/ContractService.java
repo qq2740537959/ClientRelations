@@ -2,6 +2,8 @@ package com.znsd.client.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.znsd.client.bean.Shape;
 
 public interface ContractService {
