@@ -1,10 +1,5 @@
 package com.znsd.client.page;
 public class Pages<T>{
-	@Override
-	public String toString() {
-		return "Pages [currentIndexPage=" + currentIndexPage + ", pageSize=" + pageSize + ", totalIndexPage="
-				+ totalIndexPage + ", totalPageSize=" + totalPageSize + "]";
-	}
 	private int currentIndexPage;//当前页数
 	private int pageSize;//当前条数
 	private int totalIndexPage;//总页数
@@ -32,5 +27,10 @@ public class Pages<T>{
 	}
 	public void setTotalPageSize(int totalPageSize) {
 		this.totalPageSize = totalPageSize;
+	}
+	@Override
+	public String toString() {
+		return "Pages [currentIndexPage=" + currentIndexPage + ", pageSize=" + pageSize + ", totalIndexPage="
+				+ totalIndexPage + ", totalPageSize=" + totalPageSize + "]";
 	}
 }

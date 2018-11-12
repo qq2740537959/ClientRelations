@@ -51,6 +51,8 @@
 		</style>
 	</head>
 	<body>
+		<br>
+		
 		<div class="div_total">
 			<h3>订单管理 >> 订单查询</h3><br><br>
 			<div class="layui-inline">
@@ -88,6 +90,7 @@
 		</script>
 		          
 	<script>
+		//展示数据
 		layui.use('table', function(){
 		  var table = layui.table;
 		  table.render({
@@ -100,18 +103,18 @@
 		      ,{field:'orderNumber', width:130, title: '订单数量'}
 		      ,{field:'totalMoney', width:150, title: '总金额（万元）'}
 		      ,{field:'target', width:150, title: '本月目标（万元）'}
-		      ,{field:'percentageComplete', width:234, title: '完成率'}
+		      ,{field:'percentageComplete', width:234, title: '完成率',templet:'#titleTpl'}
 		    ]]
 		    ,page: true
-		    ,data:[{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'sdf'},
-		    		{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'sdf'},
-		    		{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'sdf'},
-		    		{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'sdf'},
-		    		{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'sdf'}
+		    ,data:[{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'50%'},
+		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'60%'},
+		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'65%'},
+		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'65%'},
+		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'45%'}
 		    ]
 		  });
 		  
-		  //头工具栏事件
+		  //查看
 		  table.on('toolbar(test)', function(obj){
 		    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
 		    switch(obj.event){
@@ -122,21 +125,57 @@
 		    };
 		  });
 		});
-		renderForm();
-		function renderForm(){
-		  layui.use('form', function(){
-		   var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
-		   form.render();
-		  });
-		 }
+		
+		//日期范围
 		layui.use('laydate', function(){
-  		var laydate = layui.laydate;
-		 //日期范围
-		  laydate.render({
-		    elem: '#test6'
-		    ,range: true
-		  });
+	  		var laydate = layui.laydate;
+			 //日期范围
+			  laydate.render({
+			    elem: '#test6'
+			    ,range: true
+			  });
 		})
+		
+		//进度条
+		layui.use('element', function(){
+		  var $ = layui.jquery
+		  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+		  
+		  //触发事件
+		  var active = {
+		    setPercent: function(){
+		      //设置50%进度
+		      element.progress('demo', '70%')
+		    }
+		    ,loading: function(othis){
+		      var DISABLED = 'layui-btn-disabled';
+		      if(othis.hasClass(DISABLED)) return;
+		    
+		      //模拟loading
+		      var n = 0, timer = setInterval(function(){
+		        n = n + Math.random()*10|0;  
+		        if(n>100){
+		          n = 100;
+		          clearInterval(timer);
+		          othis.removeClass(DISABLED);
+		        }
+		        element.progress('demo', n+'%');
+		      }, 300+Math.random()*1000);
+		      
+		      othis.addClass(DISABLED);
+		    }
+		  };
+		  
+		  $('.site-demo-active').on('click', function(){
+		    var othis = $(this), type = $(this).data('type');
+		    active[type] ? active[type].call(this, othis) : '';
+		  });
+		});
+	</script>
+	<script type="text/html" id="titleTpl">
+		<div class="layui-progress layui-progress-big" lay-showpercent="true">
+		  <div class="layui-progress-bar" style="width:{{d.percentageComplete}};text-align:center">{{d.percentageComplete}}</div>
+		</div>
 	</script>
 
 </body>

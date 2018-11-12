@@ -11,5 +11,10 @@ import com.znsd.client.vo.ClientVo;
 
 @Repository
 public interface ClientResourceMapperDao {
-	public List<ClientVo> selectClientInfoByPage(@Param("staffId") int staffId,@Param("clientName")String clientName,@Param("phone") String phone,Pages page);
+	//按销售代表id查询客户
+	public List<ClientVo> selectClientInfoByPage(@Param("staffId") int staffId,@Param("distinguish")String distinguish,@Param("clientNameOrPhone") String clientOrPhone);
+	
+	//按客户id查询客户信息
+	public ClientVo selectClientById(@Param("clientId")int clientId);
+
 }

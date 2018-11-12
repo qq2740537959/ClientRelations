@@ -18,8 +18,14 @@ public class ClientImpl implements ClientService{
 	@Autowired
 	private ClientResourceMapperDao dao;
 	
-	public List<ClientVo> selectClientInfoByPage(int staffId,String clientName,String phone,Pages page) {
-		return dao.selectClientInfoByPage(staffId,clientName, phone,page);
+	public List<ClientVo> selectClientInfoByPage(int staffId,String distinguish,String clientNameOrPhone) {
+		////按销售代表id查询客户
+		return dao.selectClientInfoByPage(staffId,distinguish, clientNameOrPhone);
+	}
+
+	public ClientVo selectClientById(int clientId) {
+		//按客户id查询客户信息
+		return dao.selectClientById(clientId);
 	}
 
 }

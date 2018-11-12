@@ -5,14 +5,13 @@ public class ClientVo {
 	private String clientName;
 	private String phone;
 	private String sex;
-	private Integer clientType;
+	private String clientType;
 	private Integer state;
 	private Integer consumptionTimes;
 	private double totalConsumptionAmount;
 	private Integer staffId;
 	private String staffName;
-	
-	public ClientVo(Integer clientId, String clientName,String phone, String sex, Integer clientType, Integer state,
+	public ClientVo(Integer clientId, String clientName,String phone, String sex, String clientType, Integer state,
 			Integer consumptionTimes, double totalConsumptionAmount, Integer staffId, String staffName) {
 		super();
 		this.clientId = clientId;
@@ -44,10 +43,10 @@ public class ClientVo {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public Integer getClientType() {
+	public String getClientType() {
 		return clientType;
 	}
-	public void setClientType(Integer clientType) {
+	public void setClientType(String clientType) {
 		this.clientType = clientType;
 	}
 	public Integer getState() {
@@ -86,5 +85,11 @@ public class ClientVo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	@Override
+	public String toString() {
+		return "ClientVo [clientId=" + clientId + ", clientName=" + clientName + ", phone=" + phone + ", sex=" + sex
+				+ ", clientType=" + clientType + ", state=" + state + ", consumptionTimes=" + consumptionTimes
+				+ ", totalConsumptionAmount=" + totalConsumptionAmount + ", staffId=" + staffId + ", staffName="
+				+ staffName + "]";
+	}
 }
