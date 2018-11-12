@@ -2,7 +2,11 @@ package com.znsd.client.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.znsd.client.bean.SalesContacts;
+import com.znsd.client.page.Pages;
 
 @Repository
 public interface ContactsDao {
@@ -16,18 +20,8 @@ public interface ContactsDao {
 	*	@desc 分页条件查询联系人
 	*
 	 */
-	public List<ContactsDao> selectContactsPage(String name);
-	/**
-	 * 
-	*	@author    Administrator
-	*	@param name
-	*	@return
-	*	@return    Long
-	*	@time    2018 上午9:27:29
-	*	@desc 查询总条数
-	*
-	 */
-	public Long selectContactsCount(String name);
+	public List<SalesContacts> selectContactsByPage(@Param("name") String name);
+	
 	/**
 	 * 
 	*	@author    Administrator
@@ -47,7 +41,7 @@ public interface ContactsDao {
 	*	@desc 修改联系人的信息
 	*
 	 */
-	public void updateContacts(ContactsDao sc);
+	public void updateContacts(SalesContacts sc);
 	/**
 	 * 
 	*	@author    Administrator
@@ -57,5 +51,5 @@ public interface ContactsDao {
 	*	@desc 增加联系人
 	*
 	 */
-	public void addContacts(ContactsDao sc);
+	public void addContacts(SalesContacts sc);
 }

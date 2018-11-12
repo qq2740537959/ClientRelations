@@ -15,30 +15,13 @@
 	  	http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
 	<context:property-placeholder location="classpath:jdbc.properties"/>
-	<context:component-scan base-package="com.znsd.client.service" />
 	<context:component-scan base-package="com.znsd.client.service.impl" />
 	<context:component-scan base-package="com.znsd.client.dao" />
 	
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-		<property name="driverClass" value="${jdbc.driver}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password"  value="${jdbc.password}"></property>
-		
-		<!-- 队列中的最小连接数 -->
-		<property name="minPoolSize"  value="15"/>
-		<!-- 队列中的最大连接数 -->
-		<property name="maxPoolSize" value="25" />
-		<!-- 当连接耗尽时创建的连接数 -->
-		<property name="acquireIncrement" value="15" />
-		<!-- 等待时间 -->
-		<property name="checkoutTimeout" value="10000" />
-		<!-- 初始化连接数 -->
-		<property name="initialPoolSize" value="20" />
-		<!-- 最大空闲时间，超出时间连接将被放弃 -->
-		<property name="maxIdleTime" value="20" />
-		<!-- 每隔60秒检测空闲连接 -->
-		<property name="idleConnectionTestPeriod" value="60000" />
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" >
+		<property name="url" value="${jdbc.url}" />
+    	<property name="username" value="${jdbc.username}" />
+    	<property name="password" value="${jdbc.password}" />
 	</bean>
 	
 	<!-- mybatis session工厂 -->
