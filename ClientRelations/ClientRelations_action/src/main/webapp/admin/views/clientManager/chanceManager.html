@@ -72,7 +72,7 @@ layui.use(['table'], function(){
   var table = layui.table;
   table.render({
     elem: '#test'
-   
+   	url: '../../../selectAllClient'
     ,toolbar: '#toolbarDemo'
     ,cols: [[
       {field:'clientId', width:80, title: '', sort: true}
@@ -86,17 +86,6 @@ layui.use(['table'], function(){
       ,{field:'entryPerson', width:100, title: '录入人'}
       ,{width:200,title:"操作",toolbar:"#barDemo"}
     ]]
-    ,data: [{//测试使用
-		"clientId": "10001"
-		,"add": ""
-		,"clientName": "大金牙"
-		,"sex": "男"
-		,"clientType": "金卡客户"
-		,"state": "正常"
-		,"allotState": "已分配"
-		,"inTime": "2018-11-8 16:18:55"
-		,"entryPerson": "赵云"
-	}]
     ,page: true
   });
   
@@ -117,6 +106,44 @@ layui.use(['table'], function(){
 	$(".add_but").click(function(){
 		
 	})
+	var $ = layui.jquery, active = {
+        getCheckData: function(){//获取选中数据
+            var checkStatus = table.checkStatus('contenttable')
+                ,data = checkStatus.data;
+            layer.alert(JSON.stringify(data));
+        }
+        ,getCheckLength: function(){//获取选中数目
+            var checkStatus = table.checkStatus('contenttable')
+                ,data = checkStatus.data;
+            layer.msg('选中了：'+ data.length + ' 个');
+        }
+        ,isAll: function(){//验证是否全选
+            var checkStatus = table.checkStatus('contenttable');
+            layer.msg(checkStatus.isAll ? '全选': '未全选')
+        }
+        ,parseTable: function(){
+            table.init('parse-table-demo', {
+                limit: 3
+            });
+        }
+        ,add: function(){
+            table.addRow('test')
+        }
+        ,delete: function(){
+            layer.confirm('确认删除吗？', function(index){
+                table.deleteRow('test')
+                layer.close(index);
+            });
+        }
+        ,reload:function () {
+            var keyWord=$("#keyWord").val();
+            var keyType=$("#key_type option:selected").val();
+            table.reload('contenttable',{
+                method:'post',
+                where:{keyWord:keyWord,keyType:keyType}
+            });
+        }
+    };
 });
 
 </script>

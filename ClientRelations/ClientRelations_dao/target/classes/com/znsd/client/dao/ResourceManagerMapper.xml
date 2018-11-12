@@ -17,20 +17,8 @@
  		<result column="in_time" property="inTime"/>
  		<result column="entry_person" property="entryPerson"/>
  	</resultMap>
- 	<parameterMap type="java.util.HashMap" id="clientInfoMap">
- 		<parameter property="clientName"/>
- 		<parameter property="phone"/>
- 	</parameterMap>
- 	<select id="selectAllClientByPage" resultMap="clientResourceMap" parameterMap="clientInfoMap">
+ 	<select id="selectAllClientByPage" resultMap="clientResourceMap" >
  		select client_id,client_name,sex,client_type,state,allot_state,in_time,entry_person from client_resource
- 		<where>
- 			<if test="clientName != null || clientName != ''">
- 				client_name = '${clientName}'
- 			</if>
- 			<if test="phone != null || phone != ''">
- 				phone like '${phone}'
- 			</if>
- 		</where>
  	</select>
  	
  </mapper>

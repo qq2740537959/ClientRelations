@@ -13,4 +13,15 @@ public interface ClientService {
 	
 	//按客户id查询客户信息
 	public ClientVo selectClientById(int clientId);
+	
+	/**
+	 * 
+	* @author dengjialei
+	* @return	
+	* @return List<Map<String,Object>>
+	* @time 2018 下午8:40:23
+	* @desc		查询所有客户资源
+	*
+	 */
+	public List<Map<String, Object>> selectAllClientByPage();
 }
