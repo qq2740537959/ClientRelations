@@ -96,7 +96,7 @@
 		  
 		  table.render({
 		    elem: '#organization'
-		    ,url:''
+		    ,url:'../../../queryDepartmentByPage'
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {checkbox:true,fixed:true}
@@ -108,10 +108,6 @@
 		      ,{field: 'right', title: '操作', width:100,toolbar:"#barDemo"}
 		    ]]
 		    ,page: true
-		    ,data:[{departmentId:'1',departmentAbbreviation:'总经办',lastTime:'女',operationPerson:'湖南',remarksInfo:'sdf'},
-		    		{departmentId:'2',departmentAbbreviation:'总经办',lastTime:'女',operationPerson:'湖南',remarksInfo:'sdf'},
-		    		{departmentId:'3',departmentAbbreviation:'总经办',lastTime:'女',operationPerson:'湖南',remarksInfo:'sdf'}
-		    ]
 		  });
 		  
 		  //头工具栏事件

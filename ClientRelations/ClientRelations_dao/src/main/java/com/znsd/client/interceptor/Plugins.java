@@ -57,7 +57,6 @@ public class Plugins implements Interceptor{
 		if(sqlId.endsWith("ByPage")) {
 			
 			Map<String, Object> map = (Map<String, Object>) boundSql.getParameterObject();
-			System.out.println(map);
 			Pages page = (Pages) map.get("param1");
 			
 			// 分页处理
@@ -87,7 +86,7 @@ public class Plugins implements Interceptor{
 			//总条数
 			page.setTotalPageSize(countPageSize);
 			sql += " limit "+((page.getCurrentIndexPage()-1)*page.getPageSize())+","+page.getPageSize()+"";
-			System.out.println("sql:"+sql);
+			
 			mo.setValue("delegate.boundSql.sql", sql);
 		}
 		return invocation.proceed();
