@@ -8,25 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.znsd.client.bean.Page;
 import com.znsd.client.page.Pages;
-import com.znsd.client.service.ClientService;
-import com.znsd.client.vo.ClientVo;
+import com.znsd.client.service.DepartmentService;
+import com.znsd.client.vo.DepartmentVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:spring-core.xml")
-public class ClientTest {
+public class DepartmentMapperDaoTest {
+
 	@Autowired
-	ClientService service;
+	DepartmentService departmentService;
 	
 	@Test
-	public void tests() {
+	public void test() {
 		Pages page = new Pages();
 		page.setCurrentIndexPage(1);
 		page.setPageSize(5);
-		List<ClientVo> clientVo = service.selectClientInfoByPage(2,null,null,page);
-		for (ClientVo clientVo2 : clientVo) {
-			System.out.println(clientVo2.getClientName()+"  "+clientVo2.getStaffName());
-		}
+		List<DepartmentVo> list = departmentService.selectDepartmentByPage(page, "总经理666");
+		System.out.println("数据"+list);
 	}
-	
+
 }

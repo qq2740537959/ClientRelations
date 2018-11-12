@@ -45,7 +45,7 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:com/znsd/client/dao/*.xml"/>
-		<property name="typeAliasesPackage" value="com.znsd.client.bean" />
+		<property name="typeAliasesPackage" value="com.znsd.client" />
 	</bean>
 	
 	<!-- mybatis 接口 -->

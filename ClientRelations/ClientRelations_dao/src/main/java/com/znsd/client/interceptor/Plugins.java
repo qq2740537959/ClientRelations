@@ -57,7 +57,8 @@ public class Plugins implements Interceptor{
 		if(sqlId.endsWith("ByPage")) {
 			
 			Map<String, Object> map = (Map<String, Object>) boundSql.getParameterObject();
-			Pages page = (Pages) map.get("arg3");
+			System.out.println(map);
+			Pages page = (Pages) map.get("param1");
 			
 			// 分页处理
 			String limitSql = "select count(*) from (" + sql + ") as s";
