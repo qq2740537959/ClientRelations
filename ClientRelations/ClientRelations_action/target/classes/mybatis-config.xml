@@ -8,7 +8,12 @@
         <setting name="lazyLoadingEnabled" value="false" />
     </settings>
     <!-- 分页 -->
+<<<<<<< HEAD
     <plugins>
 		<plugin interceptor="com.znsd.client.interceptor.Plugins" />    
+=======
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper"></plugin>
+>>>>>>> branch 'master' of http://www.znsd.com/dengjialei/ClientRelations.git
 	</plugins>
 </configuration>

@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.znsd.client.dao.ContactsDao">
+<<<<<<< HEAD
  	
  	<!-- 分页查询数据 -->
  	<select id="selectContactsPage" resultType="com.znsd.client.bean.SalesContacts" parameterType="java.lang.String">
@@ -24,5 +25,31 @@
  	
  	<!-- <update id="updateUser" parameterType="com.znsd.client.bean.SalesContacts">
  		
+=======
+ 	<resultMap type="com.znsd.client.bean.SalesContacts" id="contactsMap">
+ 		<id column="contacts_id" property="contactsId"/>
+ 		<result column="name" property="name"/>
+ 		<result column="sex" property="sex"/>
+ 		<result column="phone" property="phone"/>
+ 		<result column="address" property="address"/>
+ 		<result column="remark" property="remark"/>
+ 		<result column="birthday" property="birthday"/>
+ 		<result column="chance_content" property="chanceContent"/>
+ 		<result column="work_phone" property="workPhone"/>
+ 		<result column="family_phone" property="familyPhone"/>
+ 		<result column="email" property="email"/>
+ 	</resultMap>
+ 	<!-- 分页查询数据 -->
+ 	<select id="selectContactsByPage" resultMap="contactsMap" parameterType="java.lang.String">
+ 		select * from sales_contacts where name like "%"#{name}"%"
+ 	</select>
+	<insert id="addContacts" parameterType="com.znsd.client.bean.SalesContacts">
+		insert into sales_contacts(name,sex,phone,address,remark,birthday,chanceContent,workPhone,familyPhone,email) values (#{name},#{sex},#{phone},#{address},#{remark},#{birthday},#{chanceContent},#{workPhone},#{familyPhone},#{email})
+	</insert>
+	<delete id="delContacts" parameterType="java.lang.Integer">
+		delete from sales_contacts where id = #{id}
+	</delete>
+ 	<!-- <update id="updateUser" parameterType="com.znsd.client.bean.SalesContacts">
+>>>>>>> branch 'master' of http://www.znsd.com/dengjialei/ClientRelations.git
  	</update> -->
  </mapper>

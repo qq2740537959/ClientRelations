@@ -8,6 +8,9 @@ import com.znsd.client.page.Pages;
 import com.znsd.client.vo.ClientVo;
 
 public interface ClientService {
-
-	public List<ClientVo> selectClientInfoByPage(int staffId,String clientName,String phone, Pages page); 
+	//按销售代表id查询客户
+	public List<ClientVo> selectClientInfoByPage(int staffId,String distinguish,String clientNameOrPhone); 
+	
+	//按客户id查询客户信息
+	public ClientVo selectClientById(int clientId);
 }

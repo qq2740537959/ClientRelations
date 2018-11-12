@@ -7,6 +7,7 @@
    -->
  <mapper namespace="com.znsd.client.dao.ClientResourceMapperDao">
  	
+<<<<<<< HEAD
  	<select id="selectClientInfoByPage" resultType="com.znsd.client.vo.ClientVo">
  		select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s where c.staff_id = s.staff_id
 		<if test="staffId != null and staffId != ''">
@@ -20,4 +21,30 @@
 		</if>
  	</select>
  	
+=======
+ 	<!-- 按销售代表id查询客户 -->
+ 	<select id="selectClientInfoByPage" resultType="com.znsd.client.vo.ClientVo">
+ 		select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s where c.staff_id = s.staff_id
+		<if test="staffId != null and staffId != ''">
+			and c.staff_id= #{staffId}
+		</if>
+		<if test="distinguish != null and distinguish != ''">
+			<if test="distinguish == 'clientName'">
+				<if test="clientNameOrPhone != null and clientNameOrPhone != ''">
+					and c.client_name like #{clientNameOrPhone}
+				</if>
+			</if>
+			<if test="distinguish == 'phone'">
+				<if test="clientNameOrPhone != null and clientNameOrPhone != ''">
+					and c.phone = #{clientNameOrPhone}
+				</if>
+			</if>
+		</if>
+ 	</select>
+ 	
+ 	<!-- 按客户id查询客户信息 -->
+ 	<select id="selectClientById" resultType="com.znsd.client.vo.ClientVo">
+ 		 select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s where c.staff_id = s.staff_id and c.client_id = #{clientId}
+ 	</select>
+>>>>>>> branch 'master' of http://www.znsd.com/dengjialei/ClientRelations.git
  </mapper>

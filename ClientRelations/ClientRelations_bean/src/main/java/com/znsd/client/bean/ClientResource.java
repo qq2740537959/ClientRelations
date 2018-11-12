@@ -15,7 +15,7 @@ public class ClientResource implements Serializable {
 	private int clientId;
 	private int allotState;
 	private String clientName;
-	private int clientType;
+	private String clientType;
 	private String contactAddress;
 	private String email;
 	private int entryPerson;
@@ -66,11 +66,11 @@ public class ClientResource implements Serializable {
 
 
 	
-	public int getClientType() {
+	public String getClientType() {
 		return this.clientType;
 	}
 
-	public void setClientType(int clientType) {
+	public void setClientType(String clientType) {
 		this.clientType = clientType;
 	}
 

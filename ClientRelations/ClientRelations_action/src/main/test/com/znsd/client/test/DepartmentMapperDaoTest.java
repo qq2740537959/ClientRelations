@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.znsd.client.bean.Page;
 import com.znsd.client.page.Pages;
 import com.znsd.client.service.DepartmentService;
 import com.znsd.client.vo.DepartmentVo;

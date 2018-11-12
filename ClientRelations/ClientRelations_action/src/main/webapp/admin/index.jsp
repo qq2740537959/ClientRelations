@@ -166,7 +166,7 @@
         <div class="mobile-mask"></div>
     </div>
     <script src="assets/layui.js"></script>
-    <script src="js/index.js" data-main="home"></script>
+    <script src="index.js" data-main="home"></script>
     <script type="text/javascript">
     	$(".exit").click(function(){
     		$.ajax({

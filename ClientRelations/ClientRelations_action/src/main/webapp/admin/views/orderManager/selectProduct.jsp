@@ -11,9 +11,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" href="../layui/css/layui.css" />
-		<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
-		<script type="text/javascript" src="../layui/layui.js"></script>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../layui/layui.js"></script>
 		<style>
 			div.layui-form.layui-border-box.layui-table-view{
 				width: 850px;
@@ -49,21 +49,25 @@
 		</style>
 	</head>
 	<body>
+		<%
+			Object clientId = request.getParameter("clientId");
+		%>
+		<input type="hidden" value="<%=clientId%>" class="clientId"> 
 		<div class="div_total">
-			<h3>è®¢åç®¡ç >> ä»£ä¸è®¢å >> ä¸åæä½</h3>
-			<div style="width: 630px;height: 200px;font-size: 17px;padding-left: 220px;"><br/>
-				å®¢æ·å§åï¼å»æå   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;æ§å«ï¼ç·  <br/><br/>
-				å®¢æ·ç±»åï¼æ®éå®¢æ·   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;å®¢æ·ç¶æï¼æ­£å¸¸  <br/><br/>
-				èç³»çµè¯ï¼15801881818   &nbsp; &nbsp; &nbsp;æå¡ä»£è¡¨ï¼éç  <br/><br/>
-				å·²æ¶è´¹æ¬¡æ°ï¼1   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-				 &nbsp; &nbsp; &nbsp; &nbsp; æ¶è´¹æ»é¢ï¼2.6ä¸å 
+			<h3>订单管理 >> 代下订单 >> 下单操作</h3>
+			<div class="order" style="width: 630px;height: 200px;font-size: 17px;padding-left: 220px;"><br/>
+				客户姓名：<span class="clientName"></span>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;性别：<span class="sex"></span>  <br/><br/>
+				客户类型：<span class="clientType"></span>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;客户状态：<span class="state"></span>  <br/><br/>
+				联系电话：<span class="phone"></span>   &nbsp; &nbsp; &nbsp;服务代表：<span class="staffName"></span> <br/><br/>
+				已消费次数：<span class="consumptionTimes"></span>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+				 &nbsp; &nbsp; &nbsp; &nbsp; 消费总额：<span class="totalConsumptionAmount"></span>
 			</div>
 		    <div style="width: 850px;">
 		    	<hr>
 		    </div>
 		    <div class="div_title_btn">
 		    	<span class="span_title">
-			    	å¯éè´­ååä¿¡æ¯åè¡¨
+			    	可选购商品信息列表
 			    </span>
 		    </div>
 			<table class="layui-hide" id="test" lay-filter="test"></table>
@@ -71,45 +75,69 @@
 		<br><br>
 		<br><br>
 		<div style="margin-left: 450px;">
-			<button class="layui-btn" >ä¸ä¸æ­¥</button>
-		 	<button class="layui-btn">è¿å</button> 
+			<script type="text/html" id="toolbarDemo">
+				<button class="layui-btn" lay-event="getCheckData">下一步</button>
+				<a href="selectClient.jsp"><button class="layui-btn">返回</button></a>
+			</script>
 		</div>
 		<script>
+			var clientId= $(".clientId").val();
+			$.ajax({
+				url:'../../../selectClientByIdAction?clientId='+clientId,
+				type:'post',
+				success:function(data){
+					$(".clientName").html(data.clientName);
+					$(".sex").html(data.sex);
+					$(".clientType").html(data.clientType);
+					$(".state").html(data.state);
+					$(".phone").html(data.phone);
+					$(".staffName").html(data.staffName);
+					$(".consumptionTimes").html(data.consumptionTimes);
+					$(".totalConsumptionAmount").html(data.totalConsumptionAmount);
+				}
+			})
 			layui.use('table', function(){
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:''
+			    ,url:'../../../selectProductAction'
 			    ,toolbar: '#toolbarDemo'
 			    ,cols: [[
 			      {type:'checkbox'}
-			      ,{field:'id', width:113, title: 'ID'}
-			      ,{field:'username', width:140, title: 'ç¨æ·å'}
-			      ,{field:'sex', width:135, title: 'æ§å«'}
-			      ,{field:'city', width:135, title: 'åå¸'}
-			      ,{field:'sign', width:135, title: 'ç­¾å'}
-			      ,{field:'experience', width:135, title: 'ç§¯å'}
+			      ,{field:'productId', width:115, title: 'ID'}
+			      ,{field:'productName', width:140, title: '商品名称'}
+			      ,{field:'productTypeNumber', width:140, title: '商品型号'}
+			      ,{field:'price', width:140, title: '单价'}
+			      ,{field:'productNumber', width:140, title: '数量'}
+			      ,{field:'productNumber', width:115, title: '库存',templet:'#inventoryLet'}
 			    ]]
 			    ,page: true
-			    ,data:[{id:'1',username:'admin',sex:'å¥³',city:'æ¹å',sign:'sdf',experience:'adfgd'},
-			    		{id:'1',username:'admin',sex:'å¥³',city:'æ¹å',sign:'sdf',experience:'adfgd'},
-			    		{id:'1',username:'admin',sex:'å¥³',city:'æ¹å',sign:'sdf',experience:'adfgd'},
-			    		{id:'1',username:'admin',sex:'å¥³',city:'æ¹å',sign:'sdf',experience:'adfgd'},
-			    		{id:'1',username:'admin',sex:'å¥³',city:'æ¹å',sign:'sdf',experience:'adfgd'}
-			    ]
+			    ,limit:'5'
+			    ,limits:[1,2,3,4,5]
 			  });
 			  
-			  //å¤´å·¥å·æ äºä»¶
+			  //头工具栏事件
 			  table.on('toolbar(test)', function(obj){
-			    var checkStatus = table.checkStatus(obj.config.id); //è·åéä¸­è¡ç¶æ
+			    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
 			    switch(obj.event){
 			      case 'getCheckData':
-			        var data = checkStatus.data;  //è·åéä¸­è¡æ°æ®
-			        layer.alert(JSON.stringify(data));
+			        var data = checkStatus.data;  //获取选中行数据
+			       	var product = "";
+			        for(var a=0;a<data.length;a++){
+			        	product += data[a].productId+",";
+			        }
+			        if(product.length == 0){
+			        	alert("请选择要购买的商品");
+			        }else{
+			        	location.href= "orderSettleAccounts.jsp?clientId="+clientId+"&product="+product;
+			        }
 			      break;
 			    };
 			  });
 			});
+		</script>
+		<script type="text/html" id="inventoryLet">
+		 	 	{{d.productNumber==0?'售罄':'有货'}}
 		</script>
 	</body>
 </html>
