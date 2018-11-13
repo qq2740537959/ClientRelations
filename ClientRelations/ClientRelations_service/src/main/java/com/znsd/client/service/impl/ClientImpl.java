@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
 import com.znsd.client.bean.ClientResource;
 import com.znsd.client.dao.ClientResourceMapperDao;
 import com.znsd.client.page.Pages;
@@ -26,6 +27,10 @@ public class ClientImpl implements ClientService{
 	public ClientVo selectClientById(int clientId) {
 		//按客户id查询客户信息
 		return dao.selectClientById(clientId);
+	}
+
+	public List<Map<String, Object>> selectAllClientByPage() {
+		return dao.selectAllClientByPage();
 	}
 
 }

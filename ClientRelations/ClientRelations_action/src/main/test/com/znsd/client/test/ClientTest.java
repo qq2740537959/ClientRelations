@@ -2,6 +2,7 @@ package com.znsd.client.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.github.pagehelper.Page;
 import com.znsd.client.bean.Product;
 import com.znsd.client.service.ClientService;
 import com.znsd.client.service.ProductService;
@@ -43,6 +45,15 @@ public class ClientTest {
 		List<Product> productList = productService.selectProductById(list);
 		for (Product product : productList) {
 			System.out.println("------------"+product);
+		}
+	}
+	
+	@Test
+	public void testClientAll() {
+		Page<Object> pages = new Page<Object>(1, 5);
+		List<Map<String, Object>> list = service.selectAllClientByPage();
+		for (Map<String, Object> map : list) {
+			System.out.println(map);
 		}
 	}
 	

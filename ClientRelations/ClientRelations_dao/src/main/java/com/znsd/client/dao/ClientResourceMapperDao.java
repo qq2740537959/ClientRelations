@@ -2,11 +2,11 @@ package com.znsd.client.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.znsd.client.page.Pages;
 import com.znsd.client.vo.ClientVo;
 
 @Repository
@@ -17,4 +17,6 @@ public interface ClientResourceMapperDao {
 	//按客户id查询客户信息
 	public ClientVo selectClientById(@Param("clientId")int clientId);
 
+	
+	public List<Map<String, Object>> selectAllClientByPage();
 }
