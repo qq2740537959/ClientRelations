@@ -10,6 +10,17 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	<error-page> <!--当系统出现404错误，跳转到页面nopage.html-->
+	<error-code>404</error-code>
+	<location>/nopage.html</location>
+	</error-page>
+	<error-page> <!--当系统出现java.lang.NullPointerException，跳转到页面error.html-->
+		<exception-type>java.lang.NullPointerException</exception-type>
+		 <location>/error.html</location>
+	</error-page>
+	<session-config><!--会话超时配置，单位分钟-->
+		 <session-timeout>20</session-timeout>
+	 </session-config> 
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
