@@ -11,13 +11,13 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.0</version>
 		</dependency>
-		<!-- Struts2 -->
+		<!--  Struts2 
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
 			<version>2.5.16</version>
 		</dependency>
-		<!-- Struts2集成spring -->
+		Struts2集成spring
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
@@ -33,7 +33,26 @@
 			<artifactId>struts2-convention-plugin</artifactId>
 			<version>2.5.16</version>
 		</dependency>
-
+ -->
+ 		<!-- springMVC jar -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.3.18.RELEASE</version>
+		</dependency>
+ 		<!-- json 数据返回注解 jar -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.7</version>
+		</dependency>
+		<!-- 将数据 转成 json数据 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+		</dependency>
+ 		
 		<!-- Spring JAR -->
 		<dependency>
 			<groupId>org.springframework</groupId>

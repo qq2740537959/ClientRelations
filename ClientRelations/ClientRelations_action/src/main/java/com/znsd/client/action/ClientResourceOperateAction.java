@@ -4,35 +4,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
-import com.opensymphony.xwork2.ActionSupport;
 import com.znsd.client.service.ClientService;
 
-@SuppressWarnings("serial")
-@Namespace("/")
-@ParentPackage("json-default")
-public class ClientResourceOperateAction extends ActionSupport {
-	
-	private String conditionName;	//条件名   clientName 或  phone
-	private Integer allotState;		//分配状态
-	private String  condition;		//查询条件
-	
-	private Integer page;
-	private Integer limit;
-	
-	private Map<String, Object> map = new HashMap<String, Object>();	//返回数据
+@Controller
+public class ClientResourceOperateAction {
 	
 	@Autowired
 	private ClientService service;
 	
-	@Action(value="selectAllClient", results = {@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","map"})})
-	public String selectAllClient() {
+/*	@Action(value="selectAllClient", results = {@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","map"})})*/
+	@RequestMapping("/selectAllClient")
+	@ResponseBody
+	public Map<String, Object> selectAllClient(@RequestParam(value="allotState",required=false) Integer allotState,@RequestParam(value="conditionName",required=false)String conditionName,
+			@RequestParam(value="condition",required=false)String condition,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit,Map<String, Object> model) {
 		System.out.println(page+"-----------"+limit);
 		Page<Object> pages = new Page<Object>(page, limit);		//分页
 		List<Map<String, Object>> list = service.selectAllClientByPage();
@@ -54,55 +45,12 @@ public class ClientResourceOperateAction extends ActionSupport {
 				map.put("state", "已流失");
 			}
 		}
-		map.put("code", 0);
-		map.put("data", list);
-		map.put("page", page);
-		map.put("limit", limit);
-		map.put("count", pages.getTotal());
-		return SUCCESS;
-	}
-
-	public String getCondition() {
-		return condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
-
-	public Integer getAllotState() {
-		return allotState;
-	}
-
-	public void setAllotState(Integer allotState) {
-		this.allotState = allotState;
-	}
-
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public Integer getLimit() {
-		return limit;
-	}
-
-	public void setLimit(Integer limit) {
-		this.limit = limit;
-	}
-
-	public Map<String, Object> getMap() {
-		return map;
-	}
-
-	public String getConditionName() {
-		return conditionName;
-	}
-
-	public void setConditionName(String conditionName) {
-		this.conditionName = conditionName;
+		model = new HashMap<String, Object>();
+		model.put("code", 0);
+		model.put("data", list);
+		model.put("page", page);
+		model.put("limit", limit);
+		model.put("count", pages.getTotal());
+		return model;
 	}
 }

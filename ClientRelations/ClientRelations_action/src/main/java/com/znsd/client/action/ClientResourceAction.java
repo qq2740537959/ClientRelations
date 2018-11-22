@@ -3,26 +3,20 @@ package com.znsd.client.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.opensymphony.xwork2.ActionSupport;
 import com.znsd.client.bean.Product;
 import com.znsd.client.bean.ResultData;
 import com.znsd.client.service.ClientService;
 import com.znsd.client.service.ProductService;
 import com.znsd.client.vo.ClientVo;
 
-@SuppressWarnings("serial")
-@Namespace("/")
-@ParentPackage("json-default")
-public class ClientResourceAction extends ActionSupport{
+@Controller
+public class ClientResourceAction {
 	@Autowired
 	private ClientService clientService;
 	@Autowired
@@ -39,9 +33,10 @@ public class ClientResourceAction extends ActionSupport{
 	private Integer page;
 	private ResultData result = new ResultData();
 	private String product;
-	@Action(value="selectClientAction",results= {
+	/*@Action(value="selectClientAction",results= {
 			@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","result"})
-	})
+	})*/
+	@RequestMapping("/selectClientAction")
 	public String selectClient() {
 		//按销售代表查询客户信息
 		if(distinguish == null) {
@@ -63,19 +58,21 @@ public class ClientResourceAction extends ActionSupport{
 		result.setCount(Long.valueOf(pages.getTotal()));//总条数
 		result.setMsg("");
 		result.setData(clientVo);//客户数据
-		return SUCCESS;
+		return /*SUCCESS*/"";
 	}
-	@Action(value="selectClientByIdAction",results= {
+	/*@Action(value="selectClientByIdAction",results= {
 			@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","client"})
-	})
+	})*/
+	@RequestMapping("/selectClientByIdAction")
 	public String selectClientIdByPage() {
 		//按客户id查询客户信息
 		client = clientService.selectClientById(clientId);
-		return SUCCESS;
+		return /*SUCCESS*/"";
 	}
-	@Action(value="selectProductAction",results= {
+	/*@Action(value="selectProductAction",results= {
 			@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","result"})
-	})
+	})*/
+	@RequestMapping("/selectProductAction")
 	public String selectProduct() {
 		//查询所有商品 
 		Page<Object> pages = PageHelper.startPage(page, limit);
@@ -84,11 +81,12 @@ public class ClientResourceAction extends ActionSupport{
 		result.setCount(Long.valueOf(pages.getTotal()));//总条数
 		result.setMsg("");
 		result.setData(productList);//商品数据
-		return SUCCESS;
+		return /*SUCCESS*/"";
 	}
-	@Action(value="selectProductByIdAction",results= {
+/*	@Action(value="selectProductByIdAction",results= {
 			@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","result"})
-	})
+	})*/
+	@RequestMapping("/selectProductByIdAction")
 	public String selectProductById() {
 		//查询包含商品id的商品 
 		String [] ary = product.split(",");
@@ -100,7 +98,7 @@ public class ClientResourceAction extends ActionSupport{
 		result.setCode(0);
 		result.setMsg("");
 		result.setData(productList);//商品数据
-		return SUCCESS;
+		return /*SUCCESS*/""	;
 	}
 	public List<ClientVo> getClientVo() {
 		return clientVo;

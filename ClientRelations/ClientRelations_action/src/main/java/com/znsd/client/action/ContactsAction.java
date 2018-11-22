@@ -4,23 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 import com.znsd.client.bean.SalesContacts;
 import com.znsd.client.service.ContactsService;
 
-@SuppressWarnings("serial")
-@Namespace("/")
-@ParentPackage("json-default")
-public class ContactsAction extends ActionSupport implements ModelDriven<SalesContacts>{
+@Controller
+public class ContactsAction {
 	
 	@Autowired
 	private ContactsService contactsBiz;
@@ -31,9 +25,10 @@ public class ContactsAction extends ActionSupport implements ModelDriven<SalesCo
 	private Map<String,Object> map = new HashMap();//用于接东西
 	
 	//分页查询联系人
-	@Action(value="selectContactsPage",results={
+	/*@Action(value="selectContactsPage",results={
 		@Result(type="json",params= {"root","map"})
-	})
+	})*/
+	@RequestMapping("/selectContactsPage")
 	public String selectContactsPage() {
 		if (salesContacts.getName() == null) {
 			salesContacts.setName("");
@@ -43,7 +38,7 @@ public class ContactsAction extends ActionSupport implements ModelDriven<SalesCo
 		map.put("data",list);
 		map.put("code",0);
 		map.put("count",pages.getTotal());
-		return SUCCESS;
+		return "";
 	}
 
 

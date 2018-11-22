@@ -12,5 +12,10 @@
     	<artifactId>ClientRelations_dao</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  		<dependency>
+  		<groupId>com.znsd.client</groupId>
+    	<artifactId>ClientRelations_bean</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

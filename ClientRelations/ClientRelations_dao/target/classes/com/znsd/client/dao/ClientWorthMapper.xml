@@ -5,7 +5,7 @@
   <!-- 保证唯一性 
        使用接口方式加载命名空间 使用代理模式
    -->
-<mapper namespace="">
+<mapper namespace="com.znsd.client.dao.ClientWorthDao">
 	<!-- 客户价值需要查询出的信息 -->
  	<resultMap type="java.util.HashMap" id="clientWorthMap">
  		<id column="client_id" property="clientId"/>

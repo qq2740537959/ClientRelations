@@ -3,19 +3,11 @@ package com.znsd.client.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.RequestAware;
-import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.opensymphony.xwork2.ActionSupport;
-
-@SuppressWarnings("serial")
-@Namespace("/")
-@ParentPackage("json-default")
-public class DepartmentAction extends ActionSupport implements SessionAware,RequestAware{
+@Controller
+public class DepartmentAction {
 
 	private Map<String, Object> session;
 	private Map<String, Object> request;
@@ -32,13 +24,14 @@ public class DepartmentAction extends ActionSupport implements SessionAware,Requ
 	}
 
 
-	@Action(value="queryDepartmentByPage",results= {
+/*	@Action(value="queryDepartmentByPage",results= {
 			@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","departmentData"})
-	})
+	})*/
+	@RequestMapping("/queryDepartmentByPage")
 	public String queryDepartmentByPage() {
 		System.out.println("page"+page+"------"+"limit"+limit);
 		
-		return SUCCESS;
+		return "";
 	}
 	
 	
