@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+<mapper namespace="">
+	<!-- 客户价值需要查询出的信息 -->
+ 	<resultMap type="java.util.HashMap" id="clientWorthMap">
+ 		<id column="client_id" property="clientId"/>
+ 		<result column="client_name" property="clientName"/>
+ 		<result column="sex" property="sex"/>
+ 		<result column="client_type" property="clientType"/>
+ 		<result column="consumption_times" property="consumptionTimes"/>
+ 		<result column="total_consumption_amount" property="totalConsumptionAmount"/>
+ 		<result column="staff_name" property="staffName"/>
+ 	</resultMap>
+ 	
+ 	<select id="selectClientWorthByPage" resultMap="clientWorthMap">
+ 		select c.client_id,c.client_name,c.sex,c.client_type,c.consumption_times,c.total_consumption_amount,s.staff_name
+		FROM client_resource c INNER JOIN staff s ON c.staff_id = s.staff_id where c.allot_state = 2
+		<if test="clientName != null || clientName != ''">
+			and c.client_name LIKE '%${clientName}%'
+		</if>
+ 	</select>	
+</mapper>
