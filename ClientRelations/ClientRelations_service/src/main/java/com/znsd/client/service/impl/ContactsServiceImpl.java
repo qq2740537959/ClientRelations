@@ -31,7 +31,12 @@ public class ContactsServiceImpl implements ContactsService{
 
 	public void addContacts(SalesContacts sc) {
 		// TODO Auto-generated method stub
-		
+		dao.addContacts(sc);
+	}
+
+	public SalesContacts getContactsData(Integer id) {
+		// TODO Auto-generated method stub
+		return dao.getContactsData(id);
 	}
 
 	
