@@ -26,6 +26,18 @@ public interface ContactsDao {
 	 * 
 	*	@author    Administrator
 	*	@param id
+	*	@return
+	*	@return    SalesContacts
+	*	@time    2018 下午5:18:31
+	*	@desc 根据id查询联系人
+	*
+	 */
+	public SalesContacts getContactsData(Integer id);
+	
+	/**
+	 * 
+	*	@author    Administrator
+	*	@param id
 	*	@return    void
 	*	@time    2018 上午9:28:43
 	*	@desc 删除联系人

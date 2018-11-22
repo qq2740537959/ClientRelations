@@ -30,7 +30,7 @@
 							<div class="layui-inline">
 								<div class="layui-form-mid">联系人：</div>
 								<div class="layui-input-inline">
-							       <input type="text" name="" class="layui-input staffName">   
+							       <input type="text" name="name" class="layui-input staffName">   
 							    </div>
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
@@ -40,9 +40,9 @@
 						</button>
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="del">删除</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
+							<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+							<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="see">查看</a>
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
 						  <div class="layui-btn-container">
@@ -67,12 +67,12 @@ layui.use(['table'], function(){
       ,{field:'sex', width:80, title: '性别'}
       ,{field:'address', width:220, title: '地址'}
       ,{field:'remark', width:110, title: '备注'}
-      ,{width:160,title:"操作",toolbar:"#barDemo"}
+      ,{width:162,title:"操作",toolbar:"#barDemo"}
     ]]
     ,page: true
     ,limit:5
 	,limits:[5,10,15,20]
-  	,width:778
+  	,width:779
   	,align:"center"
   });
   
@@ -84,15 +84,72 @@ layui.use(['table'], function(){
 	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 	   	if(layEvent == 'see') { //查看
-	
+			
 	   	}else if(layEvent === 'edit') { //修改
+	   		
+			layer.open({
+				type:2,
+				content:"addOrUpdateContacts.jsp?contactsId="+data.contactsId,
+				area:['721px', '620px'],
+				shade: [0.8, '#393D49'],
+				move:false,
+				shadeClose:true,
+				end:function(){
+					refreshTable();
+				}
+			})
 			
 	   	}else if(layEvent == 'del'){//删除
-	   		
+	   		layer.confirm('真的删除行么', function(index){
+	   			$.ajax({
+		   			type:"post",
+		  			url:"/ClientRelations_action/delContacts",
+		  			data:"contactsId="+data.contactsId,
+		  			success:function(t){
+		  				obj.del();
+		  			}
+		   		}) 
+	   	        layer.close(index);
+	   			layer.msg("删除成功");
+	   	     });
 	   	}
+	   
 	});
 	$(".add_but").click(function(){
-		
+		layer.open({
+			type:2,
+			content:"addOrUpdateContacts.jsp",
+			area:['721px', '620px'],
+			shade: [0.8, '#393D49'],
+			move:false,
+			shadeClose:true,
+			end:function(){
+				refreshTable();
+			}
+		})
+	})
+	function refreshTable(){
+		table.reload('test',
+        {
+             where: { //这里传参  向后台
+             	name:$(".staffName").val(),
+             } 
+             ,limit:5
+ 			 ,limits:[5,10,15,20]
+        });
+	}
+	$(".refer_but").click(function(){
+		table.reload('test',
+        {
+             where: { //这里传参  向后台
+             	name:$(".staffName").val(),
+             } 
+			 ,page:{
+				 curr: 1
+			 }
+             ,limit:5
+ 			 ,limits:[5,10,15,20]
+        });
 	})
 });
 

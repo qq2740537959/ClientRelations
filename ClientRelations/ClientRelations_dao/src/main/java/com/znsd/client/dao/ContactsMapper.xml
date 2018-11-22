@@ -20,12 +20,16 @@
  	<select id="selectContactsByPage" resultMap="contactsMap" parameterType="java.lang.String">
  		select * from sales_contacts where name like "%"#{name}"%"
  	</select>
+ 	<select id="getContactsData" resultMap="contactsMap" parameterType="java.lang.Integer">
+ 		select * from sales_contacts where contacts_id = #{id}
+ 	</select>
 	<insert id="addContacts" parameterType="com.znsd.client.bean.SalesContacts">
-		insert into sales_contacts(name,sex,phone,address,remark,birthday,chanceContent,workPhone,familyPhone,email) values (#{name},#{sex},#{phone},#{address},#{remark},#{birthday},#{chanceContent},#{workPhone},#{familyPhone},#{email})
+		insert into sales_contacts(name,sex,phone,address,remark,birthday,work_phone,family_phone,email) values (#{name},#{sex},#{phone},#{address},#{remark},#{birthday},#{workPhone},#{familyPhone},#{email})
 	</insert>
-	<delete id="delContacts" parameterType="java.lang.Integer">
-		delete from sales_contacts where id = #{id}
+	<delete id="deleteContacts" parameterType="java.lang.Integer">
+		delete from sales_contacts where contacts_id = #{id}
 	</delete>
- 	<!-- <update id="updateUser" parameterType="com.znsd.client.bean.SalesContacts">
- 	</update> -->
+ 	<update id="updateContacts" parameterType="com.znsd.client.bean.SalesContacts">
+ 		update sales_contacts set name=#{name},sex=#{sex},phone=#{phone},address=#{address},remark=#{remark},birthday=#{birthday},work_phone=#{workPhone},family_phone=#{familyPhone},email=#{email} where contacts_id = #{contactsId}
+ 	</update>
  </mapper>
