@@ -50,7 +50,9 @@ public class ClientResourceOperateAction {
 		model.put("data", list);
 		model.put("page", page);
 		model.put("limit", limit);
-		model.put("count", pages.getTotal());
+		model.put("count", (pages.getTotal()+1));
+		
+		System.out.println("action controller=="+model);
 		return model;
 	}
 }
