@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.znsd.client.bean.ClientResource;
 import com.znsd.client.dao.ClientResourceMapperDao;
 import com.znsd.client.service.ClientService;
 import com.znsd.client.vo.ClientVo;
@@ -26,8 +27,15 @@ public class ClientImpl implements ClientService{
 		return dao.selectClientById(clientId);
 	}
 
-	public List<Map<String, Object>> selectAllClientByPage() {
-		return dao.selectAllClientByPage();
+	public List<Map<String, Object>> selectAllClientByPage(Integer allotState,String conditionName,String condition) {
+		if ("clientName".equals(conditionName)) {
+			conditionName = "client_name";
+		}
+		return dao.selectAllClientByPage(allotState,conditionName,condition);
+	}
+
+	public Integer addResource(ClientResource resource) {
+		return dao.addResource(resource);
 	}
 
 }
