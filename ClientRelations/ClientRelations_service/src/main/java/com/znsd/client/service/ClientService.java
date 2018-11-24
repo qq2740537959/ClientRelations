@@ -23,5 +23,17 @@ public interface ClientService {
 	* @desc		查询所有客户资源
 	*
 	 */
-	public List<Map<String, Object>> selectAllClientByPage();
+	public List<Map<String, Object>> selectAllClientByPage(Integer allotState,String conditionName,String condition);
+	
+	/**
+	 * 
+	* @author Administrator
+	* @param resource
+	* @return
+	* @return Integer
+	* @time 2018 上午10:19:37
+	* @desc			增加客户资源
+	*
+	 */
+	public Integer addResource(ClientResource resource);
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="../../layui/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/view.css" />
+<link rel="icon" href="/favicon.ico">
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<title>问题修改</title>
+<style type="text/css">
+</style>
+</head>
+
+<body class="layui-view-body">
+	<div id="add" style="padding-top:30px;">
+		<form class="layui-form" action="">
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">*问题标题</label>
+		    <div class="layui-input-block">
+		      <input type="text" name="title" required  lay-verify="required" placeholder="请输入服务名称" autocomplete="off" class="layui-input" style = "width:600px;">
+		    </div>
+		  </div>
+		  <div class="layui-form-item" style="width: 710px;">
+		    <label class="layui-form-label">*问题类型</label>
+		    <div class="layui-input-block" >
+		      <select name="city" lay-verify="required">
+		      	<option value=""></option>
+		        <option value="0">咨询问题</option>
+		        <option value="1">投诉问题</option>
+		        <option value="2">售前问题</option>
+		        <option value="3">售后问题</option>
+		      </select>
+		    </div>
+		  </div>
+		  <div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">答复要点</label>
+		    <div class="layui-input-block">
+		      <textarea name="desc" style = "width:600px"; placeholder="请输入服务内容" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+		  <div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">备注信息</label>
+		    <div class="layui-input-block">
+		      <textarea name="desc" style = "width:600px; placeholder="请输入备注内容" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">提交</button>
+		      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	
+	<script src="../../layui/layui.js"></script>
+<script>
+layui.use(['table'], function(){ 
+	
+});
+
+</script>
+</body>
+</html>

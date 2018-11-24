@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/target/
+=======
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -25,3 +28,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+>>>>>>> 18b401ad0ea42b4cad911b89f49680b70506c1ac

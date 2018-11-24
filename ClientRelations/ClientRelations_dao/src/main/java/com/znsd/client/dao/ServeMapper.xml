@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <mapper namespace="com.znsd.client.dao.ServeDao">
+  
+  	<resultMap type="com.znsd.client.bean.Serve" id="serveMap">
+  		<id property="id" column="id"/>
+  		<result property="serveName" column="serve_name"/>
+  		<result property="serveType" column="serve_type"/>
+  		<result property="serveState" column="serve_state"/>
+  		<result property="serveClient" column="serve_client"/>
+  		<result property="phone" column="phone"/>
+  		<result property="serveContent" column="serve_content"/>
+  		<result property="comment" column="comment"/>
+  		<result property="operator" column="operator"/>
+  		<result property="pendingPeople" column="pending_people"/>
+  		<result property="endTime" column="end_time"/>
+  		<result property="createBy" column="create_by"/>
+  		<result property="createTime" column="create_time"/>
+  		<result property="updateBy" column="update_by"/>
+  		<result property="updateTime" column="update_time"/>
+  	</resultMap>
+  	
+  	
+  	<select id="serveQuery"  resultMap="serveMap">
+  		select * from serve where delete_flag=1
+  	</select>
+	
+	<insert id="serveAdd">
+		INSERT into serve (serve_name,serve_type,serve_state,serve_client,phone,serve_content,comment,operator,pending_people,end_time,create_by,create_time,update_by,update_time) VALUE (#{serveName},#{serveType},#{serveState},#{serveClient},#{phone},#{serveContent},#{comment},#{operator},#{pendingPeople},NOW(),#{createBy},NOW(),#{updateBy},NOW())
+	</insert>
+  	
+  	<update id="serveDelete">
+  		update serve set delete_flag=0 where id = #{id}
+  	</update>
+  	
+  	<update id="serveSub">
+  		update serve set serve_state='已提交' where id = #{id} 
+  	</update>
+  	
+  </mapper>

@@ -14,127 +14,86 @@ public class Issue implements Serializable {
 	private int id;
 	private String answer;
 	private String comment;
-	private int createBy;
+	private String createBy;
 	private Date createTime;
 	private int deleteFlag;
 	private Date endTime;
-	private int issueType;
+	private String issueType;
 	private String title;
-	private int updateBy;
+	private String updateBy;
 	private Date updateTime;
-
-	public Issue() {
-	}
-
-
-	
-	
 	public int getId() {
-		return this.id;
+		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 	public String getAnswer() {
-		return this.answer;
+		return answer;
 	}
-
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-
-
 	public String getComment() {
-		return this.comment;
+		return comment;
 	}
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-
-
-	
-	public int getCreateBy() {
-		return this.createBy;
+	public String getCreateBy() {
+		return createBy;
 	}
-
-	public void setCreateBy(int createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
-
-
-	
-	
 	public Date getCreateTime() {
-		return this.createTime;
+		return createTime;
 	}
-
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-
-	
 	public int getDeleteFlag() {
-		return this.deleteFlag;
+		return deleteFlag;
 	}
-
 	public void setDeleteFlag(int deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
-
-
-	
-	
 	public Date getEndTime() {
-		return this.endTime;
+		return endTime;
 	}
-
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-
-
-	
-	public int getIssueType() {
-		return this.issueType;
+	public String getIssueType() {
+		return issueType;
 	}
-
-	public void setIssueType(int issueType) {
+	public void setIssueType(String issueType) {
 		this.issueType = issueType;
 	}
-
-
 	public String getTitle() {
-		return this.title;
+		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-	
-	public int getUpdateBy() {
-		return this.updateBy;
+	public String getUpdateBy() {
+		return updateBy;
 	}
-
-	public void setUpdateBy(int updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-
-
-	
-	
 	public Date getUpdateTime() {
-		return this.updateTime;
+		return updateTime;
 	}
-
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
+	@Override
+	public String toString() {
+		return "Issue [id=" + id + ", answer=" + answer + ", comment=" + comment + ", createBy=" + createBy
+				+ ", createTime=" + createTime + ", deleteFlag=" + deleteFlag + ", endTime=" + endTime + ", issueType="
+				+ issueType + ", title=" + title + ", updateBy=" + updateBy + ", updateTime=" + updateTime + "]";
+	}
+	
+	
 }

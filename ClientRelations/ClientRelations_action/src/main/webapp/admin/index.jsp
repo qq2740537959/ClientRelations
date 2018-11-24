@@ -103,12 +103,12 @@
                             <em>服务管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="">服务创建</a></dd>
-                            <dd><a href="">服务分配</a></dd>
-                            <dd><a href="">服务处理</a></dd>
-                            <dd><a href="">服务反馈</a></dd>
-                            <dd><a href="">服务归档</a></dd>
-                            <dd><a href="">常见问题处理</a></dd>
+                            <dd><a href="views/serveManager/foundServe.html">服务创建</a></dd>
+                            <dd><a href="views/serveManager/allocationServe.html">服务分配</a></dd>
+                            <dd><a href="views/serveManager/disposeServe.html">服务处理</a></dd>
+                            <dd><a href="views/serveManager/feedbackServe.html">服务反馈</a></dd>
+                            <dd><a href="views/serveManager/pigeonholeServe.html">服务归档</a></dd>
+                            <dd><a href="views/serveManager/issuesManage.html">常见问题处理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">

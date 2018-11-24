@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.znsd.client.bean.ClientResource;
 import com.znsd.client.vo.ClientVo;
 
 @Repository
@@ -17,6 +18,9 @@ public interface ClientResourceMapperDao {
 	//按客户id查询客户信息
 	public ClientVo selectClientById(@Param("clientId")int clientId);
 
+	//客户资源信息
+	public List<Map<String, Object>> selectAllClientByPage(@Param("allotState")Integer allotState,@Param("conditionName")String conditionName,@Param("condition")String condition);
 	
-	public List<Map<String, Object>> selectAllClientByPage();
+	//客户资源增加
+	public Integer addResource(ClientResource resource);
 }

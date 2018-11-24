@@ -1,5 +1,9 @@
 package com.znsd.client.action;
 
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.znsd.client.bean.ClientResource;
 import com.znsd.client.service.ClientService;
 
 @Controller
@@ -24,9 +30,8 @@ public class ClientResourceOperateAction {
 	@ResponseBody
 	public Map<String, Object> selectAllClient(@RequestParam(value="allotState",required=false) Integer allotState,@RequestParam(value="conditionName",required=false)String conditionName,
 			@RequestParam(value="condition",required=false)String condition,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit,Map<String, Object> model) {
-		System.out.println(page+"-----------"+limit);
-		Page<Object> pages = new Page<Object>(page, limit);		//分页
-		List<Map<String, Object>> list = service.selectAllClientByPage();
+		Page<Object> pages = PageHelper.startPage(page, limit);		//分页
+		List<Map<String, Object>> list = service.selectAllClientByPage(allotState,conditionName,condition);
 		for (Map<String, Object> map : list) {
 			map.put("clientType", map.get("clientType")+"客户");
 			
@@ -47,10 +52,29 @@ public class ClientResourceOperateAction {
 		}
 		model = new HashMap<String, Object>();
 		model.put("code", 0);
-		model.put("data", list);
+		model.put("data", list); 
 		model.put("page", page);
 		model.put("limit", limit);
 		model.put("count", pages.getTotal());
+		
+		return model;
+	}
+	
+	@RequestMapping("/addResource")
+	@ResponseBody
+	public Map<String, Object> addResource(ClientResource resource,Map<String, Object> model){
+		StringBuffer msg ;
+		resource.setConsumptionTimes(0);
+		resource.setTotalConsumptionAmount(0.0);
+		resource.setInTime(new Date());
+		Integer ccc = service.addResource(resource);
+		if (ccc > 0) {
+			msg = new StringBuffer("增加成功");
+		}else {
+			msg = new StringBuffer("增加失败");
+		}
+		model = new HashMap<String, Object>();
+		model.put("msg", msg);
 		return model;
 	}
 }

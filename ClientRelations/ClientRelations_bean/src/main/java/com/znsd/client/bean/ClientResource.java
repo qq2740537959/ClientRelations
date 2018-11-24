@@ -3,6 +3,8 @@ package com.znsd.client.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  * The persistent class for the client_resource database table.
@@ -19,23 +21,23 @@ public class ClientResource implements Serializable {
 	private String contactAddress;
 	private String email;
 	private int entryPerson;
+	private Date birthday;
 	private String familyPhone;
 	private Date inTime;
 	private String phone;
 	private String remark;
+	private int chanceId;
 	private int roleId;
 	private String sex;
 	private int staffId;
 	private int state;
 	private String workPhone;
+	private int consumptionTimes;
+	private double totalConsumptionAmount;
 
 	public ClientResource() {
 	}
 
-
-	
-	
-	
 	public int getClientId() {
 		return this.clientId;
 	}
@@ -43,8 +45,6 @@ public class ClientResource implements Serializable {
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
 	}
-
-
 	
 	public int getAllotState() {
 		return this.allotState;
@@ -53,9 +53,23 @@ public class ClientResource implements Serializable {
 	public void setAllotState(int allotState) {
 		this.allotState = allotState;
 	}
-
-
 	
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public int getChanceId() {
+		return chanceId;
+	}
+
+	public void setChanceId(int chanceId) {
+		this.chanceId = chanceId;
+	}
+
 	public String getClientName() {
 		return this.clientName;
 	}
@@ -188,6 +202,33 @@ public class ClientResource implements Serializable {
 
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
+	}
+
+	public int getConsumptionTimes() {
+		return consumptionTimes;
+	}
+
+	public void setConsumptionTimes(int consumptionTimes) {
+		this.consumptionTimes = consumptionTimes;
+	}
+
+	public double getTotalConsumptionAmount() {
+		return totalConsumptionAmount;
+	}
+
+	public void setTotalConsumptionAmount(double totalConsumptionAmount) {
+		this.totalConsumptionAmount = totalConsumptionAmount;
+	}
+
+	@Override
+	public String toString() {
+		return "ClientResource [clientId=" + clientId + ", allotState=" + allotState + ", clientName=" + clientName
+				+ ", clientType=" + clientType + ", contactAddress=" + contactAddress + ", email=" + email
+				+ ", entryPerson=" + entryPerson + ", birthday=" + birthday + ", familyPhone=" + familyPhone
+				+ ", inTime=" + inTime + ", phone=" + phone + ", remark=" + remark + ", chanceId=" + chanceId
+				+ ", roleId=" + roleId + ", sex=" + sex + ", staffId=" + staffId + ", state=" + state + ", workPhone="
+				+ workPhone + ", consumptionTimes=" + consumptionTimes + ", totalConsumptionAmount="
+				+ totalConsumptionAmount + "]";
 	}
 
 }

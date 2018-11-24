@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="../../layui/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/view.css" />
+<link rel="icon" href="/favicon.ico">
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<title>常见问题管理</title>
+<style type="text/css">
+</style>
+</head>
+
+<body class="layui-view-body">
+	
+	<div class="layui-content">
+		<div class="layui-page-header">
+			<div class="pagewrap">
+				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">服务管理</a> <a><cite>机会管理</cite></a>
+				</span>
+				<h2 class="title">服务管理>> 常见问题管理</h2>
+			</div>
+		</div>
+		<div class="layui-row">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="form-box">
+						<div class="layui-form layui-form-item">
+							<div class="layui-inline">
+								<div class="layui-form-mid">问题名称：</div>
+								<div class="layui-input-inline">
+							       <input type="text" name="" class="layui-input staffName">   
+							    </div>
+								<button class="layui-btn layui-btn-blue refer_but">查询</button>
+							</div>
+						</div>
+						<button class="layui-btn layui-btn-blue add_but">
+							<i class="layui-icon">&#xe654;</i>增加&nbsp;&nbsp;&nbsp;&nbsp;
+						</button>
+						<table class="layui-hide" id="test" lay-filter="test"></table>
+ 						<script type="text/html" id="barDemo">
+ 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="delete">删除</a>
+ 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>
+							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
+	 					</script>
+						<script type="text/html" id="toolbarDemo">
+						  <div class="layui-btn-container">
+						  	
+						  </div>
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../layui/layui.js"></script>
+<script>
+layui.use(['table'], function(){
+  var table = layui.table;
+  
+  table.render({
+    elem: '#test'
+    ,url:'../../../issueQuery'
+    ,cols: [[
+       {type: 'numbers', fixed: 'left'}
+      ,{field:'id', width:80, title: 'ID', sort: true}
+      ,{field:'title', width:200, title: '标题'}
+      ,{field:'issueType', width:120, title: '类型'}
+      ,{field:'createBy', width:120, title: '创建人'}
+      ,{field:'endTime',width:170, title: '最后操作时间', minWidth: 100,templet:'<div>{{ Format(d.endTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
+      ,{field:'updateTime',width:170, title: '最后更新时间', minWidth: 100,templet:'<div>{{ Format(d.updateTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
+      ,{width:160,title:"操作",toolbar:"#barDemo"}
+    ]]
+    ,page: true
+  });
+  
+  
+	//监听工具条
+	table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+	   	var data = obj.data; //获得当前行数据
+	   	console.log(data);
+	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
+	   	if(layEvent == 'see') { //查看
+	
+	   	} else if(layEvent === 'edit') { //修改
+			
+	   	}else if(layEvent == 'allot'){//分配
+	   		
+	   	}
+	});
+	$(".add_but").click(function(){
+		layer.open({
+			type: 2,
+            title: '服务管理>> 常见问题管理>> 添加常见问题',
+            maxmin: true,
+            skin: 'layui-layer-lan',
+            shadeClose: true, //点击遮罩关闭层
+            area : ['800px' , '500px'],
+			content:"issuesAdd.html",
+			end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+  	        	/* location.reload();　 */　//layer.open关闭刷新
+            	 layui.use('table', function(){
+	           		 var table = layui.table;
+	           		 table.reload('test',{
+		  				  page: { 
+		  				  	//curr: 1  //重新从第 1 页开始
+		  				  }
+	  				});
+           		});
+  	        }
+		})
+	})
+});
+function Format(datetime,fmt) {
+	  if (parseInt(datetime)==datetime) {
+		    if (datetime.length==10) {
+		      datetime=parseInt(datetime)*1000;
+		    } else if(datetime.length==13) {
+		      datetime=parseInt(datetime);
+		    }
+	  }
+	  datetime=new Date(datetime);
+	  var o = {
+		  "M+" : datetime.getMonth()+1,                 //月份   
+		  "d+" : datetime.getDate(),                    //日   
+		  "h+" : datetime.getHours(),                   //小时   
+		  "m+" : datetime.getMinutes(),                 //分   
+		  "s+" : datetime.getSeconds(),                 //秒   
+		  "q+" : Math.floor((datetime.getMonth()+3)/3), //季度   
+		  "S"  : datetime.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+	  fmt=fmt.replace(RegExp.$1, (datetime.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+	  if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;
+}
+</script>
+</body>
+</html>

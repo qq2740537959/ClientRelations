@@ -20,7 +20,7 @@
  	<select id="selectClientWorthByPage" resultMap="clientWorthMap">
  		select c.client_id,c.client_name,c.sex,c.client_type,c.consumption_times,c.total_consumption_amount,s.staff_name
 		FROM client_resource c INNER JOIN staff s ON c.staff_id = s.staff_id where c.allot_state = 2
-		<if test="clientName != null || clientName != ''">
+		<if test="clientName != null and clientName != ''">
 			and c.client_name LIKE '%${clientName}%'
 		</if>
  	</select>	

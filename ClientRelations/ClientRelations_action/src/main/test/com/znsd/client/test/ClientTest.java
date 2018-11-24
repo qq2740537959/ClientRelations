@@ -1,6 +1,7 @@
 package com.znsd.client.test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.znsd.client.bean.ClientResource;
 import com.znsd.client.bean.Product;
 import com.znsd.client.service.ClientService;
+import com.znsd.client.service.ClientWorthService;
 import com.znsd.client.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,11 +54,48 @@ public class ClientTest {
 	
 	@Test
 	public void testClientAll() {
-		Page<Object> pages = new Page<Object>(1, 5);
-		List<Map<String, Object>> list = service.selectAllClientByPage();
+		Page<Object> pages = PageHelper.startPage(1, 5);
+		List<Map<String, Object>> list = service.selectAllClientByPage(0,"clientName","隋炀帝");
 		for (Map<String, Object> map : list) {
 			System.out.println(map);
 		}
 	}
+	//add 增加资源
+	@Test
+	public void testAddResource() {
+		
+		ClientResource resource = new ClientResource();
+		resource.setContactAddress("常山辉煌道普股街");
+		resource.setClientName("戏谑精");
+		resource.setClientType("普通");
+		resource.setFamilyPhone("16523156498");
+		resource.setEmail("jang@cing.com");
+		resource.setInTime(new Date());
+		resource.setInTime(new Date());
+		resource.setPhone("19654842191");
+		resource.setRemark("备注");
+		resource.setSex("妖");
+		resource.setWorkPhone("94149-4894");
+		
+		resource.setConsumptionTimes(0);
+		resource.setTotalConsumptionAmount(0.0);
+		
+		Integer count = service.addResource(resource);
+		if (count > 0) {
+			System.out.println(count+"增加成功");
+		}
+		System.out.println("数据的增加====="+count);
+	}
 	
+	@Autowired
+	private ClientWorthService worthService;
+	
+	@Test
+	public void testclientworth() {
+		Page<Object> pages = PageHelper.startPage(1, 5);
+		List<Map<String, Object>> list = worthService.selectClientWorthByPage("邓");
+		for (Map<String, Object> map : list) {
+			System.out.println(map);
+		}
+	}
 }
