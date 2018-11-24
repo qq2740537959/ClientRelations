@@ -24,7 +24,7 @@ public class DepartmentMapperDaoTest {
 		Pages page = new Pages();
 		page.setCurrentIndexPage(1);
 		page.setPageSize(5);
-		List<DepartmentVo> list = departmentService.selectDepartmentByPage(page, "总经理666");
+		List<DepartmentVo> list = departmentService.selectDepartmentByPage("总经理666");
 		System.out.println("数据"+list);
 	}
 
