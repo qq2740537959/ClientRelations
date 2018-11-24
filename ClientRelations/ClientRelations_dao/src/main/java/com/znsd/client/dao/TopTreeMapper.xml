@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.TopTreeMapperDao">
+	 <!-- 查询所有省份 -->
+ 	<select id="selectToptreeAll" resultType="topTree">
+ 		select * from tp_tree where pid=1
+ 	</select>
+ 	<!-- 查询市区 -->
+ 	<select id="selectToptreeByPId" resultType="topTree">
+ 		select * from tp_tree where pid=#{id}
+ 	</select>
+ 	<!-- 查询省市区 -->
+ 	<select id="selectTopeByPId" resultType="topTree">
+ 		select * from tp_tree where id in 
+ 		<foreach collection="list" item="i" index="index" open="(" separator="," close=")">
+ 			#{i}
+ 		</foreach>
+ 	</select>
+ </mapper>

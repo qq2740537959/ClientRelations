@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.znsd.client.dao.DepartmentMapperDao;
-import com.znsd.client.page.Pages;
 import com.znsd.client.service.DepartmentService;
 import com.znsd.client.vo.DepartmentVo;
 

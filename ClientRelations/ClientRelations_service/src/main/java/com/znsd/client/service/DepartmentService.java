@@ -2,7 +2,6 @@ package com.znsd.client.service;
 
 import java.util.List;
 
-import com.znsd.client.page.Pages;
 import com.znsd.client.vo.DepartmentVo;
 
 public interface DepartmentService {

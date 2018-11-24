@@ -179,6 +179,12 @@
 		    <artifactId>pagehelper</artifactId>
 		    <version>4.1.4</version>
 		</dependency>
+		<!-- 支付宝支付 -->
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>3.3.49.ALL</version>
+		</dependency>
 	</dependencies>
   <modules>
   	<module>ClientRelations_action</module>

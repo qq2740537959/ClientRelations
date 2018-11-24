@@ -16,23 +16,21 @@
   	<mvc:annotation-driven />	
 	<mvc:default-servlet-handler/>
 	<!-- 在这里启用转换器 -->
-	<mvc:annotation-driven conversion-service="conversionService" />
+	<!-- <mvc:annotation-driven conversion-service="conversionService" /> -->
 	
 	<context:property-placeholder location="classpath:jdbc.properties" />
 	<!-- 设置使用注解的类所在的jar包 -->
-	<context:component-scan base-package="com.znsd.client.action" />
-	<context:component-scan base-package="com.znsd.client.service.impl"></context:component-scan>
-	<context:component-scan base-package="com.znsd.client.dao"></context:component-scan>
+	<context:component-scan base-package="com.znsd.client" />
 
 	<!-- 定义自定义类型转换器的bean -->
-	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+	<!-- <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
 				<bean class="com.znsd.client.convert.DateConvert"></bean>
 			</list>
-			<!-- <set> 这里是我们自己定义的类型转换器 注意，这里首字母要小写，因为springmvc帮我们创建bean的时候，是以类名首字母小写命名 <ref bean="userConvert" /> </set> -->
+			<set> 这里是我们自己定义的类型转换器 注意，这里首字母要小写，因为springmvc帮我们创建bean的时候，是以类名首字母小写命名 <ref bean="userConvert" /> </set>
 		</property>
-	</bean>
+	</bean> -->
 	
 
 	<!-- 配置拦截器 -->

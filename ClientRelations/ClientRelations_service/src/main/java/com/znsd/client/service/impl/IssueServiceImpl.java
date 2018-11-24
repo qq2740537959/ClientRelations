@@ -49,7 +49,6 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 
-	@Override
 	public List<Issue> issueQuery() {
 		// TODO Auto-generated method stub
 		return issueDao.issueQuery();
@@ -64,7 +63,6 @@ public class IssueServiceImpl implements IssueService{
 	    * @see com.znsd.client.service.IssueService#issueAdd(com.znsd.client.bean.Issue)
 	    */
 	    
-	@Override
 	public void issueAdd(Issue issue) {
 		// TODO Auto-generated method stub
 		issueDao.issueAdd(issue);

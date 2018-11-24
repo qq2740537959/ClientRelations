@@ -6,10 +6,13 @@
        使用接口方式加载命名空间 使用代理模式
    -->
  <mapper namespace="com.znsd.client.dao.ClientResourceMapperDao">
- 	
+ 	<sql id="selectSql">
+ 		select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s
+ 	</sql>
  	<!-- 按销售代表id查询客户 -->
  	<select id="selectClientInfoByPage" resultType="com.znsd.client.vo.ClientVo">
- 		select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s where c.staff_id = s.staff_id
+ 		<include refid="selectSql" />
+ 		 where c.staff_id = s.staff_id
 		<if test="staffId != null and staffId != ''">
 			and c.staff_id= #{staffId}
 		</if>
@@ -29,6 +32,7 @@
  	
  	<!-- 按客户id查询客户信息 -->
  	<select id="selectClientById" resultType="com.znsd.client.vo.ClientVo">
- 		 select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s where c.staff_id = s.staff_id and c.client_id = #{clientId}
+ 		<include refid="selectSql" />
+ 		 where c.staff_id = s.staff_id and c.client_id = #{clientId}
  	</select>
  </mapper>

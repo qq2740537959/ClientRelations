@@ -99,7 +99,7 @@
 		  var staffId= $("#staffId").val();
 		  table.render({
 		    elem: '#test'
-		    ,url:'../../../selectClientAction?staffId='+staffId
+		    ,url:'../../../selectClient?staffId='+staffId
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {type:'radio'}
@@ -130,10 +130,10 @@
 	                    {
 	                        curr: 1 //重新从第 1 页开始
 	                    }
-			   			,url: '../../../selectClientAction'//后台做模糊搜索接口路径
+			   			,url: '../../../selectClient'//后台做模糊搜索接口路径
 			            , method: 'post' 
 	                    ,limit:5
-		   	  			,limits:[5,10,15,20]
+		   	  			,limits:[1,2,3,4]
 		             });
 		   		}); 
 		   		return false;
@@ -146,6 +146,7 @@
 		      case 'getCheckData':
 		        var data = checkStatus.data;  //获取选中行数据
 		         layer.alert(JSON.stringify("<div style='color:rgb(102,102,102);width: 320px;height: 200px;padding-left: 50px;'><h2 style='margin-left: 40px;'>客户信息</h2><br><div>客户姓名："+data[0].clientName+"</div><div>类型："+data[0].clientType+"</div><div>联系方式："+data[0].phone+"</div><div>性别:"+data[0].sex+"</div><div>服务代表："+data[0].staffName+"</div><div>状态："+data[0].state+"</div><div>消费次数："+data[0].consumptionTimes+"</div><div>消费总金额："+data[0].totalConsumptionAmount+"</div></div>")); 
+		        break;
 		      case 'order':
 			      location.href="selectProduct.jsp?clientId="+checkStatus.data[0].clientId;
 		      break;

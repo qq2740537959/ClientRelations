@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.znsd.client.bean.Product;
-import com.znsd.client.page.Pages;
 
 @Repository
 public interface ProductMapperDao {

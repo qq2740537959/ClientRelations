@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.client.bean.Product;
 import com.znsd.client.dao.ProductMapperDao;
-import com.znsd.client.page.Pages;
 import com.znsd.client.service.ProductService;
 
 @Service

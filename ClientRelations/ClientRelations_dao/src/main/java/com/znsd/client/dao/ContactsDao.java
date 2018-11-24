@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.znsd.client.bean.SalesContacts;
-import com.znsd.client.page.Pages;
 
 @Repository
 public interface ContactsDao {

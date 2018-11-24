@@ -1,4 +1,4 @@
-package com.znsd.client.action;
+package com.znsd.client.controller;
 
 import java.text.DateFormat;
 import java.text.ParsePosition;

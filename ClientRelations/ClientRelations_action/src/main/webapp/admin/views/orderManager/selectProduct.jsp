@@ -12,8 +12,11 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="../../layui/css/layui.css" />
+		<link rel="stylesheet" href="../../css/reset.css">
+  		<link rel="stylesheet" href="../../css/carts.css">
 		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="../../layui/layui.js"></script>
+		<script src="../../js/carts.js" ></script>
 		<style>
 			div.layui-form.layui-border-box.layui-table-view{
 				width: 850px;
@@ -71,6 +74,8 @@
 			    </span>
 		    </div>
 			<table class="layui-hide" id="test" lay-filter="test"></table>
+			<input type="hidden" class="numbers" value="0"><!-- 数量 -->
+			<input type="hidden" class="prices" value="0"><!-- 总金额 -->
 		</div>
 		<br><br>
 		<br><br>
@@ -83,7 +88,7 @@
 		<script>
 			var clientId= $(".clientId").val();
 			$.ajax({
-				url:'../../../selectClientByIdAction?clientId='+clientId,
+				url:'../../../selectClientById?clientId='+clientId,
 				type:'post',
 				success:function(data){
 					$(".clientName").html(data.clientName);
@@ -100,7 +105,7 @@
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:'../../../selectProductAction'
+			    ,url:'../../../selectProduct'
 			    ,toolbar: '#toolbarDemo'
 			    ,cols: [[
 			      {type:'checkbox'}
@@ -108,7 +113,7 @@
 			      ,{field:'productName', width:140, title: '商品名称'}
 			      ,{field:'productTypeNumber', width:140, title: '商品型号'}
 			      ,{field:'price', width:140, title: '单价'}
-			      ,{field:'productNumber', width:140, title: '数量'}
+			      ,{field:'number', width:140, title: '数量',templet:'#demo'}
 			      ,{field:'productNumber', width:115, title: '库存',templet:'#inventoryLet'}
 			    ]]
 			    ,page: true
@@ -123,13 +128,22 @@
 			      case 'getCheckData':
 			        var data = checkStatus.data;  //获取选中行数据
 			       	var product = "";
+			       	var num = $(".numbers").val();
+			       	var count = 0;
+			       	var prices = 0
 			        for(var a=0;a<data.length;a++){
 			        	product += data[a].productId+",";
+			        	count++;
+			        	var price = $(".prices").val();
+			        	$(".prices").val(parseInt(price)+data[a].price);
+			        	prices = parseInt(price)+data[a].price;
 			        }
+			        $(".numbers").val(parseInt(num)+count)
+			        var number = parseInt(num)+count;
 			        if(product.length == 0){
 			        	alert("请选择要购买的商品");
 			        }else{
-			        	location.href= "orderSettleAccounts.jsp?clientId="+clientId+"&product="+product;
+			        	location.href= "orderSettleAccounts.jsp?clientId="+clientId+"&product="+product+"&number="+number+"&price="+prices;
 			        }
 			      break;
 			    };
@@ -138,6 +152,47 @@
 		</script>
 		<script type="text/html" id="inventoryLet">
 		 	 	{{d.productNumber==0?'售罄':'有货'}}
+		</script>
+		<script type="text/html" id="demo">
+			<ul class="order_lists" >
+	            <li class="list_amount" >
+	                <div class="amount_box">
+	                    <a href="javascript:;" class="reduce reSty" onclick="bb(this,{{d.price}})" style="margin-top: -20px;">-</a>
+	                    <input type="text" value="1" class="sum" style="margin-top: -15px;">
+	                    <a href="javascript:;" class="plus" onclick="aa(this,{{d.productNumber}},{{d.price}});" style="margin-top: -20px;">+</a>
+	                </div>
+	            </li>
+	        </ul>
+		</script>
+		<script type="text/javascript">
+			function bb(th,money){
+				if (parseInt($(th).next().val()) > 1) {
+					var m = parseInt($(th).next().val())-1;
+					alert((m*money));
+					$(th).next().val(parseInt($(th).next().val())-1);
+					var num = $(".numbers").val();
+					 $(".numbers").val(parseInt(num)-1);
+					 var price = $(".prices").val();
+					 $(".prices").val(parseInt(price)-money);
+				}else{
+					$(th).next().val(1);
+					 $(".numbers").val(1);
+				}
+			}
+			function aa(th,number,money){
+				if(number > 1){
+					 var a = parseInt($(th).prev().val())+1;
+					 $(th).prev().val(parseInt($(th).prev().val())+1);
+					 alert((a*money))
+					 var num = $(".numbers").val();
+					 $(".numbers").val(parseInt(num)+1);
+					 var price = $(".prices").val();
+					 $(".prices").val(parseInt(price)+money);
+				}else{
+					$(th).next().val(0);
+					 $(".numbers").val(0);
+				}
+			}
 		</script>
 	</body>
 </html>

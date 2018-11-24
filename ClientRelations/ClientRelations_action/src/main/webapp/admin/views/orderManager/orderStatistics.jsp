@@ -11,9 +11,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-		<link rel="stylesheet" href="../layui/css/layui.css" />
-		<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
-		<script type="text/javascript" src="../layui/layui.js"></script>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../layui/layui.js"></script>
 		<style>
 			div.layui-form.layui-border-box.layui-table-view{
 				width: 850px;
@@ -63,8 +63,8 @@
 					      <label class="layui-form-label" style="font-size:16px;text-align:center;width: 180px;height: 30px;">
 					      	开始日期 - 结束日期：</label>
 					      <div class="layui-input-inline">
-					        <input type="text" class="layui-input" id="test6" placeholder=" - ">
-					        <button type="submit" class="layui-btn" style="position: relative;top:-38px;left: 230px;">查询</button>
+					        <input type="text"  class="date layui-input" id="test6" placeholder=" - ">
+					        <button type="submit" class="order_but layui-btn" style="position: relative;top:-38px;left: 230px;">查询</button>
 					      </div>
 					    </div>
 		      		</div>
@@ -95,24 +95,38 @@
 		  var table = layui.table;
 		  table.render({
 		    elem: '#test'
-		    ,url:''
+		    ,url:'../../../orderStatistics'
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {type:'radio'}
-		      ,{field:'month', width:130, title: '月份'}
-		      ,{field:'orderNumber', width:130, title: '订单数量'}
-		      ,{field:'totalMoney', width:150, title: '总金额（万元）'}
+		      ,{field:'months', width:130, title: '月份'}
+		      ,{field:'totalOrderNumber', width:130, title: '订单数量'}
+		      ,{field:'totalOrderMoney', width:150, title: '总金额（万元）'}
 		      ,{field:'target', width:150, title: '本月目标（万元）'}
 		      ,{field:'percentageComplete', width:234, title: '完成率',templet:'#titleTpl'}
 		    ]]
 		    ,page: true
-		    ,data:[{month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'50%'},
-		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'60%'},
-		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'65%'},
-		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'65%'},
-		    	   {month:'1',orderNumber:'admin',totalMoney:'女',target:'湖南',percentageComplete:'45%'}
-		    ]
+		    ,limit:'2'
+		    ,limits:[1,2,3,4,5]
 		  });
+		  $(".order_but").click(function(){//条件查询
+		   		layui.use('table', function(){
+		   		   	var table = layui.table;
+			   		table.reload('test',
+		             {
+	                    where: { //这里传参  向后台
+	                    	date:$('.date').val(),
+	                    } 
+			   			,page:true
+			   			,url: '../../../orderStatistics'//后台做模糊搜索接口路径
+			            , method: 'post' 
+	                    ,limit:'2'
+		   	  			,limits:[1,2,3,4]
+		             });
+		   		}); 
+		   		return false;
+		   	})
+		  
 		  
 		  //查看
 		  table.on('toolbar(test)', function(obj){

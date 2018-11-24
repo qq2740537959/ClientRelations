@@ -24,5 +24,6 @@
  		<foreach collection="list" item="i" open="(" separator="," close=")">
  			#{i}
  		</foreach>
+ 		and product_number > 1
  	</select>
  </mapper>
