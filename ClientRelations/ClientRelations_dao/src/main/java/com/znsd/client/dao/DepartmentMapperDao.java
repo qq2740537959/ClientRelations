@@ -25,5 +25,5 @@ public interface DepartmentMapperDao {
 	* @desc	条件查询组织结构并分页查询组织结构数据
 	*
 	 */
-	public List<DepartmentVo> selectDepartmentByPage(Pages page,@Param("departmentFullname")String departmentFullname);
+	public List<DepartmentVo> selectDepartmentByPage(@Param("departmentFullname")String departmentFullname);
 }

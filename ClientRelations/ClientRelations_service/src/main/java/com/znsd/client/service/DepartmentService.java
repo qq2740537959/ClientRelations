@@ -17,5 +17,5 @@ public interface DepartmentService {
 	* @desc	条件查询组织结构并分页查询组织结构数据
 	*
 	 */
-	public List<DepartmentVo> selectDepartmentByPage(Pages page,String departmentFullname);
+	public List<DepartmentVo> selectDepartmentByPage(String departmentFullname);
 }

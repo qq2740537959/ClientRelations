@@ -16,9 +16,9 @@ public class DepartmentServiceImpl implements DepartmentService{
 	@Autowired
 	private DepartmentMapperDao departmentMapperDao;
 	
-	public List<DepartmentVo> selectDepartmentByPage(Pages page, String departmentFullname) {
+	public List<DepartmentVo> selectDepartmentByPage(String departmentFullname) {
 		// TODO Auto-generated method stub
-		return departmentMapperDao.selectDepartmentByPage(page, departmentFullname);
+		return departmentMapperDao.selectDepartmentByPage(departmentFullname);
 	}
 
 }
