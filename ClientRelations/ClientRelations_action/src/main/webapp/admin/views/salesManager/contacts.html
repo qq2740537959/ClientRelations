@@ -128,16 +128,7 @@ layui.use(['table'], function(){
 			}
 		})
 	})
-	function refreshTable(){
-		table.reload('test',
-        {
-             where: { //这里传参  向后台
-             	name:$(".staffName").val(),
-             } 
-             ,limit:5
- 			 ,limits:[5,10,15,20]
-        });
-	}
+
 	$(".refer_but").click(function(){
 		table.reload('test',
         {
@@ -151,6 +142,16 @@ layui.use(['table'], function(){
  			 ,limits:[5,10,15,20]
         });
 	})
+	function refreshTable(){
+		table.reload('test',
+        {
+             where: { //这里传参  向后台
+             	name:$(".staffName").val(),
+             } 
+             ,limit:5
+ 			 ,limits:[5,10,15,20]
+        });
+	}
 });
 
 </script>

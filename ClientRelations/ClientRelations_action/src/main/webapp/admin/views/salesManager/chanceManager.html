@@ -28,9 +28,9 @@
 					<div class="form-box">
 						<div class="layui-form layui-form-item">
 							<div class="layui-inline">
-								<div class="layui-form-mid">员工姓名：</div>
+								<div class="layui-form-mid">机会名称：</div>
 								<div class="layui-input-inline">
-							       <input type="text" name="" class="layui-input staffName">   
+							       <input type="text" name="" class="layui-input name">   
 							    </div>
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
@@ -40,7 +40,7 @@
 						</button>
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>
+							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="edit">修改</a>
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
 	 					</script>
@@ -58,24 +58,22 @@
 <script>
 layui.use(['table'], function(){
   var table = layui.table;
+  var layer = layui.layer;
   table.render({
     elem: '#test'
-   
+   	,url:"/ClientRelations_action/selectHapPage"
     ,toolbar: '#toolbarDemo'
     ,cols: [[
       {field:'chanceId', width:80, title: 'ID', sort: true}
       ,{field:'chanceName', width:200, title: '机会名称'}
-      ,{field:'typeId', width:120, title: '机会类型'}
-      ,{field:'entryTime',width:170, title: '录入时间', minWidth: 100,sort: true}
-      ,{field:'userName', width:85, title: '录入人'}
+      ,{field:'typeName', width:120, title: '机会类型'}
+      ,{field:'entryTime',width:180, title: '录入时间',templet:'<div>{{ Format(d.entryTime,"yyyy-MM-dd hh:mm:ss")}}</div>', minWidth: 100,sort: true}
+      ,{field:'entryName', width:85, title: '录入人'}
       ,{width:160,title:"操作",toolbar:"#barDemo"}
     ]]
-    ,data: [{//测试使用
-		"forecastId": "10001"
-		,"sellingName": "杜甫"
-		,"planMoth": "x"
-		,"pendingName": "男"
-	}]
+  	,align:"center"
+ 	,limit:5
+	,limits:[5,10,15,20]
     ,page: true
   });
   
@@ -89,7 +87,17 @@ layui.use(['table'], function(){
 	   	if(layEvent == 'see') { //查看
 	
 	   	} else if(layEvent === 'edit') { //修改
-			
+	   		layer.open({
+				type:2,
+				content:"addOrUpdateHap.jsp?chanceId="+data.chanceId,
+				area:['600px', '555px'],
+				shade: [0.8, '#393D49'],
+				move:false,
+				shadeClose:true,
+				end:function(){
+					refreshTable();
+				}
+			})
 	   	}else if(layEvent == 'allot'){//分配
 	   		
 	   	}
@@ -97,8 +105,50 @@ layui.use(['table'], function(){
 	$(".add_but").click(function(){
 		
 	})
+	$(".refer_but").click(function(){
+		refreshTable();
+	})
+	function refreshTable(){
+		table.reload('test',
+	    {
+	         where: { //这里传参  向后台
+	         	name:$(".name").val(),
+	         } 
+	         ,limit:5
+			 ,limits:[5,10,15,20]
+	    });
+	}
 });
 
+
+function Format(datetime,fmt) {
+	  if (datetime == "" || datetime == null) {
+			return "";
+	  }
+	  if (parseInt(datetime)==datetime) {
+	    if (datetime.length==10) {
+	      datetime=parseInt(datetime)*1000;
+	    } else if(datetime.length==13) {
+	      datetime=parseInt(datetime);
+	    }
+	  }
+	  datetime=new Date(datetime);
+	  var o = {
+	  "M+" : datetime.getMonth()+1,                 //月份   
+	  "d+" : datetime.getDate(),                    //日   
+	  "h+" : datetime.getHours(),                   //小时   
+	  "m+" : datetime.getMinutes(),                 //分   
+	  "s+" : datetime.getSeconds(),                 //秒   
+	  "q+" : Math.floor((datetime.getMonth()+3)/3), //季度   
+	  "S"  : datetime.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+	  fmt=fmt.replace(RegExp.$1, (datetime.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+	  if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;
+	}
 </script>
 </body>
 </html>
