@@ -3,6 +3,8 @@ package com.znsd.client.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.znsd.client.bean.ClientResource;
 import com.znsd.client.vo.ClientVo;
 
@@ -35,4 +37,19 @@ public interface ClientService {
 	*
 	 */
 	public Integer addResource(ClientResource resource);
+		
+	/**
+	 * 
+	* @author Administrator
+	* @param resource
+	* @return
+	* @return Integer
+	* @time 2018 下午3:39:58	
+	* @desc			修改客户资源
+	*
+	 */
+	public Integer updateResource(ClientResource resource);
+	
+	//查询未分配和正常状态的客户
+	public List<Map<String, Object>> selectResourceState(@Param("allotState")Integer allotState,@Param("state")Integer state);
 }

@@ -23,5 +23,8 @@
 		<if test="clientName != null and clientName != ''">
 			and c.client_name LIKE '%${clientName}%'
 		</if>
+		<if test="clientType != null and clientType != ''">
+			and c.client_type LIKE '%${clientType}%'
+		</if>
  	</select>	
 </mapper>

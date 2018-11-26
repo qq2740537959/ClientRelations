@@ -1,6 +1,5 @@
 package com.znsd.client.controller;
 
-import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,6 +48,7 @@ public class ClientResourceOperateAction {
 			}else if ("3" .equals(String.valueOf(map.get("state")))) {
 				map.put("state", "已流失");
 			}
+			System.out.println(map.get("birthday")+"------时间");
 		}
 		model = new HashMap<String, Object>();
 		model.put("code", 0);
@@ -66,7 +66,9 @@ public class ClientResourceOperateAction {
 		StringBuffer msg ;
 		resource.setConsumptionTimes(0);
 		resource.setTotalConsumptionAmount(0.0);
-		resource.setInTime(new Date());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(new Date());
+		resource.setInTime(dateString);
 		Integer ccc = service.addResource(resource);
 		if (ccc > 0) {
 			msg = new StringBuffer("增加成功");
@@ -75,6 +77,22 @@ public class ClientResourceOperateAction {
 		}
 		model = new HashMap<String, Object>();
 		model.put("msg", msg);
+		return model;
+	}
+	
+	@RequestMapping("/updateResource")
+	@ResponseBody
+	public Map<String, Object> updateResource(ClientResource resource,Map<String, Object> model){
+		StringBuffer msg ;
+		System.out.println(resource.toString());
+		Integer ccc = service.updateResource(resource);
+		if (ccc > 0) {
+			msg = new StringBuffer("修改成功");
+		}else {
+			msg = new StringBuffer("修改失败");
+		}
+		model = new HashMap<String, Object>();
+		model.put("msg", 1);
 		return model;
 	}
 }

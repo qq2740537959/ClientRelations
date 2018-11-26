@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClientWorthDao {
 	
-	public List<Map<String, Object>> selectClientWorthByPage(@Param(value="clientName") String clientName);
+	public List<Map<String, Object>> selectClientWorthByPage(@Param(value="clientName") String clientName,@Param(value="clientType") String clientType);
 }

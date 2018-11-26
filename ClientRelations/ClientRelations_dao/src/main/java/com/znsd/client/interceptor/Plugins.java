@@ -20,8 +20,6 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.apache.ibatis.session.Configuration;
 
-import com.znsd.client.page.Pages;
-
 
 @Intercepts(
 		{
@@ -57,7 +55,7 @@ public class Plugins implements Interceptor{
 		if(sqlId.endsWith("ByPage")) {
 			
 			Map<String, Object> map = (Map<String, Object>) boundSql.getParameterObject();
-			Pages page = (Pages) map.get("param1");
+		//	Pages page = (Pages) map.get("param1");
 			
 			// 分页处理
 			String limitSql = "select count(*) from (" + sql + ") as s";
@@ -82,10 +80,10 @@ public class Plugins implements Interceptor{
 			}
 			
 			//总页数
-			page.setTotalIndexPage(countPageSize%page.getPageSize()==0?countPageSize/page.getPageSize():countPageSize/page.getPageSize()+1);
+		//	page.setTotalIndexPage(countPageSize%page.getPageSize()==0?countPageSize/page.getPageSize():countPageSize/page.getPageSize()+1);
 			//总条数
-			page.setTotalPageSize(countPageSize);
-			sql += " limit "+((page.getCurrentIndexPage()-1)*page.getPageSize())+","+page.getPageSize()+"";
+		//	page.setTotalPageSize(countPageSize);
+		//	sql += " limit "+((page.getCurrentIndexPage()-1)*page.getPageSize())+","+page.getPageSize()+"";
 			
 			mo.setValue("delegate.boundSql.sql", sql);
 		}

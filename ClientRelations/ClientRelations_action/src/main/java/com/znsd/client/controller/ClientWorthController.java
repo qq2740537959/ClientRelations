@@ -22,12 +22,13 @@ public class ClientWorthController {
 	
 	@RequestMapping("/queryWorth")
 	@ResponseBody
-	public Map<String, Object> selectClientWorth(@RequestParam(value="clientName",required=false)String clientName, @RequestParam("page") Integer page, @RequestParam("limit")Integer limit, Map<String, Object> model){
+	public Map<String, Object> selectClientWorth(@RequestParam(value="clientName",required=false)String clientName, @RequestParam(value="clientType",required=false)String clientType, @RequestParam("page") Integer page, @RequestParam("limit")Integer limit, Map<String, Object> model){
 		
 		Page<Object> pages = PageHelper.startPage(page, limit);
-		List<Map<String, Object>> list = service.selectClientWorthByPage(clientName);
+		List<Map<String, Object>> list = service.selectClientWorthByPage(clientName,clientType);
 		for (Map<String, Object> map : list) {
 			System.out.println(map);
+			map.put("clientType", map.get("clientType")+"客户");
 		}
 		model = new HashMap<String, Object>();
 		model.put("code", 0);

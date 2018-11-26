@@ -32,6 +32,15 @@
 								<div class="layui-input-inline">
 							       <input type="text" name="" class="layui-input staffName">   
 							    </div>
+							    <div class="layui-form-mid">类型：</div>
+								<div class="layui-input-inline">
+									<select class="cliType">
+										<option value="普通">普通客户</option>
+										<option value="银卡">银卡客户</option>
+										<option value="金卡">金卡客户</option>
+										<option value="vip">vip客户</option>
+									</select>
+							    </div>
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
 						</div>
@@ -50,7 +59,7 @@ layui.use(['table'], function(){
   var table = layui.table;
   table.render({
     elem: '#test'
-   
+   	,url: '../../../queryWorth'
     ,toolbar: '#toolbarDemo'
     ,cols: [[
       {field:'clientId', width:80, title: '', sort: true}
@@ -58,21 +67,12 @@ layui.use(['table'], function(){
       ,{field:'clientName', width:200, title: '客户姓名', align: 'center'}
       ,{field:'sex', width:100, title: '性别'}
       ,{field:'clientType',width:160, title: '客户类型', minWidth: 100}
-      ,{field:'state', width:100, title: '已消费次数'}
-      ,{field:'allotState', width:200, title: '消费总额(单位：万元)'}
-      ,{field:'inTime', width:120, title: '服务代表'}
+      ,{field:'consumptionTimes', width:100, title: '已消费次数'}
+      ,{field:'totalConsumptionAmount', width:200, title: '消费总额(单位：万元)'}
+      ,{field:'staffName', width:120, title: '服务代表'}
     ]]
-    ,data: [{//测试使用
-		"clientId": "10001"
-		,"add": ""
-		,"clientName": "大金牙"
-		,"sex": "男"
-		,"clientType": "金卡客户"
-		,"state": "4150"
-		,"allotState": "13223.0"
-		,"entryPerson": "赵云"
-	}]
     ,page: true
+    ,limits: [2,5,8]
   });
   
 	//监听工具条
@@ -88,6 +88,15 @@ layui.use(['table'], function(){
 	   	}else if(layEvent == 'allot'){//分配
 	   		
 	   	}
+	});
+	$(".refer_but").on('click',function(){
+		table.reload('test',{
+	        method:'post',
+	        where:{
+	        	clientName:$(".staffName").val(),
+				clientType:$(".cliType").val()
+	        }
+	    });
 	});
 	$(".add_but").click(function(){
 		
