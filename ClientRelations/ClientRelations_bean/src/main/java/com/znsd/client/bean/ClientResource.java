@@ -21,9 +21,9 @@ public class ClientResource implements Serializable {
 	private String contactAddress;
 	private String email;
 	private int entryPerson;
-	private Date birthday;
+	private String birthday;
 	private String familyPhone;
-	private Date inTime;
+	private String inTime;
 	private String phone;
 	private String remark;
 	private int chanceId;
@@ -54,11 +54,11 @@ public class ClientResource implements Serializable {
 		this.allotState = allotState;
 	}
 	
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
@@ -130,11 +130,11 @@ public class ClientResource implements Serializable {
 
 	
 	
-	public Date getInTime() {
+	public String getInTime() {
 		return this.inTime;
 	}
 
-	public void setInTime(Date inTime) {
+	public void setInTime(String inTime) {
 		this.inTime = inTime;
 	}
 

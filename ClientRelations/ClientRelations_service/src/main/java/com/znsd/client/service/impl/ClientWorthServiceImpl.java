@@ -15,8 +15,8 @@ public class ClientWorthServiceImpl implements ClientWorthService {
 	@Autowired
 	private ClientWorthDao dao;
 	
-	public List<Map<String, Object>> selectClientWorthByPage(String clientName) {
-		return dao.selectClientWorthByPage(clientName);
+	public List<Map<String, Object>> selectClientWorthByPage(String clientName,String clientType) {
+		return dao.selectClientWorthByPage(clientName,clientType);
 	}
 
 }

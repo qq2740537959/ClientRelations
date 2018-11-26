@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ClientWorthService {
 	
-	public List<Map<String, Object>> selectClientWorthByPage(@Param(value="clientName") String clientName);
+	public List<Map<String, Object>> selectClientWorthByPage(String clientName,String clientType);
 }

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 保证唯一性 使用接口方式加载命名空间 使用代理模式 -->
 <mapper namespace="com.znsd.client.dao.ClientResourceMapperDao">
-
+	<!-- 客户资源信息 -->
 	<resultMap type="java.util.HashMap" id="clientResourceMap">
 		<id column="client_id" property="clientId" />
 		<result column="client_name" property="clientName" />
@@ -22,9 +22,16 @@
 		<result column="in_time" property="inTime" />
 		<result column="staff_name" property="staffName" />
 	</resultMap>
+	<!-- 正常状态 和 未分配的客户 -->
+	<resultMap type="java.util.HashMap" id="stateMap">
+		<id column="client_id" property="clientId" />
+		<result column="client_name" property="clientName" />
+	</resultMap>
+	<!-- 查询所有客户资源信息 -->
 	<select id="selectAllClientByPage" resultMap="clientResourceMap">
-		SELECT c.client_id,c.client_name,c.sex,c.birthday,c.client_type,c.state,c.phone,c.work_phone,c.email,c.family_phone,c.contact_address,c.remark,c.allot_state,c.in_time,s.staff_name from client_resource
-		c INNER JOIN staff s ON c.entry_person = s.staff_id
+		SELECT 
+		c.client_id,c.client_name,c.sex,DATE_FORMAT(c.birthday,'%Y-%m-%d') as birthday,c.client_type,c.state,c.phone,c.work_phone,c.email,c.family_phone,c.contact_address,c.remark,c.allot_state,DATE_FORMAT(c.in_time,'%Y-%m-%d') as in_time,s.staff_name 
+		from client_resource c INNER JOIN staff s ON c.entry_person = s.staff_id
 		<where>
 			<choose>
 				<when test="allotState != null and allotState gt 0">
@@ -39,11 +46,20 @@
 			</choose>
 		</where>
 	</select>
-
+	<!-- 增加客戶資源 -->
 	<insert id="addResource" parameterType="com.znsd.client.bean.ClientResource">
 		INSERT INTO `client_resource`
 		(client_id,client_name,phone,work_phone,email,birthday,family_phone,in_time,entry_person,sex,client_type,allot_state,contact_address,remark,state,consumption_times,total_consumption_amount)
 		VALUES(null,#{clientName},#{phone},#{workPhone},#{email},#{birthday},#{familyPhone},#{inTime},1,#{sex},#{clientType},1,#{contactAddress},#{remark},1,#{consumptionTimes},#{totalConsumptionAmount})
 	</insert>
-
+	<!-- 查询正常状态和未分配的客户 -->
+	<select id="selectResourceState" resultMap="stateMap">
+		select client_id,client_name from client_resource where allot_state = #{allotState} and state = #{state}
+	</select>
+<!-- 	根据id查询需要查询的 -->
+	<update id="updateResource" parameterType="com.znsd.client.bean.ClientResource">
+		update client_resource 
+		set client_name=#{clientName},sex=#{sex},birthday=#{birthday},client_type=#{clientType},state=#{state},phone=#{phone},work_phone=#{workPhone},email=#{email},family_phone=#{familyPhone},contact_address=#{contactAddress},remark=#{remark} 
+		where client_id = #{clientId}
+	</update>
 </mapper>

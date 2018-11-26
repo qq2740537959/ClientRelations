@@ -17,25 +17,39 @@ public class ClientImpl implements ClientService{
 	@Autowired
 	private ClientResourceMapperDao dao;
 	
+	@Override
 	public List<ClientVo> selectClientInfoByPage(int staffId,String distinguish,String clientNameOrPhone) {
 		////按销售代表id查询客户
 		return dao.selectClientInfoByPage(staffId,distinguish, clientNameOrPhone);
 	}
-
+	@Override
 	public ClientVo selectClientById(int clientId) {
 		//按客户id查询客户信息
 		return dao.selectClientById(clientId);
 	}
-
+	/**
+	 * 分页查询所有客户资源
+	 */
+	@Override
 	public List<Map<String, Object>> selectAllClientByPage(Integer allotState,String conditionName,String condition) {
 		if ("clientName".equals(conditionName)) {
 			conditionName = "client_name";
 		}
 		return dao.selectAllClientByPage(allotState,conditionName,condition);
 	}
-
+	@Override
 	public Integer addResource(ClientResource resource) {
 		return dao.addResource(resource);
+	}
+	
+	@Override
+	public Integer updateResource(ClientResource resource) {
+		return dao.updateResource(resource);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectResourceState(Integer allotState, Integer state) {
+		return dao.selectResourceState(allotState, state);
 	}
 
 }

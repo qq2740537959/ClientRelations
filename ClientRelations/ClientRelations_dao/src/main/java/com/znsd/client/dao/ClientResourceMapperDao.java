@@ -1,6 +1,5 @@
 package com.znsd.client.dao;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -23,4 +22,10 @@ public interface ClientResourceMapperDao {
 	
 	//客户资源增加
 	public Integer addResource(ClientResource resource);
+	
+	//修改资源
+	public Integer updateResource(ClientResource resource);
+	
+	//查询未分配和正常状态的客户
+	public List<Map<String, Object>> selectResourceState(@Param("allotState")Integer allotState,@Param("state")Integer state);
 }
