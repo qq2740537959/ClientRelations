@@ -10,7 +10,7 @@ public class StaffVo {
 	private String roleName;
 	private int state;
 	private Date lastTime;
-	private int operationPersonName;
+	private String operationPersonName;
 	public int getStaffId() {
 		return staffId;
 	}
@@ -53,10 +53,10 @@ public class StaffVo {
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
 	}
-	public int getOperationPersonName() {
+	public String getOperationPersonName() {
 		return operationPersonName;
 	}
-	public void setOperationPersonName(int operationPersonName) {
+	public void setOperationPersonName(String operationPersonName) {
 		this.operationPersonName = operationPersonName;
 	}
 	@Override
