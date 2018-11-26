@@ -18,7 +18,7 @@ public class Hap implements Serializable {
 	private Integer staffId;// 分配给谁
 	private String remark;//备注
 	private String entryId;//录入人
-	private Integer client_id; //客户编码
+	private Integer clientId; //客户编码
 	public Integer getChanceId() {
 		return chanceId;
 	}
@@ -79,11 +79,11 @@ public class Hap implements Serializable {
 	public void setEntryId(String entryId) {
 		this.entryId = entryId;
 	}
-	public Integer getClient_id() {
-		return client_id;
+	public Integer getClientId() {
+		return clientId;
 	}
-	public void setClient_id(Integer client_id) {
-		this.client_id = client_id;
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
 	}
 	public Hap(Integer chanceId, String chanceContent, String chanceName, Date entryTime, Integer handleId,
 			Date lastTime, Integer typeId, Integer staffId, String remark, String entryId, Integer client_id) {
@@ -98,7 +98,7 @@ public class Hap implements Serializable {
 		this.staffId = staffId;
 		this.remark = remark;
 		this.entryId = entryId;
-		this.client_id = client_id;
+		this.clientId = clientId;
 	}
 	public Hap() {
 		super();
@@ -107,8 +107,8 @@ public class Hap implements Serializable {
 	public String toString() {
 		return "Hap [chanceId=" + chanceId + ", chanceContent=" + chanceContent + ", chanceName=" + chanceName
 				+ ", entryTime=" + entryTime + ", handleId=" + handleId + ", lastTime=" + lastTime + ", typeId="
-				+ typeId + ", staffId=" + staffId + ", remark=" + remark + ", entryId=" + entryId + ", client_id="
-				+ client_id + "]";
+				+ typeId + ", staffId=" + staffId + ", remark=" + remark + ", entryId=" + entryId + ", clientId="
+				+ clientId + "]";
 	}
 	
 	

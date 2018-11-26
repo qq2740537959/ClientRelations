@@ -162,11 +162,13 @@
 				});
 				/* 增加 */
 				form.on('submit(demo2)', function(data) {
+					
 					var formData = $(".layui-form").serialize();
-					var entryId = $(".entryId").val();
+					var entryId = /* $(".entryId").val() */1;
+					console.log(formData+"&entryId="+entryId+"&handleId="+entryId);
 					$.ajax({
 						type:"post",
-						url:"/ClientRelations_action/addContacts",
+						url:"/ClientRelations_action/addHapData",
 						data:formData+"&entryId="+entryId+"&handleId="+entryId,
 						success:function(t){
 							closeIndex(t.msg);
@@ -200,7 +202,13 @@
 						url:"/ClientRelations_action/getClientData",
 						success:function(t){
 							var data = t.data;
-							console.log(data);
+							var trData = "";
+							for (var i=0;i<data.length;i++){
+								trData+="<option value='"+data[i].clientId+"'>"+data[i].clientName+"<option>"
+							}
+							$(".clientId").empty();
+							$(".clientId").append(trData);
+							referForm();
 						}
 					})
 				<%

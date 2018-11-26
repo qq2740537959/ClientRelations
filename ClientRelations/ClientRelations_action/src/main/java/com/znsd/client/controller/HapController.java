@@ -2,6 +2,7 @@ package com.znsd.client.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.znsd.client.bean.Hap;
 import com.znsd.client.service.ClientService;
 import com.znsd.client.service.HapService;
+import com.znsd.client.service.StaffService;
 
 @Controller
 public class HapController {
@@ -22,6 +24,9 @@ public class HapController {
 	private ClientService clientBiz;
 	@Autowired
 	private HapService hapBiz;
+	@Autowired
+	private StaffService staffBiz;
+	
 	private Map<String,Object> map = new HashMap();//用于接东西
 	//分页机会selectHapPage
 	@RequestMapping("selectHapPage")
@@ -55,14 +60,15 @@ public class HapController {
 	@RequestMapping("getClientData")
 	@ResponseBody
 	public Map<String,Object> getClientData(){
-		
+		List<Map<String, Object>> list = clientBiz.selectResourceState();
+		map.put("data", list);
 		return map;
 	}
 	
 	@RequestMapping("updateAllotHap")
 	@ResponseBody
-	public Map<String,Object> updateAllotHap(@RequestParam("staffId") Integer staffId,@RequestParam("chanceId") Integer chanceId){
-		hapBiz.updateAllotHap(staffId, chanceId);
+	public Map<String,Object> updateAllotHap(@RequestParam("staffId") Integer staffId,@RequestParam("handleId") Integer handleId,@RequestParam("chanceId") Integer chanceId){
+		hapBiz.updateAllotHap(staffId,handleId,chanceId);
 		map.put("msg","分配成功");
 		return map;
 	}
@@ -74,6 +80,12 @@ public class HapController {
 		hap.setLastTime(new Date());
 		hapBiz.addHap(hap);
 		map.put("msg","增加成功");
+		return map;
+	}
+	@RequestMapping("getStaffDeputyData")
+	@ResponseBody
+	public Map<String,Object> getStaffDeputyData(){
+		map.put("data",staffBiz.getStaffDeputyData());
 		return map;
 	}
 

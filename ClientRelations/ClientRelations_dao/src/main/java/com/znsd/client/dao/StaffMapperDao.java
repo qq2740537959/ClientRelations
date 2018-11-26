@@ -1,6 +1,7 @@
 package com.znsd.client.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +21,16 @@ public interface StaffMapperDao {
 	*
 	 */
 	public List<StaffVo> selectStaffByPage(String staffName);
+	
+	
+	/**
+	 * 
+	*	@author    Administrator
+	*	@return 
+	*	@return    List<Map<String,Object>>
+	*	@time    2018 下午8:48:00
+	*	@desc 查询销售代表
+	*
+	 */
+	List<Map<String,Object>> getStaffDeputyData();
 }

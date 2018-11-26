@@ -25,4 +25,8 @@
 		</if>
  	</select>
  	
+ 	<select id="getStaffDeputyData" resultMap="staffResultMap">
+ 		select staff_id,staff_name from staff where role_identity=4 and state = 1
+ 	</select>
+ 	
  </mapper>

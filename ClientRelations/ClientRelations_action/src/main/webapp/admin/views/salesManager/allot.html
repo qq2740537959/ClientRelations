@@ -103,7 +103,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">分配给:</label>
 				<div class="layui-input-block" style="width: 165px;">
-			      <select name="typeId" lay-filter="aihao" class="dr_select">
+			      <select name="staffId" lay-filter="aihao" class="staffId">
 			        <option value="1">陈璇</option>
 			        <option value="2">李彪</option>
 			        <option value="3">吕艳超</option>
@@ -135,17 +135,32 @@
 				laydate.render({
 					elem: '#date'
 				});
-
 				
-				/* 增加 */
+				 $.ajax({
+					type:"post",
+					url:"/ClientRelations_action/getStaffDeputyData",
+					success:function(t){
+						var data = t.data;
+						console.log(data);
+						var trData = "";
+						for (var i=0;i<data.length;i++){
+							trData+="<option value='"+data[i].staffId+"'>"+data[i].staffName+"<option>"
+						}
+						$(".staffId").empty();
+						$(".staffId").append(trData);
+						referForm();
+					}
+				}) 
+				
+				/* 分配*/
 				form.on('submit(demo2)', function(data) {
-					var staffId = 1;
 					var chanceId = $(".formChanceId").val();
-					
+					var handleId = /* #(".handleId").val() */1;
+					var staffId = $(".staffId").val();
 					$.ajax({
 						type:"post",
 						url:"/ClientRelations_action/updateAllotHap",
-						data:"staffId="+staffId+"&chanceId="+chanceId,
+						data:"staffId="+staffId+"&handleId="+handleId+"&chanceId="+chanceId,
 						success:function(t){
 							closeIndex(t.msg);
 						}
@@ -160,7 +175,6 @@
 					parent.layer.close(index);
 					parent.refreshTable();
 				}
-				
 				
 				$(".result").click(function(){
 					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引

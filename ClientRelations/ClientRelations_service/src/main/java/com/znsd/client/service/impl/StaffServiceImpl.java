@@ -1,6 +1,7 @@
 package com.znsd.client.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ public class StaffServiceImpl implements StaffService{
 	public List<StaffVo> selectStaffByPage(String staffName) {
 		// TODO Auto-generated method stub
 		return staffDao.selectStaffByPage(staffName);
+	}
+
+	@Override
+	public List<Map<String, Object>> getStaffDeputyData() {
+		// TODO Auto-generated method stub
+		return staffDao.getStaffDeputyData();
 	}
 
 }
