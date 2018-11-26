@@ -21,7 +21,7 @@
  	<select id="selectStaffByPage" resultMap="staffResultMap">
  		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
 		<if test="staffName != null and staffName != ''">
-			and d.staff_name like CONCAT('%',#{staffName},'%')
+			and s.staff_name like CONCAT('%',#{staffName},'%')
 		</if>
  	</select>
  	

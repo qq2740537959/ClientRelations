@@ -13,12 +13,13 @@
 		<result column = "department_fullname" property = "departmentFullname" />
 		<result column = "department_outline" property = "departmentOutline" />
 		<result column = "remarks_info" property = "remarksInfo" />
-		<result column = "operation_person" property="operationPerson"></result>
+		<result column = "operation_person" property="operationPerson" />
 		<result column = "staff_name" property = "operationPersonName" />
+		<result column = "last_time" property = "lastTime" />
 	</resultMap>
  	
  	<select id="selectDepartmentByPage" resultMap="departmentResultMap">
- 		select d.department_id,d.department_abbreviation,d.department_fullname,d.department_outline,d.remarks_info,d.operation_person,s.staff_name from department d,staff s where d.operation_person = s.staff_id
+ 		select d.department_id,d.department_abbreviation,d.department_fullname,d.department_outline,d.remarks_info,d.operation_person,s.staff_name,d.last_time from department d,staff s where d.operation_person = s.staff_id
 		<if test="departmentFullname != null and departmentFullname != ''">
 			and d.department_fullname like CONCAT('%',#{departmentFullname},'%')
 		</if>

@@ -3,6 +3,7 @@ package com.znsd.client.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.znsd.client.vo.StaffVo;
@@ -20,7 +21,7 @@ public interface StaffMapperDao {
 	* @desc	分页条件查询员工数据
 	*
 	 */
-	public List<StaffVo> selectStaffByPage(String staffName);
+	public List<StaffVo> selectStaffByPage(@Param("staffName") String staffName);
 	
 	
 	/**

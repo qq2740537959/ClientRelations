@@ -24,7 +24,7 @@ public class StaffController {
 	//分页条件查询员工信息
 	@RequestMapping("/selectStaffByPage")
 	@ResponseBody
-	public Map<String, Object> selectStaffByPage(@RequestParam("page")Integer page,@RequestParam("limit") Integer limit,@RequestParam(value="staffName",required=false)String staffName){
+	public Map<String, Object> selectStaffByPage(@RequestParam("page")Integer page,@RequestParam("limit") Integer limit,@RequestParam(value="staffName",required=false) String staffName){
 		Map<String, Object> map = new HashMap<>();
 		Page<Object> pages = PageHelper.startPage(page,limit);
 		List<StaffVo> list = staffBiz.selectStaffByPage(staffName);
