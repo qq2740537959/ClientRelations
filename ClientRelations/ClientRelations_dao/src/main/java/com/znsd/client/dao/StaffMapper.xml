@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.StaffMapperDao">
+ 	
+ 	<resultMap type="StaffVo" id="staffResultMap">
+		<id column="staff_id" property="staffId"/>
+		<result column = "staff_name" property = "staffName" />
+		<result column = "sex" property = "sex" />
+		<result column = "department_abbreviation" property = "departmentAbbreviation" />
+		<result column = "role_name" property = "roleName" />
+		<result column = "state" property="state"></result>
+		<result column = "last_time" property = "lastTime" />
+		<result column = "operationPersonName" property = "operationPersonName" />
+	</resultMap>
+ 	
+ 	<select id="selectStaffByPage" resultMap="staffResultMap">
+ 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
+		<if test="staffName != null and staffName != ''">
+			and d.staff_name like CONCAT('%',#{staffName},'%')
+		</if>
+ 	</select>
+ 	
+ </mapper>
