@@ -1,13 +1,16 @@
-package com.znsd.client.service;
+package com.znsd.client.dao;
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import com.znsd.client.bean.Hap;
 
-public interface HapService {
+@Repository
+public interface HapDao {
+	
 	/**
 	 * 
 	*	@author    Administrator
@@ -18,7 +21,8 @@ public interface HapService {
 	*	@desc 分页查询机会
 	*
 	 */
-	List<Map<String,Object>> selectHapByPage(String chanceName);
+	List<Map<String,Object>> selectHapByPage(@Param("chanceName")String chanceName);
+	
 	
 	/**
 	 * 
@@ -30,18 +34,19 @@ public interface HapService {
 	*	@desc 分配机会
 	*
 	 */
-	void updateAllotHap(Integer staffId, Integer chanceId);
+	void updateAllotHap(@Param("staffId")Integer staffId,@Param("chanceId") Integer chanceId);
+	
 	
 	/**
 	 * 
 	*	@author    Administrator
 	*	@param chanceId
-	*	@return    Map<String,Object>
+	*	@return   Map<String,Object>
 	*	@time    2018 下午8:49:42
 	*	@desc 根据id查询机会
 	*
 	 */
-	Map<String,Object> getHapData(Integer chanceId);
+	Map<String,Object> getHapData(@Param("chanceId") Integer chanceId);
 	
 	/**
 	 * 

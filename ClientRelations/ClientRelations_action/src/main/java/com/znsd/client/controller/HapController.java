@@ -17,7 +17,7 @@ import com.znsd.client.service.ClientService;
 import com.znsd.client.service.HapService;
 
 @Controller
-public class HapAction {
+public class HapController {
 	@Autowired
 	private ClientService clientBiz;
 	@Autowired
@@ -58,4 +58,23 @@ public class HapAction {
 		
 		return map;
 	}
+	
+	@RequestMapping("updateAllotHap")
+	@ResponseBody
+	public Map<String,Object> updateAllotHap(@RequestParam("staffId") Integer staffId,@RequestParam("chanceId") Integer chanceId){
+		hapBiz.updateAllotHap(staffId, chanceId);
+		map.put("msg","分配成功");
+		return map;
+	}
+	
+	@RequestMapping("addHapData")
+	@ResponseBody
+	public Map<String,Object> addHapData(Hap hap){
+		hap.setEntryTime(new Date());
+		hap.setLastTime(new Date());
+		hapBiz.addHap(hap);
+		map.put("msg","增加成功");
+		return map;
+	}
+
 }	 
