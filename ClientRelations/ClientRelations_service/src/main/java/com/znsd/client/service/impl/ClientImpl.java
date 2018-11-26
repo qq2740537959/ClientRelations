@@ -48,7 +48,9 @@ public class ClientImpl implements ClientService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectResourceState(Integer allotState, Integer state) {
+	public List<Map<String, Object>> selectResourceState() {
+		Integer allotState = 1;
+		Integer state = 1;
 		return dao.selectResourceState(allotState, state);
 	}
 

@@ -51,5 +51,5 @@ public interface ClientService {
 	public Integer updateResource(ClientResource resource);
 	
 	//查询未分配和正常状态的客户
-	public List<Map<String, Object>> selectResourceState(@Param("allotState")Integer allotState,@Param("state")Integer state);
+	public List<Map<String, Object>> selectResourceState();
 }
