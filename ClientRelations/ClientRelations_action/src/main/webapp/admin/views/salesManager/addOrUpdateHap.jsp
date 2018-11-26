@@ -68,8 +68,11 @@
 					}else{
 				%>
 					<label class="layui-form-label">客户:</label>
-					<select name="clientId" lay-filter="aihao" class="clientId">
+					<div class="layui-input-block" style="width: 165px;">
+				     <select name="clientId" lay-filter="aihao" class="clientId">
 				      </select>
+				    </div>
+					
 				<% 
 					}
 				%>
@@ -160,10 +163,11 @@
 				/* 增加 */
 				form.on('submit(demo2)', function(data) {
 					var formData = $(".layui-form").serialize();
+					var entryId = $(".entryId").val();
 					$.ajax({
 						type:"post",
 						url:"/ClientRelations_action/addContacts",
-						data:formData,
+						data:formData+"&entryId="+entryId+"&handleId="+entryId,
 						success:function(t){
 							closeIndex(t.msg);
 						}
@@ -200,7 +204,6 @@
 						}
 					})
 				<%
-						
 					}
 				
 				%>
@@ -209,15 +212,14 @@
 					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
 					parent.layer.msg(msg);
 					parent.layer.close(index);
+					parent.refreshTable();
 				}
-				
-				
 				$(".result").click(function(){
 					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
 					parent.layer.close(index); //关闭父窗口
 				})
 				function referForm(){
-					 form.render(); 
+					 form.render();
 				} 
 				 
 			});

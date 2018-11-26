@@ -56,9 +56,10 @@
 	</div>
 	<script src="../../layui/layui.js"></script>
 <script>
+var layer = layui.layer;
+
 layui.use(['table'], function(){
-  var table = layui.table;
-  var layer = layui.layer;
+var table = layui.table;
   table.render({
     elem: '#test'
    	,url:"/ClientRelations_action/selectHapPage"
@@ -69,6 +70,8 @@ layui.use(['table'], function(){
       ,{field:'typeName', width:120, title: '机会类型'}
       ,{field:'entryTime',width:180, title: '录入时间',templet:'<div>{{ Format(d.entryTime,"yyyy-MM-dd hh:mm:ss")}}</div>', minWidth: 100,sort: true}
       ,{field:'entryName', width:85, title: '录入人'}
+      ,{field:'entryTime',width:180, title: '最后修改时间',templet:'<div>{{ Format(d.lastTime,"yyyy-MM-dd hh:mm:ss")}}</div>', minWidth: 100,sort: true}
+      ,{field:'handleName', width:85, title: '操作人'}
       ,{width:160,title:"操作",toolbar:"#barDemo"}
     ]]
   	,align:"center"
@@ -94,32 +97,59 @@ layui.use(['table'], function(){
 				shade: [0.8, '#393D49'],
 				move:false,
 				shadeClose:true,
-				end:function(){
+				/* end:function(){
 					refreshTable();
-				}
+				} */
 			})
 	   	}else if(layEvent == 'allot'){//分配
-	   		
+	   		layer.open({
+	   			type:2,
+	   			content:"allot.html",
+	   			area:['600px', '555px'],
+	   			move:false,
+				shadeClose:true,
+				success:function(layero,index){
+					 var body = layer.getChildFrame('body', index);
+					 body.find(".formChanceId").val(data.chanceId);
+					 body.find(".chanceName").text(data.chanceName);
+					 body.find(".typeName").text(data.typeName);
+					 body.find(".entryName").text(data.entryName);
+					 body.find(".handleName").text(data.handleName);
+					 body.find(".lastTime").text(data.lastTime);
+					 body.find(".chanceContent").text(data.chanceContent);
+				}
+				/* end:function(){
+					refreshTable();
+				} */
+	   		})
 	   	}
 	});
 	$(".add_but").click(function(){
-		
+		layer.open({
+   			type:2,
+   			content:"addOrUpdateHap.jsp",
+   			area:['600px', '555px'],
+   			move:false,
+			shadeClose:true,
+   		})
 	})
 	$(".refer_but").click(function(){
 		refreshTable();
 	})
-	function refreshTable(){
-		table.reload('test',
-	    {
-	         where: { //这里传参  向后台
-	         	name:$(".name").val(),
-	         } 
-	         ,limit:5
-			 ,limits:[5,10,15,20]
-	    });
-	}
+	
 });
 
+function refreshTable(){
+	
+	layui.table.reload('test',
+    {
+         where: { //这里传参  向后台
+         	name:$(".name").val(),
+         } 
+         ,limit:5
+		 ,limits:[5,10,15,20]
+    });
+}
 
 function Format(datetime,fmt) {
 	  if (datetime == "" || datetime == null) {

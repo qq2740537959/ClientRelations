@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="../../layui/css/layui.css" />
+	<script src="../../layui/layui.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="../../assets/css/view.css" />
+	<link rel="icon" href="/favicon.ico">
+	<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
+	<style>
+			div.layui-form.layui-border-box.layui-table-view{
+				width: 1092px;
+			}
+			.span_title{
+				float: left;
+				width: 415px;
+				display: block;
+				padding-left: 10px;
+				height: 70px;
+				font-size: 20px;
+    			font-weight: bold;
+			}
+			.span_btn{
+				float: left;
+				width: 415px;
+				padding-right: 10px;
+				display: block;
+				text-align: right;
+			}
+			.div_title_btn{
+				width: 850px;
+				height: 70px;
+    			line-height: 70px;
+			}
+			.div_total{
+				width: 1000px;
+				height: 610px;
+				padding-left: 100px;
+				margin-top: 50px;
+			}
+			.layui-form-select{
+				width: 100px;
+			}
+			.layui-btn .layui-icon{
+				margin-right: 0px;
+			}
+		</style>
+	</head>
+	<body class="layui-view-body">
+		<div class="layui-content">
+		<div class="layui-page-header">
+			<div class="pagewrap">
+				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">销售管理</a> <a><cite>销售计划</cite></a>
+				</span>
+				<h2 class="title">员工管理</h2>
+			</div>
+		</div>
+		<div class="layui-row">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="form-box">
+						<div class="layui-form layui-form-item">
+							<div class="layui-inline">
+								<div class="layui-form-mid">员工名称：</div>
+								<div class="layui-input-inline">
+							      	<input type="text" name="title" class="layui-input staffName">
+							    </div>
+								<button class="layui-btn layui-btn-blue refer_but">查询</button>
+							</div>
+						</div>
+						<table class="layui-hide" id="staff" lay-filter="test"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs operator" lay-event="edit"><i class="layui-icon" style="font-size:15px;">&#xe642;</i></a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs del_a operator" lay-event="del"><i class="layui-icon" style="font-size:15px;">&#xe640;</i></a>
+		</script>
+		 
+		<script type="text/html" id="toolbarDemo">
+		  <div class="layui-btn-container">
+			{{#  if(d.state == 0){ }}
+    						<a class="layui-btn layui-btn-xs operator" style="background-color:red;" lay-event="dongjie">冻结</a>
+ 						{{#  } }}
+						{{#  if(d.state == 1){ }}
+    						<a class="layui-btn layui-btn-xs operator" lay-event="zhengchang">正常</a>
+ 						{{#  } }}
+		    <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+		  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
+		  </div>
+		</script>
+		          
+	<script>
+		layui.use('table', function(){
+		  var table = layui.table;
+		  
+		  table.render({
+		    elem: '#staff'
+		    ,url:'../../../selectStaffByPage'
+		    ,toolbar: '#toolbarDemo'
+		    ,cols: [[
+		      {checkbox:true,fixed:true}
+		      ,{field:'staffId', width:80, title: 'ID', sort: true}
+		      ,{field:'staffName', width:200, title: '员工姓名'}
+		      ,{field:'sex', width:200, title: '性别'}
+		      ,{field:'departmentAbbreviation', width:200, title: '所在部门'}
+		      ,{field:'roleName', width:200, title: '角色'}
+		      ,{field:'lastTime', width:210, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+		      ,{field:'operationPersonName', width:150, title: '操作人'}
+		      ,{field: 'right', title: '操作', width:127,toolbar:"#barDemo"}
+		    ]]
+		    ,page: true
+		  });
+		  
+		  //头工具栏事件
+		  table.on('toolbar(test)', function(obj){
+		  	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+		  	  var tr = obj.tr; //获得当前行 tr 的DOM对象
+		   	  var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+		   	if (layEvent === 'add') {
+		   		layer.open(
+		  	      {
+	  	             type: 2,
+	  	             title: '增加组织结构',
+	  	             skin: 'layui-layer-molv',
+	  	             shadeClose: false,
+	  	             shade: 0.3,
+	  	             area: ['550px', '570px'],
+	  	             content: "addOrUpdateOrganization.html",//跳转的页面
+	  	            yes: function (index, layero) {
+	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
+	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];
+	  	        	var iframeWin2 = window["layui-layer-iframe" + index];
+
+	  	        	//对应调用子页面的方法（2种方式）
+	  	        	var ids1 = iframeWin1.SunPage();
+	  	        	var idd2 = iframeWin2.SunPage();
+
+	  	        	//获取子页面的值
+	  	        	var res = iframeWin1.callbackdata();
+	  	        	alert(res.resut4);　　//这里从子页面传过来了4个值，这里只取第四个值 callbackdata（）来自子页面
+	  	            },
+	  	        	cancel: function (index, layero) {//取消事件
+	  	        	},
+	  	        	end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+	  	        	location.reload();　//layer.open关闭刷新
+	  	        	table.reload('organization', {
+		  				  where: { //设定异步数据接口的额外参数，任意设
+		  				  
+		  				  }
+		  				  ,page: { 
+		  				    //curr: 1 //重新从第 1 页开始
+		  				  }
+		  				});
+	  	        	}
+	  		  	  });
+		   	}else if (layEvent === 'del') {
+		   		var data = checkStatus.data;  //获取选中行数据
+		   		if (data.length > 0) {
+		   			var getIdString = "";
+		   			for (var i = 0; i < data.length; i++) {
+		   				getIdString += data[i].departmentId+",";
+		   				console.log(data[i].departmentId)
+		   			}
+		   			console.log(getIdString);
+		   			$.ajax({
+		   				type:"get",
+		   				url:"",
+		   				async:true
+		   			});
+		   		}else{
+		   			layer.msg("请选择一个或多个选项",{icon:3});
+		   		}
+			    /*layer.alert(JSON.stringify(data));
+			    console.log(data.length);*/
+		   	}else if (layEvent === 'zhengchang') {
+	  		layer.confirm("确定要冻结“"+data.nickName+"”该用户?", function(index){
+		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+		  	      layer.close(index);
+		  	      $.ajax({
+		  	    	  url:"../../updateUserStateAdd?userId="+data.userId+"",
+		  	    	  type:"post",
+		  	    	  success:function(data){
+		  	    		if (data.code == 1) {
+		  	    			layui.use('layer', function(){
+		  	    				var layer = layui.layer;
+		  	    				layer.msg(data.msg+'', {icon: 1});
+		  	    				table.reload('usersInfo', {
+		  		  				  where: { //设定异步数据接口的额外参数，任意设
+		  		  				  
+		  		  				  }
+		  		  				  ,page: {
+		  		  				    curr: 1 //重新从第 1 页开始
+		  		  				  }
+		  		  				});
+		  	    			});    	
+						}
+		  	    	  }
+		  	      })
+		  	    });
+		  	  } else if (layEvent === 'dongjie') {
+				  //解冻
+		  	 	  layer.confirm("确定要给用户“"+data.nickName+"”取消解冻?", function(index){
+		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+		  	      layer.close(index);
+		  	      $.ajax({
+		  	    	  url:"../../updateUserStateDel?userId="+data.userId+"",
+		  	    	  type:"post",
+		  	    	  success:function(data){
+		  	    		if (data.code == 1) {
+		  	    			layui.use('layer', function(){
+		  	    				var layer = layui.layer;
+		  	    				layer.msg(data.msg+'', {icon: 1});
+		  	    				table.reload('usersInfo', {
+		  		  				  where: { //设定异步数据接口的额外参数，任意设
+		  		  				  
+		  		  				  }
+		  		  				  ,page: {
+		  		  				    curr: 1 //重新从第 1 页开始
+		  		  				  }
+		  		  				});
+		  	    			});    	
+						}
+		  	    	  }
+		  	      })
+		  	    });
+			 }
+		  });
+		  
+		  //监听工具条
+		  	table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		  	  var data = obj.data; //获得当前行数据
+		  	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+		  	  var tr = obj.tr; //获得当前行 tr 的DOM对象
+		  	 if(layEvent === 'del'){ //删除
+		  	    layer.confirm('确定要删除此组织结构么?', function(index){
+		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+		  	      layer.close(index);
+		  	      //向服务端发送删除指令
+		  	      $.ajax({
+		  	    	  url:"../../delUserInfoAction?userId="+data.userId+"",
+		  	    	  type:"post",
+		  	    	  success:function(data){
+		  	    		if (data.code == 1) {
+		  	    			layui.use('layer', function(){
+		  	    				var layer = layui.layer;
+		  	    				layer.msg(data.msg+'', {icon: 1});
+		  	    				table.reload('organization', {
+		  		  				  where: { //设定异步数据接口的额外参数，任意设
+		  		  				  
+		  		  				  }
+		  		  				  ,page: {
+		  		  				    curr: 1 //重新从第 1 页开始
+		  		  				  }
+		  		  				});
+		  	    			});    	
+						}
+		  	    	  }
+		  	      })
+		  	    });
+		  	  } else if(layEvent === 'edit'){ //编辑
+		  	    //do something
+		  	    //同步更新缓存对应的值
+		  	    /* obj.update({
+		  	      username: '123'
+		  	      ,title: 'xxx'
+		  	    }); */
+			  	  layer.open(
+		  	      {
+	  	             type: 2,
+	  	             title: '修改组织结构信息',
+	  	             skin: 'layui-layer-molv',
+	  	             shadeClose: false,
+	  	             shade: 0.3,
+	  	             area: ['600px', '630px'],
+	  	             content: "../../queryUserByIdAction?userId="+data.userId+"",//跳转的页面
+	  	            yes: function (index, layero) {
+	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
+	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];
+	  	        	var iframeWin2 = window["layui-layer-iframe" + index];
+
+	  	        	//对应调用子页面的方法（2种方式）
+	  	        	var ids1 = iframeWin1.SunPage();
+	  	        	var idd2 = iframeWin2.SunPage();
+
+	  	        	//获取子页面的值
+	  	        	var res = iframeWin1.callbackdata();
+	  	        	alert(res.resut4);　　//这里从子页面传过来了4个值，这里只取第四个值 callbackdata（）来自子页面
+	  	            },
+	  	        	cancel: function (index, layero) {//取消事件
+	  	        	},
+	  	        	end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+	  	        	location.reload();　//layer.open关闭刷新
+	  	        	table.reload('organization', {
+		  				  where: { //设定异步数据接口的额外参数，任意设
+		  				  
+		  				  }
+		  				  ,page: { 
+		  				    //curr: 1 //重新从第 1 页开始
+		  				  }
+		  				});
+	  	        	}
+	  		  	  })
+		  	   }
+		  	});
+		  
+		});
+		
+		$(".refer_but").click(function(){
+			layui.use('table', function(){
+			  	var table = layui.table;
+			 	table.reload('staff', {
+				  where: { //设定异步数据接口的额外参数，任意设
+					  'staffName':$(".staffName").val()
+				  }
+				  ,page: {
+				    curr: 1 //重新从第 1 页开始
+				  }
+				});
+			});
+		})		
+		
+		renderForm();
+		function renderForm(){
+		  layui.use('form', function(){
+		   var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+		   form.render();
+		  });
+		 }
+	</script>
+
+
+	</body>
+</html>
