@@ -28,13 +28,14 @@ public interface HapDao {
 	 * 
 	*	@author    Administrator
 	*	@param staffId
+	*   @param handleId
 	*	@param chanceId
 	*	@return    void
 	*	@time    2018 下午4:36:54
 	*	@desc 分配机会
 	*
 	 */
-	void updateAllotHap(@Param("staffId")Integer staffId,@Param("chanceId") Integer chanceId);
+	void updateAllotHap(@Param("staffId")Integer staffId,@Param("handleId")Integer handleId ,@Param("chanceId") Integer chanceId);
 	
 	
 	/**

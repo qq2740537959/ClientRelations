@@ -78,18 +78,18 @@
 	</div>
 	
 		<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs operator" lay-event="edit"><i class="layui-icon" style="font-size:15px;">&#xe642;</i></a>
-			<a class="layui-btn layui-btn-danger layui-btn-xs del_a operator" lay-event="del"><i class="layui-icon" style="font-size:15px;">&#xe640;</i></a>
-		</script>
-		 
-		<script type="text/html" id="toolbarDemo">
-		  <div class="layui-btn-container">
 			{{#  if(d.state == 0){ }}
     						<a class="layui-btn layui-btn-xs operator" style="background-color:red;" lay-event="dongjie">冻结</a>
  						{{#  } }}
 						{{#  if(d.state == 1){ }}
     						<a class="layui-btn layui-btn-xs operator" lay-event="zhengchang">正常</a>
  						{{#  } }}
+			<a class="layui-btn layui-btn-xs operator" lay-event="edit"><i class="layui-icon" style="font-size:15px;">&#xe642;</i></a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs del_a operator" lay-event="del"><i class="layui-icon" style="font-size:15px;">&#xe640;</i></a>
+		</script>
+		 
+		<script type="text/html" id="toolbarDemo">
+		  <div class="layui-btn-container">
 		    <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
 		  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
 		  </div>
@@ -105,14 +105,14 @@
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {checkbox:true,fixed:true}
-		      ,{field:'staffId', width:80, title: 'ID', sort: true}
-		      ,{field:'staffName', width:200, title: '员工姓名'}
-		      ,{field:'sex', width:200, title: '性别'}
-		      ,{field:'departmentAbbreviation', width:200, title: '所在部门'}
-		      ,{field:'roleName', width:200, title: '角色'}
-		      ,{field:'lastTime', width:210, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+		      ,{field:'staffId', width:50, title: 'ID', sort: true}
+		      ,{field:'staffName', width:120, title: '员工姓名'}
+		      ,{field:'sex', width:80, title: '性别'}
+		      ,{field:'departmentAbbreviation', width:120, title: '所在部门'}
+		      ,{field:'roleName', width:150, title: '角色'}
+		      ,{field:'lastTime', width:219, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
 		      ,{field:'operationPersonName', width:150, title: '操作人'}
-		      ,{field: 'right', title: '操作', width:127,toolbar:"#barDemo"}
+		      ,{field: 'right', title: '操作', width:145,toolbar:"#barDemo"}
 		    ]]
 		    ,page: true
 		  });

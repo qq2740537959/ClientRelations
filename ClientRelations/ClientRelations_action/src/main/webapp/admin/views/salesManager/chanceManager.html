@@ -42,7 +42,13 @@
  						<script type="text/html" id="barDemo">
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="edit">修改</a>
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
+
+							{{#  if(d.staffId == null || d.staffId == ''){ }}
+    							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
+ 							{{#  } else { }}
+								<a class="layui-btn layui-btn-xs  layui-btn-disabled" lay-event="">分配</a>
+ 							{{#  } }}
+							
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
 						  <div class="layui-btn-container">
@@ -72,7 +78,7 @@ var table = layui.table;
       ,{field:'entryName', width:85, title: '录入人'}
       ,{field:'entryTime',width:180, title: '最后修改时间',templet:'<div>{{ Format(d.lastTime,"yyyy-MM-dd hh:mm:ss")}}</div>', minWidth: 100,sort: true}
       ,{field:'handleName', width:85, title: '操作人'}
-      ,{width:160,title:"操作",toolbar:"#barDemo"}
+      ,{width:165,title:"操作",toolbar:"#barDemo"}
     ]]
   	,align:"center"
  	,limit:5

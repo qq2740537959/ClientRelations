@@ -28,9 +28,8 @@ public class HapServiceImpl implements HapService {
 	}
 
 	@Override
-	public void updateAllotHap(Integer staffId, Integer chanceId) {
-		// TODO Auto-generated method stub
-		hapDao.updateAllotHap(staffId, chanceId);
+	public void updateAllotHap(Integer staffId,Integer handleId,Integer chanceId) {
+		hapDao.updateAllotHap(staffId,handleId, chanceId);
 	}
 
 	@Override

@@ -21,8 +21,34 @@
  	<select id="selectStaffByPage" resultMap="staffResultMap">
  		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
 		<if test="staffName != null and staffName != ''">
-			and d.staff_name like CONCAT('%',#{staffName},'%')
+			and s.staff_name like CONCAT('%',#{staffName},'%')
 		</if>
+ 	</select>
+ 	
+ 	<select id="getStaffDeputyData" resultMap="staffResultMap">
+ 		select staff_id,staff_name from staff where role_identity=4 and state = 1
+ 	</select>
+ 	
+ 	<resultMap type="staffLoginVo" id="staffLoginResultMap">
+		<id column="staff_id" property="staffId"/>
+		<result column = "staff_name" property = "staffName" />
+		<result column = "sex" property = "sex" />
+		<result column = "role_name" property = "roleName" />
+		<result column = "state" property="state"></result>
+		<result column = "user_name" property="userName"></result>
+		<result column = "password" property="password"></result>
+		<result column = "last_time" property = "lastTime" />
+		<result column = "contact_mode" property = "contactMode"></result>
+	</resultMap>
+ 	
+ 	<select id="staffLogin" resultMap = "staffLoginResultMap">
+ 		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,r.role_name from staff s,role r where s.role_identity = r.role_id
+ 		<if test="userName != null and userName != ''">
+			and s.user_name = #{userName}
+		</if>
+ 		<if test="password != null and password != ''">
+ 			and s.password = #{password}
+ 		</if>
  	</select>
  	
  </mapper>
