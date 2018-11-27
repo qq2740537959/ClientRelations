@@ -19,7 +19,6 @@
 			.main_div {
 				width: 800px;
 				margin: auto;
-				border: 1px solid red;
 			}
 			
 			.float_left {
