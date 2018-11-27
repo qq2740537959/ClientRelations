@@ -16,19 +16,23 @@ import com.znsd.client.service.ClientWorthService;
 
 @Controller
 public class ClientWorthController {
-	
+
 	@Autowired
 	private ClientWorthService service;
-	
+	private Map<String, Object> map = new HashMap<String, Object>();
+
 	@RequestMapping("/queryWorth")
 	@ResponseBody
-	public Map<String, Object> selectClientWorth(@RequestParam(value="clientName",required=false)String clientName, @RequestParam(value="clientType",required=false)String clientType, @RequestParam("page") Integer page, @RequestParam("limit")Integer limit, Map<String, Object> model){
-		
+	public Map<String, Object> selectClientWorth(
+			@RequestParam(value = "clientName", required = false) String clientName,
+			@RequestParam(value = "clientType", required = false) String clientType, @RequestParam("page") Integer page,
+			@RequestParam("limit") Integer limit, Map<String, Object> model) {
+
 		Page<Object> pages = PageHelper.startPage(page, limit);
-		List<Map<String, Object>> list = service.selectClientWorthByPage(clientName,clientType);
+		List<Map<String, Object>> list = service.selectClientWorthByPage(clientName, clientType);
 		for (Map<String, Object> map : list) {
 			System.out.println(map);
-			map.put("clientType", map.get("clientType")+"客户");
+			map.put("clientType", map.get("clientType") + "客户");
 		}
 		model = new HashMap<String, Object>();
 		model.put("code", 0);
@@ -38,5 +42,37 @@ public class ClientWorthController {
 		model.put("count", pages.getTotal());
 		return model;
 	}
-	
+
+	@RequestMapping("/selectClientInfo")
+	@ResponseBody
+	public Map<String, Object> selectClientInfo(@RequestParam("clientId") Integer clientId, Map<String, Object> model) {
+		System.out.println("--进入--" + clientId);
+
+		model = service.selectClientInfo(clientId);
+		model.put("clientType", model.get("clientType") + "客户");
+		System.out.println(model);
+
+		return model;
+	}
+
+	@RequestMapping("/consumptionHistory")
+	@ResponseBody
+	public Map<String, Object> consumptionHistory(@RequestParam("clientId") Integer clientId) {
+
+		List<Map<String, Object>> list = service.consumptionHistory(clientId);
+		for (Map<String, Object> map : list) {
+			System.out.println(map);
+		}
+		map.put("data", list);
+		return map;
+	}
+
+	public Map<String, Object> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
+	}
+
 }

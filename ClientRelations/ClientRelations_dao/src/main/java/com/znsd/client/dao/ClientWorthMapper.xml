@@ -17,6 +17,32 @@
  		<result column="staff_name" property="staffName"/>
  	</resultMap>
  	
+ 	<resultMap type="java.util.HashMap" id="clientInfoMap">
+ 		<id column="client_id" property="clientId"/>
+ 		<result column="client_name" property="clientName"/>
+ 		<result column="phone" property="phone"/>
+ 		<result column="work_phone" property="workPhone"/>
+ 		<result column="email" property="email"/>
+ 		<result column="birthday" property="birthday"/>
+ 		<result column="in_time" property="inTime"/>
+ 		<result column="sex" property="sex"/>
+ 		<result column="client_type" property="clientType"/>
+ 		<result column="contact_address" property="contactAddress"/>
+ 		<result column="remark" property="remark"/>
+ 		<result column="consumption_times" property="consumptionTimes"/>
+ 		<result column="total_consumption_amount" property="totalConsumptionAmount"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="java.util.HashMap" id="historyMap">
+ 		<id column="id" property="id"/>
+ 		<result column="order_code" property="orderCode"/>
+ 		<result column="commodity" property="commodity"/>
+ 		<result column="commodity_number" property="commodityNumber"/>
+ 		<result column="deal_time" property="dealTime"/>
+ 		<result column="order_status" property="orderStatus"/>
+ 		<result column="mode_of_distribution" property="modeOfDistribution"/>
+ 	</resultMap>
+ 	
  	<select id="selectClientWorthByPage" resultMap="clientWorthMap">
  		select c.client_id,c.client_name,c.sex,c.client_type,c.consumption_times,c.total_consumption_amount,s.staff_name
 		FROM client_resource c INNER JOIN staff s ON c.staff_id = s.staff_id where c.allot_state = 2
@@ -27,4 +53,14 @@
 			and c.client_type LIKE '%${clientType}%'
 		</if>
  	</select>	
+ 	
+ 	<select id="selectClientInfo" resultMap="clientInfoMap">
+ 		SELECT client_id,client_name,phone,work_phone,email,DATE_FORMAT(birthday,'%Y-%m-%d') as birthday,in_time,sex,client_type,contact_address,remark,consumption_times,total_consumption_amount 
+		FROM client_resource where client_id = #{clientId}
+ 	</select>
+ 	
+ 	<select id="consumptionHistory" resultMap="historyMap">
+ 		select id,order_code,commodity,commodity_number,DATE_FORMAT(deal_time,'%Y-%m-%d') as deal_time,order_status,mode_of_distribution 
+ 		FROM order_indent where client_id = #{clientId} and order_status = "已完成"
+ 	</select>
 </mapper>
