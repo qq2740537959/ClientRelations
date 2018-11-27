@@ -14,23 +14,23 @@
 </head>
 
 <body class="layui-view-body">
-	<div id="add" style="padding-top:30px;">
-		<form class="layui-form" action="">
+	<div id="editDiv" style="display:none">
+		<form id="addOrUpdateform" class="layui-form" action="">
 		  <div class="layui-form-item">
 		    <label class="layui-form-label">*服务名称</label>
 		    <div class="layui-input-block">
-		      <input type="text" name="title" required  lay-verify="required" placeholder="请输入服务名称" autocomplete="off" class="layui-input" style = "width:600px;">
+		      <input type="text" name="serveName" required  lay-verify="required" placeholder="请输入服务名称" autocomplete="off" class="layui-input" style = "width:600px;">
 		    </div>
 		  </div>
 		  <div class="layui-form-item" style="width: 710px;">
 		    <label class="layui-form-label">*服务类型</label>
 		    <div class="layui-input-block" >
-		      <select name="city" lay-verify="required">
+		      <select name="serveType" lay-verify="required">
 		      	<option value=""></option>
-		        <option value="0">咨询服务</option>
-		        <option value="1">投诉服务</option>
-		        <option value="2">售前服务</option>
-		        <option value="3">售后服务</option>
+		        <option value="咨询服务">咨询服务</option>
+		        <option value="投诉服务">投诉服务</option>
+		        <option value="售前服务">售前服务</option>
+		        <option value="售后服务">售后服务</option>
 		      </select>
 		    </div>
 		  </div>
@@ -38,29 +38,29 @@
 		    <div class="layui-inline">
 		      <label class="layui-form-label">*服务客户</label>
 		      <div class="layui-input-inline" style="width: 270px;">
-		        <input type="text" name="price_min" style = "width:250px"; required  lay-verify="required" placeholder="请输入客户名" autocomplete="off" class="layui-input">
+		        <input type="text" name="serveClient" style = "width:250px"; required  lay-verify="required" placeholder="请输入客户名" autocomplete="off" class="layui-input">
 		      </div>
 		      <div class="layui-form-mid">*联系电话</div>
 		      <div class="layui-input-inline" style="width: 300px;">
-		        <input type="text" name="price_max" style = "width:250px"; required  lay-verify="required" placeholder="请输入客户电话号码" autocomplete="off" class="layui-input">
+		        <input type="text" name="phone" style = "width:250px"; required  lay-verify="required" placeholder="请输入客户电话号码" autocomplete="off" class="layui-input">
 		      </div>
 		    </div>
 		  </div>
 		  <div class="layui-form-item layui-form-text">
 		    <label class="layui-form-label">服务内容</label>
 		    <div class="layui-input-block">
-		      <textarea name="desc" style = "width:600px"; placeholder="请输入服务内容" class="layui-textarea"></textarea>
+		      <textarea name="serveContent" style = "width:600px"; placeholder="请输入服务内容" class="layui-textarea"></textarea>
 		    </div>
 		  </div>
 		  <div class="layui-form-item layui-form-text">
 		    <label class="layui-form-label">备注</label>
 		    <div class="layui-input-block">
-		      <textarea name="desc" style = "width:600px; placeholder="请输入备注内容" class="layui-textarea"></textarea>
+		      <textarea name="comment" style = "width:600px; placeholder="请输入备注内容" class="layui-textarea"></textarea>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <div class="layui-input-block">
-		      <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">提交</button>
+		      <button class="layui-btn layui-btn-normal" id="sub" lay-submit lay-filter="formDemo">立即提交</button>
 		      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		  </div>

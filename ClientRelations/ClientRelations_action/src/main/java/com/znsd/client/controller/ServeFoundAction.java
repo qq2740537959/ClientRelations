@@ -52,6 +52,14 @@ public class ServeFoundAction{
 		return map;
 	}
 	
+	@RequestMapping("/serveStateQuery")
+	@ResponseBody
+	public Map<String,Object> serveStateQuery(@RequestParam("page")int page,@RequestParam("limit")int limit,@RequestParam("state")int state,Map<String,Object> map){
+		System.out.println("wwwwwwwwwwwww"+state);
+		map.put("code",0);
+		return map;
+	}
+	
 	@RequestMapping("/serveAdd")
 	@ResponseBody
 	public Map<String,Object> serveAdd(Serve serve){
@@ -70,7 +78,10 @@ public class ServeFoundAction{
 	@ResponseBody
 	public Map<String,Object> serveDelete(@RequestParam("id")int id){
 		System.out.println(id+".......Delete");
-		serveService.serveDelete(id);
+		Serve serve = new Serve();
+		serve.setId(id);
+		serve.setOperator("admin");
+		serveService.serveDelete(serve);
 		map.put("code", 1);
 		return map;
 	}
@@ -78,7 +89,21 @@ public class ServeFoundAction{
 	@RequestMapping("/serveSub")
 	@ResponseBody
 	public Map<String,Object> serveSub(@RequestParam("id")int id){
-		serveService.serveSub(id);
+		Serve serve = new Serve();
+		serve.setId(id);
+		serve.setOperator("admin");
+		serveService.serveSub(serve);
+		map.put("code", 1);
+		return map;
+	}
+	
+	@RequestMapping("/serveUpdate")
+	@ResponseBody
+	public Map<String,Object> serveUpdate(Serve serve){
+		serve.setOperator("admin");
+		serve.setUpdateBy("admin");
+		System.out.println("...........update===id=="+serve);
+		serveService.serveUpdate(serve);
 		map.put("code", 1);
 		return map;
 	}

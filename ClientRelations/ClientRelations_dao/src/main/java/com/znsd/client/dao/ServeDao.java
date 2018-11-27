@@ -58,7 +58,7 @@ public interface ServeDao {
 				    * @throws
 				    */
 				    
-				void serveDelete(int id);
+				void serveDelete(Serve serve);
 
 
 					
@@ -70,7 +70,19 @@ public interface ServeDao {
 					    * @throws
 					    */
 					    
-					void serveSub(int id);
+					void serveSub(Serve serve);
+
+
+						
+						    /**
+						    * @Title: serveUpdate
+						    * @Description: TODO(这里用一句话描述这个方法的作用)
+						    * @param @param serve    参数
+						    * @return void    返回类型
+						    * @throws
+						    */
+						    
+						void serveUpdate(Serve serve);
 
 
 }
