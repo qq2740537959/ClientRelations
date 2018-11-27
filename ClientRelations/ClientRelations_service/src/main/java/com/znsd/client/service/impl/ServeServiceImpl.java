@@ -49,6 +49,7 @@ public class ServeServiceImpl implements ServeService{
 	
 
 
+	@Override
 	public List<Serve> serveQuery() {
 		return serveDao.serveQuery();
 	}
@@ -62,6 +63,7 @@ public class ServeServiceImpl implements ServeService{
 	    * @see com.znsd.client.service.ServeService#serveAdd(com.znsd.client.bean.Serve)
 	    */
 	    
+	@Override
 	public void serveAdd(Serve serve) {
 		// TODO Auto-generated method stub
 		serveDao.serveAdd(serve);
@@ -76,9 +78,10 @@ public class ServeServiceImpl implements ServeService{
 	    * @see com.znsd.client.service.ServeService#serveDelete(int)
 	    */
 	    
-	public void serveDelete(int id) {
+	@Override
+	public void serveDelete(Serve serve) {
 		// TODO Auto-generated method stub
-		serveDao.serveDelete(id);
+		serveDao.serveDelete(serve);
 	}
 
 
@@ -90,9 +93,25 @@ public class ServeServiceImpl implements ServeService{
 	    * @see com.znsd.client.service.ServeService#serveSub(int)
 	    */
 	    
-	public void serveSub(int id) {
+	@Override
+	public void serveSub(Serve serve) {
 		// TODO Auto-generated method stub
-		serveDao.serveSub(id);
+		serveDao.serveSub(serve);
+	}
+
+
+	
+	    /* (非 Javadoc)
+	    * 
+	    * 
+	    * @param serve
+	    * @see com.znsd.client.service.ServeService#serveUpdate(com.znsd.client.bean.Serve)
+	    */
+	    
+	@Override
+	public void serveUpdate(Serve serve) {
+		// TODO Auto-generated method stub
+		serveDao.serveUpdate(serve);
 	}
 
 

@@ -46,7 +46,7 @@ public interface ServeService {
 		    * @throws
 		    */
 		    
-		public void serveDelete(int id);
+		public void serveDelete(Serve serve);
 
 
 			
@@ -58,6 +58,18 @@ public interface ServeService {
 			    * @throws
 			    */
 			    
-			public void serveSub(int id);
+			public void serveSub(Serve serve);
+
+
+				
+				    /**
+				    * @Title: serveUpdate
+				    * @Description: TODO(这里用一句话描述这个方法的作用)
+				    * @param @param serve    参数
+				    * @return void    返回类型
+				    * @throws
+				    */
+				    
+				public void serveUpdate(Serve serve);
 
 }

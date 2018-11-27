@@ -49,5 +49,29 @@ public interface IssueDao {
 		void issueAdd(Issue issue);
 
 
+			
+			    /**
+			    * @Title: issueDelete
+			    * @Description: TODO(这里用一句话描述这个方法的作用)
+			    * @param @param id    参数
+			    * @return void    返回类型
+			    * @throws
+			    */
+			    
+			void issueDelete(Issue issue);
+
+
+				
+				    /**
+				    * @Title: issueUpdate
+				    * @Description: TODO(这里用一句话描述这个方法的作用)
+				    * @param @param issue    参数
+				    * @return void    返回类型
+				    * @throws
+				    */
+				    
+				void issueUpdate(Issue issue);
+
+
 
 }

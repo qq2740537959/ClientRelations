@@ -17,7 +17,7 @@
 	<div class="layui-content">
 		<div class="layui-page-header">
 			<div class="pagewrap">
-				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">销售管理</a> <a><cite>机会管理</cite></a>
+				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">服务管理</a> <a><cite>服务分配</cite></a>
 				</span>
 				<h2 class="title">服务管理>> 服务分配</h2>
 			</div>
@@ -38,7 +38,7 @@
 						
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
- 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">分配</a>
+ 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
@@ -61,7 +61,7 @@ layui.use(['table'], function(){
 	    ,toolbar: '#toolbarDemo'
 	    ,cols: [[
 	       {type: 'numbers', fixed: 'left'}
-	      ,{field:'id', width:80, title: 'ID', sort: true}
+	      ,{field:'id', width:80, title: 'ID',hide:true}
 	      ,{field:'serveName', width:200, title: '服务名称'}
 	      ,{field:'serveType', width:120, title: '类型'}
 	      ,{field:'serveState', width:120, title: '状态'}
@@ -81,11 +81,33 @@ layui.use(['table'], function(){
 	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 	   	if(layEvent == 'see') { //查看
-	
-	   	} else if(layEvent === 'edit') { //修改
-			
+	   		layer.open({
+                title: '查看信息',
+                type: 1,
+                //move: false,
+                //content: "<div>名称："+data.serveName+"</div>",
+                content:"<table class='layui-table' lay-even lay-skin='nob'><colgroup><col width='100'><col width='180'><col width='40'><col width='100'><colwidth='180'></colgroup><thead><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><th>服务名称</th><th>"+data.serveName+"</th><th></th><th>创建人</th><th>"+data.createBy+"</th></tr></thead><tbody><tr><td>服务类型</td><td>"+data.serveType+"</td><td></td><td>|服务状态</td><td>"+data.serveState+"</td></tr><tr><td>服务客户</td><td>"+data.serveClient+"</td><td></td><td>|联系电话</td><td>"+data.phone+"</td></tr><tr><td>服务内容</td><td>"+data.serveContent+"</td><td></td><td>|备注信息</td><td>"+data.comment+"</td></tr></tbody></table>",
+                area: ['600px' , '350px']
+            });
 	   	}else if(layEvent == 'allot'){//分配
-	   		
+	   		layer.open({
+	   			type:2,
+	   			content:"allocation.html",
+	   			area:['600px', '555px'],
+	   			move:false,
+				shadeClose:true,
+				success:function(layero,index){
+					 var body = layer.getChildFrame('body', index);
+					 body.find(".serveName").val(data.serveName);
+					 body.find(".serveType").text(data.serveType);
+					 body.find(".serveState").text(data.serveState);
+					 body.find(".phone").text(data.phone);
+					 body.find(".createBy").text(data.handleName);
+					 body.find(".createTime").text(data.lastTime);
+					 body.find(".pendingPeople").text(data.pendingPeople);
+					 body.find(".serveContent").text(data.serveContent);
+				}
+	   		})
 	   	}
 	});
 	$(".add_but").click(function(){
