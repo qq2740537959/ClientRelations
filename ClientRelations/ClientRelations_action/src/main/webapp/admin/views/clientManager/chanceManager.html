@@ -418,7 +418,12 @@
 					type : 1,
 					anim : 1,
 					area : [ '700px', '600px' ],
-					content : $('#addResource')
+					content : $('#addResource'),
+					success:function(layero,index){
+						laydate.render({
+							elem: '#date'
+						});
+					}
 				//这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
 				});
 			});

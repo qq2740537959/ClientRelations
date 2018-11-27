@@ -15,5 +15,13 @@ public class Shape {
 	public void setShapeName(String shapeName) {
 		this.shapeName = shapeName;
 	}
-	
+	@Override
+	public String toString() {
+		return "Shape [shapeId=" + shapeId + ", shapeName=" + shapeName + "]";
+	}
+	public Shape(int shapeId, String shapeName) {
+		super();
+		this.shapeId = shapeId;
+		this.shapeName = shapeName;
+	}
 }

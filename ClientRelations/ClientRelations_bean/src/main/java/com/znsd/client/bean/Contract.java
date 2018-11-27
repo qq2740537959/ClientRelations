@@ -19,8 +19,8 @@ public class Contract implements Serializable {
 	private int contractState;
 	private int contractType;
 	private String examine;
-	private String handlePeople;
-	private Date lastTime;
+	private int staffId;
+	private String lastTime;
 	private String myselfLicence;
 	private String otherCompany;
 	private String ownCompany;
@@ -116,27 +116,46 @@ public class Contract implements Serializable {
 
 
 	
-	public String getHandlePeople() {
-		return this.handlePeople;
-	}
-
-	public void setHandlePeople(String handlePeople) {
-		this.handlePeople = handlePeople;
-	}
-
+	
 
 	
 	
-	public Date getLastTime() {
-		return this.lastTime;
+
+
+
+	
+	public int getStaffId() {
+		return staffId;
 	}
 
-	public void setLastTime(Date lastTime) {
+
+
+
+
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
+	}
+
+
+
+
+
+	public String getLastTime() {
+		return lastTime;
+	}
+
+
+
+
+
+	public void setLastTime(String lastTime) {
 		this.lastTime = lastTime;
 	}
 
 
-	
+
+
+
 	public String getMyselfLicence() {
 		return this.myselfLicence;
 	}
@@ -212,4 +231,46 @@ public class Contract implements Serializable {
 		this.transferPossession = transferPossession;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Contract [contractId=" + contractId + ", anotherLicence=" + anotherLicence + ", contractContent="
+				+ contractContent + ", contractMoney=" + contractMoney + ", contractName=" + contractName
+				+ ", contractState=" + contractState + ", contractType=" + contractType + ", examine=" + examine
+				+ ", staffId=" + staffId + ", lastTime=" + lastTime + ", myselfLicence=" + myselfLicence
+				+ ", otherCompany=" + otherCompany + ", ownCompany=" + ownCompany + ", performance=" + performance
+				+ ", reasonsChange=" + reasonsChange + ", relieve=" + relieve + ", remarks=" + remarks
+				+ ", transferPossession=" + transferPossession + "]";
+	}
+
+
+
+
+
+	public Contract(int contractId, String anotherLicence, String contractContent, double contractMoney,
+			String contractName, int contractState, int contractType, String examine, int staffId, String lastTime,
+			String myselfLicence, String otherCompany, String ownCompany, String performance, String reasonsChange,
+			String relieve, String remarks, String transferPossession) {
+		super();
+		this.contractId = contractId;
+		this.anotherLicence = anotherLicence;
+		this.contractContent = contractContent;
+		this.contractMoney = contractMoney;
+		this.contractName = contractName;
+		this.contractState = contractState;
+		this.contractType = contractType;
+		this.examine = examine;
+		this.staffId = staffId;
+		this.lastTime = lastTime;
+		this.myselfLicence = myselfLicence;
+		this.otherCompany = otherCompany;
+		this.ownCompany = ownCompany;
+		this.performance = performance;
+		this.reasonsChange = reasonsChange;
+		this.relieve = relieve;
+		this.remarks = remarks;
+		this.transferPossession = transferPossession;
+	}
+
+	
 }

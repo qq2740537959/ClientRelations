@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.client.dao.StaffMapperDao;
 import com.znsd.client.service.StaffService;
+import com.znsd.client.vo.StaffLoginVo;
 import com.znsd.client.vo.StaffVo;
 
 @Service
@@ -25,6 +26,12 @@ public class StaffServiceImpl implements StaffService{
 	public List<Map<String, Object>> getStaffDeputyData() {
 		// TODO Auto-generated method stub
 		return staffDao.getStaffDeputyData();
+	}
+
+	@Override
+	public StaffLoginVo staffLogin(String userName,String password) {
+		// TODO Auto-generated method stub
+		return staffDao.staffLogin(userName, password);
 	}
 
 }

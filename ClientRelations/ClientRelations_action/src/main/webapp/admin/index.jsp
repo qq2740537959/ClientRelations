@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -24,7 +25,9 @@
     </style>
 </head>
 <body class="layui-layout-body">
-	
+	<c:if test="${userInfo eq null }">
+		<jsp:forward page="login.jsp"></jsp:forward>
+	</c:if>
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header custom-header">
             <ul class="layui-nav layui-layout-left">
@@ -61,8 +64,8 @@
                         </a>
                         <dl class="layui-nav-child">
                         	<dd><a href="">角色管理</a></dd>
-                        	<dd><a href="views/organizationManager/organization.html">组织结构</a></dd>
-                        	<dd><a href="">员工管理</a></dd>
+                        	<dd><a href="views/systemManager/organization.html">组织结构</a></dd>
+                        	<dd><a href="views/systemManager/staffManager.html">员工管理</a></dd>
                         	<dd><a href="">公告管理</a></dd>
                         	<dd><a href="">个人信息</a></dd>
                         	<dd><a href="">基础信息</a></dd>
@@ -129,8 +132,8 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a href="views/contractManager/compact.jsp">合同创建</a></dd>
-                            <dd><a href="">合同审核</a></dd>
-                            <dd><a href="">合同管理</a></dd>
+                            <dd><a href="views/contractManager/audit.jsp">合同审核</a></dd>
+                            <dd><a href="views/contractManager/regulate.jsp">合同管理</a></dd>
                         </dl>
                     </li>
                    <li class="layui-nav-item">

@@ -81,19 +81,16 @@
 		    <div style="width: 1097px;">
 		    	<hr>
 		    </div>
-		    <div class="div_title_btn">
-			    <div class="span_btn" style="margin-left: -334px">
-			    	<button class="layui-btn fabricate">创建</button>
-			    </div>
-		    </div>
 			<table class="layui-hide" id="test" lay-filter="test"></table>
 		</div>
 		 
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
-    			<button class="layui-btn layui-btn-sm" lay-event="update">修改</button>
     			<button class="layui-btn layui-btn-sm refer" lay-event="query">查看</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="audit">提交</button>
+    			<button class="layui-btn layui-btn-sm" lay-event="carry">执行</button>
+				<button class="layui-btn layui-btn-sm" lay-event="modify">变更</button>
+				<button class="layui-btn layui-btn-sm" lay-event="transfer">转让</button>
+				<button class="layui-btn layui-btn-sm" lay-event="relieve">解除</button>
   			</div>
 		</script>
 		      
@@ -111,8 +108,8 @@
 		      ,{field:'genreName', width:150, title: '合同类型'}
 		      ,{field:'shapeName', width:130, title: '状态'}
 		      ,{field:'lastTime', width:130, title: '最后操作时间'}
-		      ,{field:'staffName', width:120, title: '待处理人 '}
-		      ,{width:200,title:'操作',toolbar:'#toolbarDemo'}
+		      ,{field:'staffName', width:120, title: '处理人 '}
+		      ,{width:300,title:'操作',toolbar:'#toolbarDemo'}
 		    ]]
 		    ,page: true,
 		    limits:[1,5,10,15]
@@ -123,59 +120,40 @@
 			   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 			   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 			   	var con = data.contractId;
-			   	//console.log(data)
+			   	var shapeName = data.shapeName;
+			   	console.log(data)
 			   	if(layEvent == 'query') { //查看
 					layer.open({
 						type:2,
 						area:['800px','600px'],
 						content:"details.jsp?contractId="+con,
 					})
-			   	} else if(layEvent === 'update') { //修改
+			   	} else if(layEvent === 'modify') { //修改
 					layer.open({
 						type:2,
 						area:['800px','600px'],
 						content:"clearly.jsp?contractId="+con,
 					})
-			   	}else if(layEvent === 'audit'){
-			   		 if(data.shapeName == '已订立'){
+			   	}else if(layEvent === 'carry'){
+			   		if(shapeName == '已审核'){
 			   			layer.open({
 				   			type:2,
 				   			area:['800px','600px'],
-				   			content:"tasklet.jsp?contractId="+con,
-				   		})	
+				   			content:"enforcer.jsp?contractId"+con,
+				   		})
 			   		}else{
-			   			alert("合同已订立才能提交！");
+			   			alert("合同审核才能执行");
 			   		}
 			   	}
 			});
-		  function fledged(){
-			  $.ajax({
-				  url:'../../../delegateAction',
-				  type:'post',
-				  success:function(data){
-					  for(var i = 0 ;i<data.length;i++){
-						  /* if(data[i].roleId == 4){
-							  
-						  }else{
-							  alert("只能由销售代表创建合同");
-						  } */
-					  }
-					  //console.log(data)
-				  },error:function(){
-					  alert("网络错误！");
-				  }
-			  })
-		  }
-		  fledged();
-		  
-		  $(".fabricate").on("click",function(){
-				 layer.open({
+						
+			$(".examine").on("click",function(){
+				layer.open({
 					type:2,
 					area:['800px','600px'],
-					content:"revamp.jsp",
+					content:"details.jsp",
 				})
-			}) 
-			
+			})
 		});
 		renderForm();
 		function renderForm(){

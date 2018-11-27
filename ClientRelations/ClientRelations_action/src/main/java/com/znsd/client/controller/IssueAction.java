@@ -67,6 +67,26 @@ public class IssueAction{
 		return map;
 	}
 	
+	@RequestMapping("/issuesDelete")
+	@ResponseBody
+	public Map<String,Object> issuesDelete(@RequestParam("id")int id){
+		System.out.println("............id=="+id);
+		Issue issue = new Issue();
+		issue.setId(id);
+		issueService.issueDelete(issue);
+		map.put("code", 1);
+		return map;
+	}
+	
+	@RequestMapping("/issuesUpdate")
+	@ResponseBody
+	public Map<String,Object> issuesUpdate(Issue issue){
+		issue.setUpdateBy("admin");
+		issueService.issueUpdate(issue);
+		map.put("code", 1);
+		return map;
+	}
+	
 	public IssueService getIssueService() {
 		return issueService;
 	}
