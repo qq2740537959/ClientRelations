@@ -25,13 +25,13 @@
         <form class="login-form" >
         	<p><font style="color: #29adeb;font-size: 17px;">后台管理系统登录</font></p>
             <div class="input-group">
-                <input type="text" id="username" name="account" class="input-field">
+                <input type="text" id="username" name="userName" class="input-field">
                 <label for="username" class="input-label">
                     <span class="label-title">用户名</span>
                 </label>
             </div>
             <div class="input-group">
-                <input type="password" id="password" name="pwd" class="input-field">
+                <input type="password" id="password" name="password" class="input-field">
                 <label for="password" class="input-label">
                     <span class="label-title">密码</span>
                 </label>
@@ -41,6 +41,6 @@
     </div>
 </body>
 <script src="assets/layui.js"></script>
-<script src="js/login.js" ></script>
+<script src="login.js" ></script>
 
 </html>

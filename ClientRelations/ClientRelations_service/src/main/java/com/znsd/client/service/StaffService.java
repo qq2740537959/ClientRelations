@@ -3,6 +3,7 @@ package com.znsd.client.service;
 import java.util.List;
 import java.util.Map;
 
+import com.znsd.client.vo.StaffLoginVo;
 import com.znsd.client.vo.StaffVo;
 
 public interface StaffService {
@@ -29,4 +30,15 @@ public interface StaffService {
 	*
 	 */
 	List<Map<String,Object>> getStaffDeputyData();
+	
+	/**
+	 * 
+	* @author jlh
+	* @return
+	* @return StaffLoginVo
+	* @time 2018 上午10:10:14
+	* @desc	员工登录
+	*
+	 */
+	public StaffLoginVo staffLogin(String userName,String password);
 }

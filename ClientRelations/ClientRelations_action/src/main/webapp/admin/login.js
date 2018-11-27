@@ -19,18 +19,16 @@ $(".login-button").click(function(){
 	var loginForm = $(".login-form").serialize();
 	$.ajax({
 		type:"post",
-		url:"../enterAdminAction",
+		url:"../staffLogin",
 		data:loginForm,
 		success:function(t){
-			layer.msg(t.msg);
-			if (t.msg=="登录成功") {
+			if (t.code== 0) {
 				location.href = "index.jsp";
 			}else{
-				layer.msg("账号或密码错误");
+				layer.msg(""+t.msg);
 			}
 		}
 	})
-	console.log(loginForm);
 })
 
 /*$(".login-button").on('click',function(){

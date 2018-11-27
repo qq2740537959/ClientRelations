@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.znsd.client.vo.StaffLoginVo;
 import com.znsd.client.vo.StaffVo;
 
 @Repository
@@ -34,4 +35,17 @@ public interface StaffMapperDao {
 	*
 	 */
 	List<Map<String,Object>> getStaffDeputyData();
+	
+	/**
+	 * 
+	* @author jlh
+	* @param username
+	* @param password
+	* @return
+	* @return StaffVo
+	* @time 2018 上午9:48:22
+	* @desc	员工登录
+	*
+	 */
+	public StaffLoginVo staffLogin(@Param("userName") String userName,@Param("password") String password);
 }

@@ -61,8 +61,8 @@
                         </a>
                         <dl class="layui-nav-child">
                         	<dd><a href="">角色管理</a></dd>
-                        	<dd><a href="views/organizationManager/organization.html">组织结构</a></dd>
-                        	<dd><a href="">员工管理</a></dd>
+                        	<dd><a href="views/systemManager/organization.html">组织结构</a></dd>
+                        	<dd><a href="views/systemManager/staffManager.html">员工管理</a></dd>
                         	<dd><a href="">公告管理</a></dd>
                         	<dd><a href="">个人信息</a></dd>
                         	<dd><a href="">基础信息</a></dd>
