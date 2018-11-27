@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -26,58 +24,52 @@
 		</style>
 	</head>
 	<body>
-		<div class="div_total">
-			<form method = "post" id = "addCon">
-			<h3>合同管理 >> 合同创建</h3>
+		<div class="div_total" id = "total">
+			<input type="hidden" name="contractId" class="contractId" value="${param.contractId}" />
+			<h3>合同管理 >> 合同详情</h3>
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
-				<label>合同名称：</label><input type="text" size="67px;" name = "contractName"/>				
+				<label>合同名称：</label><input type="text" size="67px;" name = "con.contractName" class = "contractName"/>				
 			</div>
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
 				<div style="float:left">
 					<label>合同类型：</label>
-					<select class = "contractType" name = "contractType">
+					<select class = "contractType" name = "con.contractType" class = "contractType">
 						
 					</select>
 				</div>
 				<div style="float: left;margin-left: 171px;">
 					<label>合同金额：</label>
-					<input type = "text" name = "contractMoney"/>
+					<input type = "text" name = "con.contractMoney" class = "contractMoney"/>
 				</div>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 100px;">
 				<div style="float: left;margin-left: 27px;">
 					<label>甲方：</label>
-					<input type = "text" name = "ownCompany"/>
+					<input type = "text" name = "con.ownCompany" class = "ownCompany"/>
 				</div>
 				<div style="float: left;margin-left: 105px;">
 					<label>乙方：</label>
-					<input type = "text" name = "otherCompany"/>
+					<input type = "text" name = "con.otherCompany" class = "otherCompany"/>
 				</div>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 43px;">
 				<div style="float: left;">
 					<label>企业经营许可证号：</label>
-					<input type = "text" name = "myselfLicence"/>
+					<input type = "text" name = "con.myselfLicence" class = "myselfLicence"/>
 				</div>
 				<div style="float: left;margin-left:21px;">
 					<label>企业经营许可证号：</label>
-					<input type = "text" name = "anotherLicence"/>
+					<input type = "text" name = "con.anotherLicence" class = "anotherLicence"/>
 				</div>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 100px;">
 				<label>合同内容：</label>
-				<input style="width: 499px;height: 150px;border: 1px solid;margin-top: 20px;" name = "contractContent"/>
+				<input style="width: 499px;height: 150px;border: 1px solid;margin-top: 20px;" name = "con.contractContent" class = "contractContent"/>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 100px;">
 				<label>备注信息：</label>
-				<input style="width: 499px;height: 100px;border: 1px solid;margin-top: 20px;" name = "remarks"/>
+				<input style="width: 499px;height: 100px;border: 1px solid;margin-top: 20px;" name = "con.remarks" class = "remarks"/>
 			</div>
-			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
-				<input type="button" value="保存" style = "width:80px; height:30px;" id = "embrace"/>
-				
-				<a href="" style="display: block; width: 58px;height: 23px;border: 1px solid;padding-top: 5px;padding-left: 20px;float: right;">返回</a>
-			</div>
-			</form>
 		</div>
 		<script type = "text/javascript">
 			function voice(){
@@ -99,21 +91,26 @@
 			}
 			voice();
 			
-			function addContract(){
-				$("#embrace").on("click",function(){
-					$.ajax({
-						url:'../../../fortifyAction',
-						type:'post',
-						data:$("#addCon").serialize(),
-						success:function(data){
-							alert("创建成功！");
-						},error:function(){
-							alert("网络错误！");
-						}
-					})
-				})
-			}
-			addContract();
+			$.ajax({
+	 	  		url:'../../../examineAction?contractId='+$(".contractId").val(),
+	 	  		type:'post',
+	 	  		success:function(data){
+	 	  			for(var i = 0;i<data.length;i++){
+	 	  				console.log(data)
+	 	  				$(".contractName").val(data[i].contractName);
+	 	  				$(".contractType").val(data[i].contractType);
+	 	  				$(".contractMoney").val(data[i].contractMoney);
+	 	  				$(".ownCompany").val(data[i].ownCompany);
+	 	  				$(".otherCompany").val(data[i].otherCompany);
+	 	  				$(".myselfLicence").val(data[i].myselfLicence);
+	 	  				$(".anotherLicence").val(data[i].anotherLicence);
+	 	  				$(".contractContent").val(data[i].contractContent);
+	 	  				$(".remarks").val(data[i].remarks);
+	 	  			}
+	 	  		},error:function(){
+	 	  			alert("网络错误！");
+	 	  		}
+	 	  	})
 		</script>
 	</body>
 </html>

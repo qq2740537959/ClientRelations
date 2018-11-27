@@ -2,11 +2,56 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.znsd.client.dao.ClientResourceDao">
+<mapper namespace="com.znsd.client.dao.ContractMapperDao">
 
-	<resultMap type="com.znsd.client.bean.ClientResource" id="userMap">
+	<resultMap type="shape" id="userMap">
 		<id column="shape_id" property="shapeId"/>
 		<result column = "shape_name" property = "shapeName"></result>
+	</resultMap>
+	
+	<resultMap type = "contract" id = "conMap">
+		<id column = "contract_id" property = "contractId"></id>
+		<result column = "contract_name" property = "contractName"></result>
+		<result column = "contract_type" property = "contractType"></result>
+		<result column = "contract_money" property = "contractMoney"></result>
+		<result column = "own_company" property = "ownCompany"></result>
+		<result column = "other_company" property = "otherCompany"></result>
+		<result column = "myself_licence" property = "myselfLicence"></result>
+		<result column = "another_licence" property = "anotherLicence"></result>
+		<result column = "contract_content" property = "contractContent"></result>
+		<result column = "remarks" property = "remarks"></result>
+		<result column = "contract_state" property = "contractState"></result>
+		<result column = "last_time" property = "lastTime"></result>
+		<result column = "staff_id" property = "staffId"></result>
+	</resultMap>
+	
+	<resultMap type = "genre" id = "genMap">
+		<result column = "genre_id" property = "genreId"></result>
+		<result column = "genre_name" property = "genreName"></result>
+	</resultMap>
+	
+	<resultMap type = "role" id = "roleMap">
+		<result column = "role_id" property = "roleId"></result>
+		<result column = "role_name" property = "roleName"></result>
+		<result column = "department_id" property = "departmentId"></result>
+		<result column = "last_time" property = "lastTime"></result>
+		<result column = "operation_person" property = "operationPerson"></result>
+		<result column = "remarks_explain" property = "remarksExplain"></result>
+	</resultMap>
+	
+	<resultMap type = "staff" id = "staffMap">
+		<result column = "staff_id" property = "staffId"></result>
+		<result column = "staff_name" property = "staffName"></result>
+		<result column = "sex" property = "sex"></result>
+		<result column = "state" property = "state"></result>
+		<result column = "user_name" property = "userName"></result>
+		<result column = "password" property = "password"></result>
+		<result column = "contact_mode" property = "contactMode"></result>
+		<result column = "department_id" property = "departmentId"></result>
+		<result column = "role_identity" property = "roleIdentity"></result>
+		<result column = "remarks_info" property = "remarksInfo"></result>
+		<result column = "last_time" property = "lastTime"></result>
+		<result column = "operation_person" property = "operationPerson"></result>
 	</resultMap>
 	
 	<select id = "selectShape" resultMap = "userMap">
@@ -14,10 +59,77 @@
 	</select>
 	
 	<insert id = "addContract" parameterType = "java.util.List">
-		insert into contract value(
-			#{contractName},#{contractType},#{contractMoney},#{ownCompany},#{otherCompany},#{myselfLicence},#{anotherLicence},#{contractContent},#{remarks}
-		)
+		insert into contract(contract_name,contract_type,contract_money,own_company,other_company,myself_licence,another_licence,contract_content,remarks,contract_state,last_time,staff_id)values
+		<foreach collection = "list" item = "item" index = "index" separator = ",">
+			(#{item.contractName},#{item.contractType},#{item.contractMoney},#{item.ownCompany},#{item.otherCompany},#{item.myselfLicence},#{item.anotherLicence},#{item.contractContent},#{item.remarks},#{item.contractState},#{item.lastTime},#{item.staffId})
+		</foreach>
 	</insert>
+	
+	<select id = "selectContractByPage" resultType="com.znsd.client.vo.ContractVo">
+		select c.contract_id,c.contract_name,g.genre_name,p.shape_name,c.last_time,s.staff_name from contract as c INNER JOIN staff as s on c.staff_id = s.staff_id 
+		INNER JOIN shape as p ON c.contract_state = p.shape_id
+		INNER JOIN genre as g on c.contract_type = g.genre_id
+		where 1 = 1
+		<if test = "contractName != null and contractName != '' ">
+			and c.contract_name = #{contractName}
+		</if>
+		<if test = "contractState != null and contractState != '' ">
+			and c.contract_state = #{contractState}
+		</if>
+		<if test = "contractType != null and contractType != '' ">
+			and c.contract_type = #{contractType}
+		</if>
+	</select>
+	
+	<update id = "updateContract" parameterType = "contract">
+		update contract set
+		contract_name = #{contractName},contract_type = #{contractType},contract_money = #{contractMoney},own_company = #{ownCompany},other_company = #{otherCompany},myself_licence = #{myselfLicence},another_licence = #{anotherLicence},contract_content = #{contractContent},remarks = #{remarks}
+		where contract_id = #{contractId}
+	</update>
+	
+	<select id = "selectContractAll" resultMap = "conMap">
+		select * from contract where contract_id = #{contractId}
+	</select>
+	
+	<select id = "selectDetails" resultMap = "conMap" parameterType="contract">
+		select contract_id,contract_name,contract_type,contract_money,own_company,other_company,myself_licence,another_licence,contract_content,remarks from contract where contract_id = #{contractId}
+	</select>
+	
+	<select id = "selectGenre" resultMap = "genMap">
+		select * from genre;
+	</select>
+	
+	<select id = "selectRepetition" resultMap = "conMap">
+		select * from contract where contract_name = #{contractName}
+	</select>
+	
+	<select id = "selectRole" resultType = "com.znsd.client.vo.RoleVo">
+		select s.staff_id,s.staff_name,r.role_name,r.role_id,s.role_identity from role as r INNER JOIN staff as s on r.role_id = s.role_identity
+	</select>
+	
+	<select id = "selectStaff" resultMap = "staffMap" >
+		select * from staff
+	</select>
+	
+	<select id = "selectEingereicht" resultMap = "conMap" parameterType="contract">
+		select contract_id,contract_name,contract_type,contract_money,own_company,other_company,myself_licence,another_licence,contract_content,remarks,staff_id from contract where contract_id = #{contractId}
+	</select>
+	
+	<update id = "updateSubmit" parameterType = "contract">
+		update contract set 
+		staff_id = #{staffId},contract_state = #{contractState}
+		where contract_id =#{contractId}
+	</update>
+	
+	<select id = "selectCredit" resultMap = "conMap" parameterType="contract">
+		select contract_id,contract_name,contract_type,contract_state,last_time,staff_id,contract_content,contract_money,other_company,another_licence,establish,examine from contract where contract_id = #{contractId}
+	</select>
+	
+	<update id = "updateExamine" parameterType = "contract">
+		update contract set 
+		staff_id = #{staffId},contract_state = #{contractState},examine = #{examine}
+		where contract_id =#{contractId}		
+	</update>
 	
 	
 </mapper>

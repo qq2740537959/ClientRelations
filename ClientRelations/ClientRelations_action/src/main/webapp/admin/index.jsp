@@ -129,8 +129,8 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a href="views/contractManager/compact.jsp">合同创建</a></dd>
-                            <dd><a href="">合同审核</a></dd>
-                            <dd><a href="">合同管理</a></dd>
+                            <dd><a href="views/contractManager/audit.jsp">合同审核</a></dd>
+                            <dd><a href="views/contractManager/regulate.jsp">合同管理</a></dd>
                         </dl>
                     </li>
                    <li class="layui-nav-item">
