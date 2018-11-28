@@ -75,7 +75,7 @@
 			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
 				<input type="button" value="保存" style = "width:80px; height:30px;" id = "embrace"/>
 				
-				<a href="" style="display: block; width: 58px;height: 23px;border: 1px solid;padding-top: 5px;padding-left: 20px;float: right;">返回</a>
+				<input type="button" value="返回" style = "width:80px; height:30px;" id = "back"/>
 			</div>
 		</div>
 		</form>
@@ -102,6 +102,7 @@
 	 	  		url:'../../../examineAction?contractId='+$(".contractId").val(),
 	 	  		type:'post',
 	 	  		success:function(data){
+	 	  			console.log(data)
 	 	  			for(var i = 0;i<data.length;i++){
 	 	  				$(".contractName").val(data[i].contractName);
 	 	  				$(".contractType").val(data[i].contractType);
@@ -120,13 +121,15 @@
 	 	  	
 	 	  	function modification(){
 				$("#embrace").on("click",function(){
-					alert(1)
 					$.ajax({
 						url:'../../../transformAction?con.contractId='+$(".contractId").val(),
 						type:'post',
 						data:$("#hey").serialize(),
 						success:function(data){
-							console.log(data)
+							var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+							parent.layer.msg("修改成功！");
+							parent.layer.close(index);
+							parent.refershuaxin();
 						},error:function(){
 							alert("网络错误！");	
 						} 
@@ -134,6 +137,16 @@
 				})
 			}
 			modification();
+			
+			function duack(){
+				$("#back").on("click",function(){
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+					parent.layer.msg("返回成功！");
+					parent.layer.close(index);
+					parent.refershuaxin();
+				})
+			}
+			duack();
 		</script>
 	</body>
 </html>

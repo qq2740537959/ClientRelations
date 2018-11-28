@@ -33,7 +33,7 @@
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
 				<div style="float:left">
 					<label>合同类型：</label>
-					<select class = "contractType" name = "con.contractType" class = "contractType">
+					<select class = "contractType" name = "con.contractType" >
 						
 					</select>
 				</div>
@@ -72,31 +72,11 @@
 			</div>
 		</div>
 		<script type = "text/javascript">
-			function voice(){
-				$.ajax({
-					url:'../../../voiceAction',
-					type:'post',
-					success:function(data){
-						console.log(data)
-						$(".contractType").empty();
-						var arr = "";
-						for(var i = 0;i<data.length;i++){
-							arr+="<option value = "+data[i].genreId+">"+data[i].genreName+"</option>";
-						}
-						$(".contractType").html(arr);
-					},error:function(){
-						alert("网络错误！");
-					}
-				})
-			}
-			voice();
-			
 			$.ajax({
 	 	  		url:'../../../examineAction?contractId='+$(".contractId").val(),
 	 	  		type:'post',
 	 	  		success:function(data){
 	 	  			for(var i = 0;i<data.length;i++){
-	 	  				console.log(data)
 	 	  				$(".contractName").val(data[i].contractName);
 	 	  				$(".contractType").val(data[i].contractType);
 	 	  				$(".contractMoney").val(data[i].contractMoney);
@@ -111,6 +91,28 @@
 	 	  			alert("网络错误！");
 	 	  		}
 	 	  	})
+	 	  	
+			function voice(){
+				$.ajax({
+					url:'../../../voiceAction',
+					type:'post',
+					success:function(data){
+						var suv = $(".contractType").val();
+						console.log(suv)
+						
+						$(".contractType").empty();
+						var arr = "";
+						for(var i = 0;i<data.length;i++){
+							arr+="<option value = "+data[i].genreId+">"+data[i].genreName+"</option>";
+						}
+						$(".contractType").html(arr);
+					},error:function(){
+						alert("网络错误！");
+					}
+				})
+			}
+			voice();
+			
 		</script>
 	</body>
 </html>

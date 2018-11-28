@@ -139,11 +139,12 @@ public class ContractAction{
 	@RequestMapping(value = "/someBodyAction")
 	public Map<String,Object> someBodyAction(Contract con,@RequestParam(value = "msg",required = false) String msg,Map<String,Object> map){
 		con.setContractState(2);
+		System.out.println("-----------------------"+con.getStaffId());
 		int updateSubmit = contractService.updateSubmit(con);
 		if(updateSubmit > 0) {
-			msg = "修改成功！";
+			msg = "合同提交成功！";
 		}else {
-			msg = "修改失败！";
+			msg = "合同提交失败！";
 		}
 		map = new HashMap<String, Object>();
 		map.put("code", updateSubmit);
@@ -161,16 +162,97 @@ public class ContractAction{
 	@ResponseBody
 	@RequestMapping(value = "/processAction")
 	public Map<String,Object> processAction (Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
-		int updateExamine = contractService.updateExamine(con);
 		con.setContractState(3);
+		int updateExamine = contractService.updateExamine(con);
 		if(updateExamine >0) {
-			msg = "修改成功！";
+			msg = "合同审核成功！";
 		}else {
-			msg = "修改失败！";
+			msg = "合同审核失败！";
 		}
-		map = new HashMap<String, Object>();
+		map = new HashMap<String,Object>();
 		map.put("code", updateExamine);
 		map.put("msg", msg);
 		return map;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/waittingAction")
+	public Map<String,Object> waittingAction (Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+		con.setContractState(4);
+		int updateExamine = contractService.updateExamine(con);
+		if(updateExamine >0) {
+			msg = "合同审核成功！";
+		}else {
+			msg = "合同审核失败！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("code", updateExamine);
+		map.put("msg", msg);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/executiveAction")
+	public Map<String,Object> executiveAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+		con.setContractState(5);
+		int updatePower = contractService.updatePower(con);
+		if(updatePower > 0) {
+			msg = "合同执行成功！";
+		}else {
+			msg = "合同执行失败！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("code", updatePower);
+		map.put("msg", msg);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/trainAction")
+	public Map<String,Object> trainAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+		con.setContractState(7);
+		int updatePolicy = contractService.updatePolicy(con);
+		if(updatePolicy > 0) {
+			msg = "合同变更成功！";
+		}else {
+			msg = "合同变更失败！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("code", updatePolicy);
+		map.put("msg", msg);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/cancelAction")
+	public Map<String,Object> cancelAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+		con.setContractState(8);
+		int updateDispel = contractService.updateDispel(con);
+		if(updateDispel>0) {
+			msg = "合同解除成功！";
+		}else {
+			msg = "合同解除失败！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("code", updateDispel);
+		map.put("msg", msg);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/beachAction")
+	public Map<String,Object> beachAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+		con.setContractState(1);
+		int updateRepulse = contractService.updateRepulse(con);
+		if(updateRepulse >0) {
+			msg = "审核成功！";
+		}else {
+			msg = "审核失败！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("code", updateRepulse);
+		map.put("msg", msg);
+		return map;
+	}
+	
 }

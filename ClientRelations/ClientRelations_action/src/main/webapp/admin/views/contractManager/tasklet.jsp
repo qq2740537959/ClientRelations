@@ -28,6 +28,7 @@
 		<form method = "post" id = "she">
 		<div class="div_total" id = "total">
 			<input type="hidden" name="contractId" class="contractId" value="${param.contractId}" />
+			
 			<h3>合同管理 >> 提交合同</h3>
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
 				<label>合同名称：</label><input type="text" size="67px;" name = "contractName" class="contractName" />				
@@ -83,7 +84,7 @@
 			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
 				<input type="button" value="提交" style = "width:80px; height:30px;" id = "gucation"/>
 				
-				<a href="" style="display: block; width: 58px;height: 23px;border: 1px solid;padding-top: 5px;padding-left: 20px;float: right;">返回</a>
+				<input type="button" value="返回" style = "width:80px; height:30px;" id = "back"/>
 			</div>
 		</div>
 		</form>
@@ -173,7 +174,10 @@
 						data:$("#she").serialize(),
 						type:'post',
 						success:function(data){
-							
+							var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+							parent.layer.msg("提交成功！");
+							parent.layer.close(index);
+							parent.refershuaxin();
 						},error:function(){
 							alert("网络错误！");
 						}
@@ -181,6 +185,16 @@
 				})
 			}
 			babyTrage();
+			
+			function duack(){
+				$("#back").on("click",function(){
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+					parent.layer.msg("返回成功！");
+					parent.layer.close(index);
+					parent.refershuaxin();
+				})
+			}
+			duack();
 		</script>
 	</body>
 </html>

@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="../../layui/css/layui.css" />
 		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="../../layui/layui.js"></script>
+		<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
 		<style>
 			div.layui-form.layui-border-box.layui-table-view{
 				width: 685px;
@@ -75,15 +76,14 @@
 				填写并核对订单信息
 				<hr>
 				<% 
-		    		Object product =  request.getParameter("product");
 		    		Object clientId = request.getParameter("clientId");
-		    		Object number = request.getParameter("number");
-		    		Object price = request.getParameter("price");
+					
 		    	%>
 				<input type="hidden" name="consigneeName" class="consigneeName">
 				<input type="hidden" name="phone" class="phone">
 				<input type="hidden" name="province" class="province">
 				<input type="hidden" name="city" class="city">
+				<input type="hidden" name="area" class="area">
 				<input type="hidden" name="detailAddress" class="detailAddress">
 				<form action="../../../projectPay" method="post">
 					<div style="font-size: 17px;">
@@ -108,14 +108,15 @@
 						 <input type="radio" value="公司" name="commercialVoucher">
 							公司明细
 					</div>
-					<input type="hidden" name="orderMoney" value="<%=price %>">
+					<input type="hidden" name="orderMoney" class="orderMoney">
 			    	<input type="hidden" name="commodity" class="commodity">
-			    	<input type="hidden" name="commodityNumber" value="<%=number %>">
+			    	<input type="hidden" name="commodityNumber" class="commodityNumber">
 			    	<input type="hidden" value="<%=clientId %>" name="clientId" class="client">
 		   			<input type="hidden" value="<%=clientId %>" name="staffId">
+		   			<input type="hidden" name="shippingAddressId" class="shippingAddressId">
 				</form>
 			</div>
-		    <div style="width: 685px;margin-left: 100px;">
+		    <div style="width: 685px;margin-left: 100px;margin-top: 50px;">
 		    	<hr>
 		    </div>
 		    <div class="div_title_btn">
@@ -123,47 +124,70 @@
 			    	商品清单
 			    </span>
 			    <span class="span_btn">
-			    	<input type="hidden"  name="product" class="product" value="<%=product %>">
+			    	<input type="hidden"  name="product" class="product" value="30>">
 			    	<a href="selectProduct.jsp?clientId=<%=clientId %>">
 			    		<button class="layui-btn layui-btn-radius">返回</button>
 			    	</a>
 			    </span>
 		    </div>
-			<table class="layui-hide" id="test"></table>
+			<table class="shopping" border="1" bordercolor="#E6E6E6" style="margin-left:90px;text-align:center;width:690px;font-size: 14px;color: #666;">
+			</table><br />
 			<div class="div_c">
-			 	<font color="red"><%=number %></font> 件商品，总商品金额：    ￥<%=price %>元
+			 	<font color="red" class="totalNumber">20</font> 件商品，总商品金额：    ￥<span class="totalMoney"></span>元
 			</div>
 			<div class="div_c">
 			 	 运费：  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   ￥0.00元
 			</div> 
 			<div class="div_c">
-			 	 应付总额：      ￥<%=price %>元
+			 	 应付总额：      ￥<span class="totalMoney"></span>元
 			</div>
 			<div style="width: 685px;margin-left: 100px;">
 		    	<hr>
 		    </div>
 		    <div style="font-size: 18px;margin-left: 100px;width: 685px;height: 70px;line-height:70px;text-align: right;">
-		    	应付总额：<font color="red">￥<%=price %>元 </font>&nbsp; &nbsp; &nbsp;
+		    	应付总额：<font color="red">￥<span class="totalMoney"></span>元 </font>&nbsp; &nbsp; &nbsp;
 		    	<div class="sub-order layui-btn">提交订单</div> 
 		    </div>
 		</div>
-		<script type="text/javascript">
-			var clientId = $(".client").val();
-			var product = $(".product").val();
+	<script type="text/javascript">
+		var ary = new Array();
+		var ddd = $.cookie('the_cookie');
+		ary=ddd.split(","); //字符分割 
+		let subArrayNum = 5;
+		var dataArr = new Array(Math.ceil(ary.length / subArrayNum));
+        for(let i = 0; i < dataArr.length;i++) {
+            dataArr[i] = new Array();
+            for(let j = 0; j < subArrayNum; j++) {
+                dataArr[i][j] = '';
+            }
+        }
+        for(let i = 0; i < ary.length;i++) {
+            dataArr[parseInt(i / subArrayNum)][i % subArrayNum] = ary[i]; 
+        }
+        $(".shopping").empty();
+        var totalMoney = 0;//总数量
+		var totalNumber = 0;//总金额
+		var productNumber = "";
+		var product = "";
+        var a = "<tr style='height:45px;' bgcolor='#F2F2F2'><th>商品名称</th><th>型号</th><th>单价（单位：万元）</th><th>数量</th></tr>";
+        for (var i = 0; i < dataArr.length; i++) {
+        	a+="<tr style='height:45px;'><td>"+dataArr[i][1]+"</td><td>"+dataArr[i][2]+"</td><td>"+dataArr[i][3]+"</td><td>x"+dataArr[i][4]+"</td></tr>";
+        	totalMoney += parseInt(dataArr[i][3]);
+        	totalNumber += parseInt(dataArr[i][4]);
+        	productNumber += parseInt(dataArr[i][0])+","+parseInt(dataArr[i][4])+"-";
+        	product += dataArr[i][1]+",";
+		}
+        $(".commodity").val(product);
+        $(".totalMoney").empty();
+        $(".totalNumber").empty();
+        $(".totalMoney").html(totalMoney);
+        $(".totalNumber").html(totalNumber);
+        $(".commodityNumber").val(totalNumber);
+        $(".orderMoney").val(totalMoney);
+        $(".shopping").append(a);
+		var clientId = $(".client").val();
+		var product = $(".product").val();
 			layui.use(['table','layer'], function(){
-			  var table = layui.table;
-			  table.render({
-			    elem: '#test'
-			    ,url:'../../../selectProductById?product='+product
-			    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-			    ,cols: [[
-			      {field:'productName', width:135, title: '商品名称'}
-			      ,{field:'productTypeNumber', width:135, title: '型号'}
-			      ,{field:'price', width:135, title: '单价(单位:万元)'}
-			      ,{field:'productNumber', width:135, title: '数量'}
-			      ,{field:'productNumber', title: '库存', width: '30%', width: 138,templet:'#inventoryLet'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-			    ]]
-			  });
 			  /* 查询客户的收货地址 */
 			  $.ajax({
 				  url:'../../../selectAddressByClidentId?clientId='+clientId,
@@ -180,6 +204,7 @@
 						$(".shippingAddress").empty();
 						$(".shippingAddress").empty();
 	 					$(".shippingAddress").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.consigneeName+"  &nbsp;&nbsp; "+data.phone+" <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "+data.province+" &nbsp;&nbsp; "+data.city+"  &nbsp;&nbsp;"+data.area+"&nbsp;&nbsp;"+data.detailAddress+"  ");
+	 					$(".shippingAddressId").val(data.id);
 					  }
 				  }
 			  });
@@ -192,15 +217,7 @@
 			  	})
 			  })
 			});
-			$.ajax({
-				url:'../../../selectProductByIdes?product='+product,
-				type:'post',
-				success:function(data){
-					$(".commodity").val(data);
-				}
-			});
 			function test(a){
-				console.log(a);
 				var city = "";
 				city += a[2].value+",";
 				city += a[3].value+",";
@@ -208,7 +225,6 @@
 				var province = "";
 				var citys = "";
 				var area = "";
-				
 				$.ajax({
 					url:'../../../selectTpById?city='+city,
 					type:'post',
@@ -237,11 +253,30 @@
 									  // 存在就修改收货地址 
 									  address = "updateAddress";
 								  }
+								  console.log("clientId:"+clientId);
 								  $.ajax({
 									url:'../../../'+address,
 									type:'post',
 									data:'consigneeName='+a[0].value+'&phone='+a[1].value+'&province='+province+'&city='+citys+'&area='+area+'&detailAddress='+a[5].value+'&clientId='+clientId,
-									success:function(data){
+									success:function(a){
+										if(a == 'success'){
+											if(data == null){
+												alert("data==null");
+												$.ajax({
+													  url:'../../../selectAddressByClidentId?clientId='+clientId,
+													  type:'post',
+													  dataType:'json',
+													  success:function(dd){
+														  alert("data==null222");
+														  if(dd != null){
+															alert("dd.id:"+dd.id);
+															$(".shippingAddressId").val(dd.id);
+														  }
+													  }
+												  });
+											} 
+										}
+										
 									}
 								}); 
 							  }
@@ -266,8 +301,16 @@
 				var area = $(".area").val();
 				var detail = $(".detailAddress").val();
 				if(consigneeName.length != 0 && prov.length != 0 && c.length != 0 && area.length != 0 && detail.length != 0){
+					$.ajax({
+						url:'../../../reduceProductNumber',
+						type:'post',
+						data:'productNumber='+productNumber,
+						success:function(data){
+							console.log(data);
+						}
+					});
 					if(modeOfPayment == '货到付款'){
-						location.href="changeHands.jsp";
+						location.href = "../../../cashOnDelivery?orderIndent="+$("form").serialize();
 					}else if(modeOfPayment == '支付宝'){
 						$("form").submit();
 					}

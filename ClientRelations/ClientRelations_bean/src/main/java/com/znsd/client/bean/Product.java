@@ -6,6 +6,7 @@ public class Product {
 	private String productTypeNumber;//商品型号
 	private double price;//单价
 	private Integer productNumber;//商品库存数量
+	private int number;
 	public Integer getProductId() {
 		return productId;
 	}
@@ -35,6 +36,13 @@ public class Product {
 	}
 	public void setProductNumber(Integer productNumber) {
 		this.productNumber = productNumber;
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
 	}
 	@Override
 	public String toString() {

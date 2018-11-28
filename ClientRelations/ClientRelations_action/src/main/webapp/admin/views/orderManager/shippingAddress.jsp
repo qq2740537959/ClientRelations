@@ -118,7 +118,6 @@ String basePath = request.getScheme() + "://"
 	</div>
 	<script>
 		 var clientId = <%=clientId%>;
-		 alert(clientId);
 		 // 查询客户的收货地址
 		 //重新渲染表单
 		 layui.use(['form'], function() {

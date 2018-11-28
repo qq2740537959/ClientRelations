@@ -99,4 +99,9 @@ public class ClientTest {
 		}
 	}
 	
+	@Test
+	public void testInfo() {
+		Map<String, Object> amp = worthService.selectClientInfo(1);
+		System.out.println(amp);
+	}
 }

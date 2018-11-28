@@ -180,14 +180,14 @@
 					var formData = $(".layui-form").serialize();
 					var contactsId = $(".contactsId_span").text();
 					console.log(formData);
-					$.ajax({
+					 $.ajax({
 						type:"post",
 						url:"/ClientRelations_action/updateContacts",
 						data:formData+"&contactsId="+contactsId,
 						success:function(t){
 							closeIndex(t.msg);
 						}
-					})
+					}) 
 					return false;
 				});
 				

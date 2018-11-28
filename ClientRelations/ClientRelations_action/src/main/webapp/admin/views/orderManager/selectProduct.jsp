@@ -16,6 +16,7 @@
   		<link rel="stylesheet" href="../../css/carts.css">
 		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="../../layui/layui.js"></script>
+		<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
 		<script src="../../js/carts.js" ></script>
 		<style>
 			div.layui-form.layui-border-box.layui-table-view{
@@ -102,7 +103,9 @@
 				}
 			})
 			layui.use('table', function(){
-			  var table = layui.table;
+			  var table = layui.table
+			  ,form = layui.form;
+			  
 			  table.render({
 			    elem: '#test'
 			    ,url:'../../../selectProduct'
@@ -113,53 +116,60 @@
 			      ,{field:'productName', width:140, title: '商品名称'}
 			      ,{field:'productTypeNumber', width:140, title: '商品型号'}
 			      ,{field:'price', width:140, title: '单价'}
-			      ,{field:'number', width:140, title: '数量',templet:'#demo'}
-			      ,{field:'productNumber', width:115, title: '库存',templet:'#inventoryLet'}
+			      ,{field:'number', width:140, title: '输入购买数量', edit: 'number'}
+			      ,{field:'productNumber', width:115, title: '库存',templet:'#inventoryLet'} 
 			    ]]
 			    ,page: true
 			    ,limit:'5'
 			    ,limits:[1,2,3,4,5]
 			  });
 			  
-			  //头工具栏事件
-			  table.on('toolbar(test)', function(obj){
-			    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
-			    switch(obj.event){
-			      case 'getCheckData':
-			        var data = checkStatus.data;  //获取选中行数据
-			       	var product = "";
-			       	var num = $(".numbers").val();
-			       	var count = 0;
-			       	var prices = 0
-			        for(var a=0;a<data.length;a++){
-			        	product += data[a].productId+",";
-			        	count++;
-			        	var price = $(".prices").val();
-			        	$(".prices").val(parseInt(price)+data[a].price);
-			        	prices = parseInt(price)+data[a].price;
-			        }
-			        $(".numbers").val(parseInt(num)+count)
-			        var number = parseInt(num)+count;
-			        if(product.length == 0){
-			        	alert("请选择要购买的商品");
-			        }else{
-			        	location.href= "orderSettleAccounts.jsp?clientId="+clientId+"&product="+product+"&number="+number+"&price="+prices;
-			        }
-			      break;
-			    };
+			  table.on('edit(test)', function(obj){
+			    var value = obj.value //得到修改后的值
+			    ,data = obj.data //得到所在行所有键值
+			    ,field = obj.field; //得到字段
+			  	console.log(value);
 			  });
+				//头工具栏事件
+				table.on('toolbar(test)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+					switch (obj.event) {
+					case 'getCheckData':
+						var data = checkStatus.data; //获取选中行数据
+						var product = "";
+						var num = $(".numbers").val();
+						var ary = new Array();
+						for (var a = 0; a < data.length; a++) {
+							product += data[a].productId + ",";
+							ary[a] = new Array();
+							ary[a][0] = data[a].productId;
+							ary[a][1] = data[a].productName;
+							ary[a][2] = data[a].productTypeNumber;
+							ary[a][3] = data[a].price;
+							ary[a][4] = data[a].number;
+						}
+						if(product.length == 0) {
+							alert("请选择要购买的商品");
+						} else {
+							$.cookie('the_cookie', ary);
+							location.href = "orderSettleAccounts.jsp?clientId="+clientId;
+						}
+						break;
+					}
+					;
+				});
 			});
 		</script>
 		<script type="text/html" id="inventoryLet">
-		 	 	{{d.productNumber==0?'售罄':'有货'}}
+		 	{{d.productNumber==0?'售罄':'有货'}}
 		</script>
 		<script type="text/html" id="demo">
 			<ul class="order_lists" >
 	            <li class="list_amount" >
 	                <div class="amount_box">
 	                    <a href="javascript:;" class="reduce reSty" onclick="bb(this,{{d.price}})" style="margin-top: -20px;">-</a>
-	                    <input type="text" value="1" class="sum" style="margin-top: -15px;">
-	                    <a href="javascript:;" class="plus" onclick="aa(this,{{d.productNumber}},{{d.price}});" style="margin-top: -20px;">+</a>
+	                    <input type="text"  value="1"  class="sum shoppingNumber " style="margin-top: -15px;">
+	                    <a href="javascript:;" class="plus" onclick="aa(this,{{d.productNumber}},{{d.price}});"  style="margin-top: -20px;">+</a>
 	                </div>
 	            </li>
 	        </ul>
@@ -168,7 +178,6 @@
 			function bb(th,money){
 				if (parseInt($(th).next().val()) > 1) {
 					var m = parseInt($(th).next().val())-1;
-					alert((m*money));
 					$(th).next().val(parseInt($(th).next().val())-1);
 					var num = $(".numbers").val();
 					 $(".numbers").val(parseInt(num)-1);
@@ -183,7 +192,6 @@
 				if(number > 1){
 					 var a = parseInt($(th).prev().val())+1;
 					 $(th).prev().val(parseInt($(th).prev().val())+1);
-					 alert((a*money))
 					 var num = $(".numbers").val();
 					 $(".numbers").val(parseInt(num)+1);
 					 var price = $(".prices").val();

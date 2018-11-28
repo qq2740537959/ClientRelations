@@ -1,7 +1,7 @@
 package com.znsd.client.bean;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -13,34 +13,28 @@ import java.util.Date;
 public class OrderIndent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private double carriage;
-	private String commercialVoucher;
+	private String orderType;
+	private String orderCode;
 	private String commodity;
 	private int commodityNumber;
-	private Date dealTime;
-	private String modeOfDistribution;
-	private String modeOfPayment;
-	private String orderCode;
-	private double orderMoney;
-	private String orderStatus;
-	private String orderType;
 	private int shippingAddressId;
-
+	private double orderMoney;
+	private Integer staffId;
+	private Integer clientId;
+	private double carriage;
+	private Timestamp dealTime;
+	private String orderStatus;
+	private String modeOfPayment;
+	private String commercialVoucher;
+	private String modeOfDistribution;
 	public OrderIndent() {
 	}
-
-
-	
-	
 	public int getId() {
 		return this.id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 	public double getCarriage() {
 		return this.carriage;
 	}
@@ -48,18 +42,24 @@ public class OrderIndent implements Serializable {
 	public void setCarriage(double carriage) {
 		this.carriage = carriage;
 	}
-
-
-	
 	public String getCommercialVoucher() {
 		return this.commercialVoucher;
 	}
-
+	public Integer getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
+	}
+	public Integer getClientId() {
+		return clientId;
+	}
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
+	}
 	public void setCommercialVoucher(String commercialVoucher) {
 		this.commercialVoucher = commercialVoucher;
 	}
-
-
 	public String getCommodity() {
 		return this.commodity;
 	}
@@ -67,9 +67,6 @@ public class OrderIndent implements Serializable {
 	public void setCommodity(String commodity) {
 		this.commodity = commodity;
 	}
-
-
-	
 	public int getCommodityNumber() {
 		return this.commodityNumber;
 	}
@@ -77,20 +74,13 @@ public class OrderIndent implements Serializable {
 	public void setCommodityNumber(int commodityNumber) {
 		this.commodityNumber = commodityNumber;
 	}
-
-
-	
-	
-	public Date getDealTime() {
+	public Timestamp getDealTime() {
 		return this.dealTime;
 	}
 
-	public void setDealTime(Date dealTime) {
+	public void setDealTime(String Timestamp) {
 		this.dealTime = dealTime;
 	}
-
-
-	
 	public String getModeOfDistribution() {
 		return this.modeOfDistribution;
 	}
@@ -98,9 +88,6 @@ public class OrderIndent implements Serializable {
 	public void setModeOfDistribution(String modeOfDistribution) {
 		this.modeOfDistribution = modeOfDistribution;
 	}
-
-
-	
 	public String getModeOfPayment() {
 		return this.modeOfPayment;
 	}
@@ -108,9 +95,6 @@ public class OrderIndent implements Serializable {
 	public void setModeOfPayment(String modeOfPayment) {
 		this.modeOfPayment = modeOfPayment;
 	}
-
-
-	
 	public String getOrderCode() {
 		return this.orderCode;
 	}
@@ -118,19 +102,12 @@ public class OrderIndent implements Serializable {
 	public void setOrderCode(String orderCode) {
 		this.orderCode = orderCode;
 	}
-
-
-	
 	public double getOrderMoney() {
 		return this.orderMoney;
 	}
-
 	public void setOrderMoney(double orderMoney) {
 		this.orderMoney = orderMoney;
 	}
-
-
-	
 	public String getOrderStatus() {
 		return this.orderStatus;
 	}
@@ -138,9 +115,6 @@ public class OrderIndent implements Serializable {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-
-
-	
 	public String getOrderType() {
 		return this.orderType;
 	}
@@ -148,9 +122,6 @@ public class OrderIndent implements Serializable {
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
 	}
-
-
-	
 	public int getShippingAddressId() {
 		return this.shippingAddressId;
 	}

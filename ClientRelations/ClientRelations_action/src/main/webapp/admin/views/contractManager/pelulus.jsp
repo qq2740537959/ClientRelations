@@ -83,10 +83,10 @@
 				<input style="width: 499px;height: 100px;border: 1px solid;margin-top: 20px;" name = "examine" class = "examine"/>
 					
 			</div>
-			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
-				<input type="button" value="提交" style = "width:80px; height:30px;" id = "repair" />
-				
-				<a href="" style="display: block; width: 58px;height: 23px;border: 1px solid;padding-top: 5px;padding-left: 20px;float: right;">返回</a>
+			<div style="float: left;margin-top: 39px;width:249px ;height: 100px;margin-left: 300px;">
+				<input type="button" value="通过" style = "width:80px; height:30px;" id = "repair" />
+				<input type="button" value="打回" style = "width:80px; height:30px;" id = "fight"/>
+				<input type="button" value="返回" style = "width:80px; height:30px;" id = "back"/>
 			</div>
 		</div>
 		</form>
@@ -198,7 +198,10 @@
 						data:$("#king").serialize(),
 						type:'post',
 						success:function(data){
-							console.log(data);
+							var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+							parent.layer.msg("审核成功！");
+							parent.layer.close(index);
+							parent.referhuy();
 						},error:function(){
 							alert("网络错误！");
 						}
@@ -206,6 +209,32 @@
 				})
 			}
 			weldHoldaing();
+			
+			function facebook(){
+				$("#back").on("click",function(){
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+					parent.layer.msg("返回成功！");
+					parent.layer.close(index);
+					parent.refershuaxin();
+				})
+			}
+			facebook();
+			
+			function basketball(){
+				$("#fight").on("click",function(){
+					$.ajax({
+						url:'../../../beachAction?con.contractId='+$(".contractId").val(),
+						type:'post',
+						data:$("#king").serialize(),
+						success:function(data){
+							console.log(data);
+						},error:function(){
+							alert("网络错误！");
+						}
+					})
+				})
+			}
+			basketball();
 		</script>
 	</body>
 </html>

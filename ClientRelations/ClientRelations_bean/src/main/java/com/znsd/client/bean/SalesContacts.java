@@ -1,7 +1,5 @@
 package com.znsd.client.bean;
 
-import java.util.Date;
-
 public class SalesContacts {
 	private int contactsId;
 	private String name;
@@ -9,7 +7,7 @@ public class SalesContacts {
 	private String phone;
 	private String address;
 	private String remark;
-	private Date birthday;
+	private String birthday;
 	private String chanceContent;
 	private String workPhone;
 	private String familyPhone;
@@ -50,10 +48,10 @@ public class SalesContacts {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public String getChanceContent() {
@@ -88,7 +86,7 @@ public class SalesContacts {
 				+ "]";
 	}
 	public SalesContacts(int contactsId, String name, String sex, String phone, String address, String remark,
-			Date birthday, String chanceContent, String workPhone, String familyPhone, String email) {
+			String birthday, String chanceContent, String workPhone, String familyPhone, String email) {
 		super();
 		this.contactsId = contactsId;
 		this.name = name;

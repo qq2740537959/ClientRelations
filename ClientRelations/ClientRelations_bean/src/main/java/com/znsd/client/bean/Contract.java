@@ -29,7 +29,8 @@ public class Contract implements Serializable {
 	private String relieve;
 	private String remarks;
 	private String transferPossession;
-
+	private int establish;
+	
 	public Contract() {
 	}
 
@@ -55,8 +56,24 @@ public class Contract implements Serializable {
 		this.anotherLicence = anotherLicence;
 	}
 
-
 	
+	
+	public int getEstablish() {
+		return establish;
+	}
+
+
+
+
+
+	public void setEstablish(int establish) {
+		this.establish = establish;
+	}
+
+
+
+
+
 	public String getContractContent() {
 		return this.contractContent;
 	}
@@ -232,6 +249,9 @@ public class Contract implements Serializable {
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
 		return "Contract [contractId=" + contractId + ", anotherLicence=" + anotherLicence + ", contractContent="
@@ -240,7 +260,7 @@ public class Contract implements Serializable {
 				+ ", staffId=" + staffId + ", lastTime=" + lastTime + ", myselfLicence=" + myselfLicence
 				+ ", otherCompany=" + otherCompany + ", ownCompany=" + ownCompany + ", performance=" + performance
 				+ ", reasonsChange=" + reasonsChange + ", relieve=" + relieve + ", remarks=" + remarks
-				+ ", transferPossession=" + transferPossession + "]";
+				+ ", transferPossession=" + transferPossession + ", establish=" + establish + "]";
 	}
 
 
@@ -250,7 +270,7 @@ public class Contract implements Serializable {
 	public Contract(int contractId, String anotherLicence, String contractContent, double contractMoney,
 			String contractName, int contractState, int contractType, String examine, int staffId, String lastTime,
 			String myselfLicence, String otherCompany, String ownCompany, String performance, String reasonsChange,
-			String relieve, String remarks, String transferPossession) {
+			String relieve, String remarks, String transferPossession, int establish) {
 		super();
 		this.contractId = contractId;
 		this.anotherLicence = anotherLicence;
@@ -270,6 +290,7 @@ public class Contract implements Serializable {
 		this.relieve = relieve;
 		this.remarks = remarks;
 		this.transferPossession = transferPossession;
+		this.establish = establish;
 	}
 
 	

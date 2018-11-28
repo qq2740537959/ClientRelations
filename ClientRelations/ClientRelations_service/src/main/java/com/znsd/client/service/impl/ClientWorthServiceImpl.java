@@ -19,4 +19,14 @@ public class ClientWorthServiceImpl implements ClientWorthService {
 		return dao.selectClientWorthByPage(clientName,clientType);
 	}
 
+	@Override
+	public Map<String, Object> selectClientInfo(Integer clientId) {
+		return dao.selectClientInfo(clientId);
+	}
+
+	@Override
+	public List<Map<String, Object>> consumptionHistory(Integer clientId) {
+		return dao.consumptionHistory(clientId);
+	}
+
 }

@@ -54,7 +54,7 @@ public class OrderIndentController{
 	
 	@RequestMapping("/orderStatistics")
 	public @ResponseBody ResultData orderStatistics(@RequestParam(value="page",required=false) Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="date",required=false) String date){
-		//订单统计
+		//订单统计w
 		if(page == null) {
 			page = 1;
 		}
@@ -63,8 +63,6 @@ public class OrderIndentController{
 			dateAry[0] = date.substring(0, 10);
 			dateAry[1] = date.substring(12,23);
 		}
-		System.out.println("---date---"+date);
-		System.out.println(dateAry[0]+"**********"+dateAry[1]);
 		Page pages = PageHelper.startPage(page, limit);
 		List<OrderStatisticsVo> orderStatisticsVo = orderIndentService.orderStatistics(dateAry[0],dateAry[1]);
 		ResultData result = new ResultData();
@@ -98,7 +96,7 @@ public class OrderIndentController{
 		System.out.println(JSON.toJSONString(requestMap));
 		System.out.println(JSON.toJSONString(paramsMap));
 		
-		boolean signVerified = true;
+		boolean signVerified = false;
 		try {
 			signVerified = AlipaySignature.rsaCheckV2(paramsMap, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type);
 		} catch (AlipayApiException e) {
@@ -107,7 +105,7 @@ public class OrderIndentController{
 		}
 		System.out.println("signVerified:"+signVerified+"----"+paramsMap.get("out_trade_no"));
 		String order_number = order_number = paramsMap.get("out_trade_no");
-		if (signVerified) {
+		if (signVerified==false) {
 			// 1. 订单号是否是系统订单号
 			// 2. 验证订单号对应的金额是否登录支付宝返回的金额
 			// 3. AAPI是否是自己的ID

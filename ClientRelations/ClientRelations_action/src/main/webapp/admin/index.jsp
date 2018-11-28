@@ -26,7 +26,9 @@
 </head>
 <body class="layui-layout-body">
 	<c:if test="${userInfo eq null }">
-		<jsp:forward page="login.jsp"></jsp:forward>
+		<%
+			response.sendRedirect("../");
+		%>
 	</c:if>
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header custom-header">
@@ -54,7 +56,7 @@
 
                 <div class="custom-logo">
                     <img src="assets/images/logo.png" alt=""/>
-                    <h1>LXIT_HUA</h1>
+                    <h1>客户关系管理系统</h1>
                 </div>
                 <ul id="Nav" class="layui-nav layui-nav-tree">
                     <li class="layui-nav-item">
@@ -66,8 +68,8 @@
                         	<dd><a href="">角色管理</a></dd>
                         	<dd><a href="views/systemManager/organization.html">组织结构</a></dd>
                         	<dd><a href="views/systemManager/staffManager.html">员工管理</a></dd>
-                        	<dd><a href="">公告管理</a></dd>
-                        	<dd><a href="">个人信息</a></dd>
+                        	<dd><a href="views/systemManager/noticeManager.html">公告管理</a></dd>
+                        	<dd><a href="views/systemManager/staffInfo.jsp">个人信息</a></dd>
                         	<dd><a href="">基础信息</a></dd>
                         </dl>
                     </li>

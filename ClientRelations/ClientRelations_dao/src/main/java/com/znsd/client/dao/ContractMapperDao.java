@@ -42,4 +42,12 @@ public interface ContractMapperDao {
 	public List<Contract> selectCredit(int contractId);
 	
 	public int updateExamine(Contract con);
+	
+	public int updatePower(Contract con);
+	
+	public int updatePolicy(Contract con);
+	
+	public int updateDispel(Contract con);
+	
+	public int updateRepulse(Contract con);
 }

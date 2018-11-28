@@ -124,7 +124,7 @@
 						content:"details.jsp?contractId="+con,
 					})
 			   	} else if(layEvent === 'verification') { //审核
-			   		if(data.shapeName == '已订立'){
+			   		if(data.shapeName == '已提交'){
 			   			layer.open({
 							type:2,
 							area:['800px','600px'],
@@ -138,7 +138,7 @@
 			   				content:"favourable.jsp?contractId="+con,
 			   			})
 			   		}else{
-			   			alert("合同已订立和待审核才能审核");
+			   			alert("合同已提交和待审核才能审核");
 			   		}
 			   	}
 			});
@@ -204,6 +204,10 @@
 			})
 		}
 		voice();
+		
+		function referhuy(){
+			$("#refer").click();
+		}
 		
 		$('#refer').on('click', function(){
 			layui.use('table', function(){

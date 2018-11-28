@@ -43,7 +43,7 @@
 	</head>
 	<body>
 		<div class="div_total">
-			<h3>合同管理 >> 合同创建</h3>
+			<h3>合同管理 >> 合同管理</h3>
 			<div class="layui-inline">
 		      <div class="layui-input-inline">
 		      	<form class="layui-form">
@@ -86,7 +86,7 @@
 		 
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
-    			<button class="layui-btn layui-btn-sm refer" lay-event="query">查看</button>
+    			<button class="layui-btn layui-btn-sm" lay-event="query">查看</button>
     			<button class="layui-btn layui-btn-sm" lay-event="carry">执行</button>
 				<button class="layui-btn layui-btn-sm" lay-event="modify">变更</button>
 				<button class="layui-btn layui-btn-sm" lay-event="transfer">转让</button>
@@ -128,21 +128,35 @@
 						area:['800px','600px'],
 						content:"details.jsp?contractId="+con,
 					})
-			   	} else if(layEvent === 'modify') { //修改
-					layer.open({
-						type:2,
-						area:['800px','600px'],
-						content:"clearly.jsp?contractId="+con,
-					})
+			   	} else if(layEvent === 'modify') { //变更
+			   		if(shapeName == '履行中'){
+			   			layer.open({
+							type:2,
+							area:['800px','600px'],
+							content:"alteration.jsp?contractId="+con,
+						})
+			   		}else{
+			   			alert("合同履行中才能变更");
+			   		}
 			   	}else if(layEvent === 'carry'){
-			   		if(shapeName == '已审核'){
+			   		 if(shapeName == '已审核'){
 			   			layer.open({
 				   			type:2,
 				   			area:['800px','600px'],
-				   			content:"enforcer.jsp?contractId"+con,
+				   			content:"enforcer.jsp?contractId="+con,
 				   		})
 			   		}else{
 			   			alert("合同审核才能执行");
+			   		}
+			   	}else if(layEvent === 'relieve'){
+			   		if(shapeName == '履行中'){
+			   			layer.open({
+							type:2,
+							area:['800px','600px'],
+							content:"discharge.jsp?contractId="+con,
+						})
+			   		}else{
+			   			alert("合同履行中才能解除");
 			   		}
 			   	}
 			});
@@ -201,6 +215,10 @@
 			})
 		}
 		voice();
+		
+		function referkop(){
+			$("#refer").click();
+		}
 		
 		$('#refer').on('click', function(){
 			layui.use('table', function(){

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="../../layui/css/layui.css">
 <link rel="stylesheet" href="../../assets/css/view.css" />
-<link rel="icon" href="/favicon.ico">
+<!-- <link rel="icon" href="/favicon.ico"> -->
 <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 <title>销售计划</title>
 <style type="text/css">
@@ -35,20 +35,18 @@
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
 						</div>
-						<button class="layui-btn layui-btn-blue add_but">
-							<i class="layui-icon">&#xe654;</i>新增
-						</button>
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
-							<a class="layui-btn layui-btn-xs " lay-event="see">查看</a>
-	    					<a class="layui-btn layui-btn-xs " lay-event="edit">修改</a>
-	    					<a class="layui-btn layui-btn-xs " lay-event="del">删除</a>
-	    					<a class="layui-btn layui-btn-xs " lay-event="submission">提交</a>
+							
 	    					
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
-						  <div class="layui-btn-container">
-						   
+						  <div class="layui-btn-container" >
+							 <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="add">添加<button>
+    						 <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="edit">修改</button>
+    						 <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="del">删除</button>
+    						 <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="sub">提交</button>
+    						 <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="see">查看</button>
 						  </div>
 						</script>
 					</div>
@@ -66,15 +64,14 @@ layui.use('table', function(){
    
     ,toolbar: '#toolbarDemo'
     ,cols: [[
+      {type:'radio'},
       {field:'planId', width:80, title: 'ID', sort: true}
-      ,{field:'sellingName', width:80, title: '姓名'}
-      ,{field:'planMoth', width:100, title: '月份', sort: true}
-      ,{field:'state', width:80, title: '状态'}
+      ,{field:'sellingName', width:90, title: '姓名'}
+      ,{field:'planMoth', width:110, title: '月份', sort: true}
+      ,{field:'state', width:90, title: '状态'}
       ,{field:'lastTime',width:250, title: '最后操作时间', minWidth: 100,sort: true}
-      ,{field:'operatorName', width:80, title: '操作人'}
+      ,{field:'operatorName', width:100, title: '操作人'}
       ,{field:'pendingName', width:100, title: '待处理人' }
-      ,{width:210,title:"操作",toolbar:"#barDemo"}
-      
     ]]
     ,data: [{//测试使用
 		"planId": "10001"
@@ -85,24 +82,48 @@ layui.use('table', function(){
     ,page: true
   });
   
+//头工具栏事件
+  table.on('toolbar(test)', function(obj){
+    var checkStatus = table.checkStatus(obj.config.id)
+    ,data = checkStatus.data; //获取选中行状态
+    switch(obj.event){
+      case 'add':
+    	  layer.msg("add");
+      break;
+      case 'edit':
+   	  	 if(data.length === 0){
+           layer.msg('请选择一行');
+         }else{
+       	  layer.msg("编辑");
+         }
+         
+      break;
+      case 'del':
+    	  if(data.length === 0){
+              layer.msg('请选择一行');
+            }else{
+          	  layer.msg("删除");
+            }
+      break;
+      case 'sub':
+    	  if(data.length === 0){
+              layer.msg('请选择一行');
+            }else{
+          	  layer.msg("提交");
+            }
+      break;
+      case 'see':
+    	  if(data.length === 0){
+              layer.msg('请选择一行');
+            }else{
+          	  layer.msg("查看");
+            }
+      break;
+     
+    };
+  });
   
-	//监听工具条
-	table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-	   	var data = obj.data; //获得当前行数据
-	   	console.log(data);
-	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
-	   	if(layEvent == 'see') { //查看
 	
-	   	} else if(layEvent === 'del') { //删除
-	
-	   	} else if(layEvent === 'edit') { //修改
-	
-	   	} else if(layEvent === 'submission') {//提交
-	
-	   	}
-	});
-
 });
 
 layui.use('laydate', function(){

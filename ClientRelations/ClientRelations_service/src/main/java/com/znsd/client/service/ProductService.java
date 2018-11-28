@@ -10,4 +10,7 @@ public interface ProductService {
 	
 	//查询商品id的所有商品
 	public List<Product> selectProductById(List<Integer> list);
+	
+	//购买后数量减少
+	public int reduceProductNumber(Integer productId,Integer number);
 }

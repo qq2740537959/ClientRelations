@@ -92,7 +92,7 @@
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
     			<button class="layui-btn layui-btn-sm" lay-event="update">修改</button>
-    			<button class="layui-btn layui-btn-sm refer" lay-event="query">查看</button>
+    			<button class="layui-btn layui-btn-sm" lay-event="query">查看</button>
     			<button class="layui-btn layui-btn-sm" lay-event="audit">提交</button>
   			</div>
 		</script>
@@ -223,7 +223,9 @@
 			})
 		}
 		voice();
-		
+		function refershuaxin(){
+			$("#refer").click();
+		}
 		$('#refer').on('click', function(){
 			layui.use('table', function(){
 				var table = layui.table;

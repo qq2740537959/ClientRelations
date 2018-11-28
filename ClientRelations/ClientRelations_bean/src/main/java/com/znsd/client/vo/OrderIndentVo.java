@@ -10,7 +10,7 @@ public class OrderIndentVo {
 	private String commodity;//购买的商品
 	private String consigneeName;//收货人姓名
 	private double orderMoney;//订单交易金额
-	private Timestamp dealTime;//交易时间
+	private String dealTime;//交易时间
 	private String orderStatus;//交易状态
 	private String province;//省
 	private String city;//市
@@ -18,7 +18,7 @@ public class OrderIndentVo {
 	private String detailAddress;//详细地址
 	
 	public OrderIndentVo(Integer id, String orderType, String orderCode, String commodity, String consigneeName,
-			double orderMoney, Timestamp dealTime, String orderStatus, String province, String city, String area,
+			double orderMoney, String dealTime, String orderStatus, String province, String city, String area,
 			String detailAddress) {
 		super();
 		this.id = id;
@@ -70,10 +70,10 @@ public class OrderIndentVo {
 	public void setOrderMoney(double orderMoney) {
 		this.orderMoney = orderMoney;
 	}
-	public Timestamp getDealTime() {
+	public String getDealTime() {
 		return dealTime;
 	}
-	public void setDealTime(Timestamp dealTime) {
+	public void setDealTime(String dealTime) {
 		this.dealTime = dealTime;
 	}
 	public String getOrderStatus() {

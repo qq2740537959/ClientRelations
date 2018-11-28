@@ -7,8 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.DocFlavor.STRING;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,7 +51,6 @@ public class ClientResourceOperateAction {
 			}else if ("3" .equals(String.valueOf(map.get("state")))) {
 				map.put("state", "已流失");
 			}
-			System.out.println(map.get("birthday")+"------时间");
 		}
 		model = new HashMap<String, Object>();
 		model.put("code", 0);
@@ -92,7 +94,29 @@ public class ClientResourceOperateAction {
 			msg = new StringBuffer("修改失败");
 		}
 		model = new HashMap<String, Object>();
-		model.put("msg", 1);
+		model.put("msg", msg);
 		return model;
 	}
-}
+	
+	@RequestMapping("/updateStaffId")
+	@ResponseBody
+	public Map<String, Object> updateStaffId(@RequestParam("staffId") Integer staffId, @RequestParam("clientId") Integer clientId,Map<String, Object> model){
+		String msg;
+		Integer count = service.updateStaffId(staffId, clientId);
+		if (count > 0) {
+			msg = "分配成功";
+		}else {
+			msg = "分配失败";
+		}
+		model = new HashMap<String, Object>();
+		model.put("msg", msg);
+		return model;
+	}
+	
+	/*@RequestMapping("/updasteChanceId")
+	public Map<String, Object> updateChanceId(@RequestParam("staffId") Integer staffId, @RequestParam("clientId") Integer clientId, Map<String, Object> model){
+		
+		return model;
+	}*/
+	
+ }

@@ -83,4 +83,24 @@ public class ContractServiceImp implements ContractService{
 	public int updateExamine(Contract con) {
 		return dao.updateExamine(con);
 	}
+
+	@Override
+	public int updatePower(Contract con) {
+		return dao.updatePower(con);
+	}
+
+	@Override
+	public int updatePolicy(Contract con) {
+		return dao.updatePolicy(con);
+	}
+
+	@Override
+	public int updateDispel(Contract con) {
+		return dao.updateDispel(con);
+	}
+
+	@Override
+	public int updateRepulse(Contract con) {
+		return dao.updateRepulse(con);
+	}
 }
