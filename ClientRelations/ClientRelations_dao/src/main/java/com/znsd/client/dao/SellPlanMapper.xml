@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.SellPlanDao">
+ 	
+ 	<resultMap type="java.util.HashMap" id="sellPlanMap">
+		<id column="plan_id" property="planId" />
+		<result column="sellingName" property="sellingName"/>
+		<result column="plan_month" property="planMonth"/>
+		<result column="state" property="state"/>
+		<result column="plan_content" property="planContent"/>
+		<result column="pendingName" property="pendingName"/>
+		<result column="last_time" property="lastTime"/>
+		<result column="money" property="money"/>
+	</resultMap>
+ 	
+ 	<insert id="addSellPlan" parameterType="com.znsd.client.bean.SellPlan">
+ 		insert into sell_plan(selling_id,plan_month,state,plan_content,last_time,money) values (#{sellingId},#{planMonth},#{state},#{planContent},#{lastTime},#{money})
+ 	</insert>
+ 	
+ 	<select id="selectSellPlanByPage" resultMap="sellPlanMap">
+ 		select plan_id,state,plan_content,money,
+ 		(select staff_name from staff s where s.staff_id = sp.selling_id) as sellingName,
+ 		(select staff_name from staff s where s.staff_id = sp.pending_id ) as pendingName,
+ 		DATE_FORMAT(plan_month,'%Y-%m') as plan_month,
+ 		DATE_FORMAT(last_time,'%Y-%m-%d %H:%i:%s') as last_time
+ 		from sell_plan as sp where 
+ 		<if test="roleName == '销售代表'">
+ 			selling_id=#{sellingId} 
+ 		</if>
+ 		<if test="roleName != '销售代表' ">
+ 			(pending_id=#{sellingId}  or selling_id=#{sellingId}) and state !=3
+ 		</if>
+ 		<if test="planMonth!=null and planMonth!=''">
+ 			and plan_month like "#{planMonth}%"
+ 		</if>
+ 	</select>
+ 	
+ 	<update id="subSellPlan" >
+		update sell_plan set pending_id = (select staff_id FROM staff  where role_identity = 
+		<if test="roleName == '销售代表'">
+			3
+		</if>
+		<if test="roleName == '销售经理'">
+			2
+		</if>
+		),last_time=now(),state=1 where plan_id = #{planId}
+  	</update> 	
+  	<update id="examineSellPlan" parameterType="com.znsd.client.bean.SellPlan">
+		update sell_plan set state = #{state},pending_id = null,last_time=now() where plan_id = #{planId}
+  	</update>
+  	<delete id="delSellPlan">
+  		delete from sell_plan where plan_id = #{planId}
+  	</delete>
+ </mapper>
