@@ -19,11 +19,11 @@ $(".login-button").click(function(){
 	var loginForm = $(".login-form").serialize();
 	$.ajax({
 		type:"post",
-		url:"../staffLogin",
+		url:"admin/staffLogin",
 		data:loginForm,
 		success:function(t){
 			if (t.code== 0) {
-				location.href = "index.jsp";
+				location.href = "admin/index.jsp";
 			}else{
 				layer.msg(""+t.msg);
 			}
