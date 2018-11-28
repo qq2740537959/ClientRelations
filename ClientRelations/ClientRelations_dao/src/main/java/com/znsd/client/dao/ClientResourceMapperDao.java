@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.znsd.client.bean.ClientResource;
 import com.znsd.client.vo.ClientVo;
-
 @Repository
 public interface ClientResourceMapperDao {
 	//按销售代表id查询客户
@@ -28,4 +27,10 @@ public interface ClientResourceMapperDao {
 	
 	//查询未分配和正常状态的客户
 	public List<Map<String, Object>> selectResourceState(@Param("allotState")Integer allotState,@Param("state")Integer state);
+	
+	//修改分配后客户服务代表
+	public Integer updateStaffId(@Param("staffId")Integer staffId, @Param("clientId")Integer clientId);
+	
+	//增加客户的机会
+	public Integer updateChanceId(@Param("chanceId")Integer chanceId, @Param("clientId")Integer clientId);
 }

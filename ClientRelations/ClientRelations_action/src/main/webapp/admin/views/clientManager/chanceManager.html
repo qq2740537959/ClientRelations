@@ -127,7 +127,7 @@
 				<label class="layui-form-label">类型：</label>
 				<div class="layui-input-inline">
 					<select name="clientType" class="typeb">
-						<option value="普通" selected>普通客户</option>
+						<option value="普通" selected="selected">普通客户</option>
 						<option value="银卡" selected="">银卡客户</option>
 						<option value="金卡" selected="">金卡客户</option>
 						<option value="vip" selected="">vip客户</option>
@@ -138,7 +138,7 @@
 				<label class="layui-form-label">状态：</label>
 				<div class="layui-input-inline">
 					<select name="state" class="state">
-						<option value="1" selected>启用</option>
+						<option value="1" selected="selected">启用</option>
 						<option value="2" selected="">禁用</option>
 						<option value="3" selected="">流失</option>
 					</select>
@@ -346,15 +346,27 @@
 						}
 					});
 				} else if (layEvent == 'allot') {//分配
-					
-					layer.open({
-						type : 1,
-						anim : 2,
-						area : [ '700px', '600px' ],
-						title: '分配',
-						content : 'allot.html',
-					});
-					
+					if (data.allotState == "未分配" && data.state == "正常" && data.chanceId != undefined) {
+						layer.open({
+							type : 2,
+							anim : 2,
+							area : [ '700px', '600px' ],
+							title: '分配',
+							content : 'allot.html',
+							success:function(layero,index){
+								 var body = layer.getChildFrame('body', index);	//调用弹出页面css dom元素
+								 var iframe = window['layui-layer-iframe'+index]; //调用弹出页面js方法
+								 body.find(".formClientId").val(data.clientId); //客户id
+								 body.find(".formChanceId").val(data.chanceId); //机会id
+							}
+						});
+					}else if (data.chanceId == undefined) {
+						layer.msg("该客户没有任何给机会！");
+					}else if (data.allotState == "已分配"){
+						layer.msg("客户已分配");
+					}else if(data.state != "正常"){
+						layer.msg("客户已被禁用或流失，无法分配");
+					}
 				}
 			});
 			$(".refer_but").on('click',function() {
@@ -471,12 +483,24 @@
 					success:function(msg){
 						layer.msg(msg.msg);
 						layer.close(mylay);
+						/* table.reload('test',{
+					        method:'post',
+					        where:{
+								allotState:$(".allot").val(),
+								conditionName:$(".cliName").val(),
+								condition:$(".staffName").val()
+					        }
+					    }); */
+						$(".refer_but").click();
 					},error(){
 						alert("壕鳥网络错误！");
 					}
 				});
 			});
 		});
+	}
+	function referclick(){
+		$(".refer_but").click();
 	}
 	</script>
 </body>

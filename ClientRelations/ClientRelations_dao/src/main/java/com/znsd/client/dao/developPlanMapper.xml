@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 保证唯一性 使用接口方式加载命名空间 使用代理模式 -->
+<mapper namespace="com.znsd.client.dao.DevelopPlanDao">
+	
+	<resultMap type="com.znsd.client.bean.DevelopPlan" id="planMap">
+		<id column="plan_id" property="planId"/>
+		<result column="plan_name" property="planName"/>
+		<result column="client_id" property="clientId"/>
+		<result column="staff_id" property="staffId"/>
+		<result column="plan_content" property="planContent"/>
+		<result column="plan_month" property="planMonth"/>
+		<result column="found_time" property="foundTime"/>
+		<result column="last_opterate_time" property="lastOpterateTime"/>
+		<result column="plan_status" property="planStatus"/>
+	</resultMap>
+	
+	<select id="selectDevelopPlan" resultMap="planMap">
+		select plan_id,plan_name,client_id,staff_id,plan_content,plan_month,found_time,last_opterate_time,plan_status from develop_plan 
+		<where>
+			<if test="month != null and month != ''">
+				month like '%${month}%'
+			</if>
+		</where>
+	</select>
+	
+	<delete id="deleteDevelopPlan">
+		delete FROM develop_plan where plan_id = #{planId}
+	</delete>
+	
+</mapper>

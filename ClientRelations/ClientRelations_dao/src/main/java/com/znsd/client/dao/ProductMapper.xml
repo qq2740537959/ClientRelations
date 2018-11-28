@@ -12,18 +12,23 @@
  		<result column="product_type_number" property="productTypeNumber"/>
  		<result column="price" property="price"/>
  		<result column="product_number" property="productNumber"/>
+ 		<result column="number" property="number"/>
  	</resultMap>
  	<!-- 查询所有商品 -->
  	<select id="selectProductByPage" resultMap="selectProductResultMape">
- 		select product_id,product_name,product_type_number,price,product_number from product
+ 		select product_id,product_name,product_type_number,price,product_number,1 as number from product
  	</select>
  	<!-- 查询商品id的所有商品 -->
  	<select id="selectProductById" resultMap="selectProductResultMape">
- 		select product_id,product_name,product_type_number,price,product_number 
+ 		select product_id,product_name,product_type_number,price,product_number,1 as number
  		from product where product_id in
- 		<foreach collection="list" item="i" open="(" separator="," close=")">
+ 		<foreach collection="list" item="i" open="(" close=")">
  			#{i}
  		</foreach>
  		and product_number > 1
  	</select>
+ 	<!-- 购买后数量减少 -->
+ 	<update id="reduceProductNumber">
+ 		update product set product_number = product_number-#{number} where product_id = #{productId}
+ 	</update>
  </mapper>

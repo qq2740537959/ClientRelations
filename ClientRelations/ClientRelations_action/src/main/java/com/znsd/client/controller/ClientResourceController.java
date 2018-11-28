@@ -6,7 +6,9 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +50,6 @@ public class ClientResourceController{
 	private OrderIndentService orderIndentService;
 	@RequestMapping("/selectClient")
 	public @ResponseBody ResultData selectClient(@RequestParam("staffId") Integer staffId,@RequestParam(value="distinguish",required=false) String distinguish,@RequestParam(value="clientNameOrPhone",required=false) String clientNameOrPhone,@RequestParam("limit") Integer limit,@RequestParam("page") Integer page) {
-		System.out.println(staffId+" == "+limit+" == "+page);
 		//按销售代表查询客户信息
 		if(distinguish == null) {
 			distinguish = "";
@@ -106,7 +107,7 @@ public class ClientResourceController{
 		return result;
 	}
 	@RequestMapping("/addAddress")
-	public String selectAddress(@RequestParam(value="clientId",required=false) Integer clientId,@RequestParam(value="province",required=false) String province,@RequestParam(value="area",required=false) String area,@RequestParam(value="city",required=false) String city,@RequestParam(value="consigneeName",required=false) String consigneeName,@RequestParam(value="detailAddress",required=false) String detailAddress,@RequestParam(value="phone",required=false) String phone) {
+	public @ResponseBody String selectAddress(@RequestParam(value="clientId",required=false) Integer clientId,@RequestParam(value="province",required=false) String province,@RequestParam(value="area",required=false) String area,@RequestParam(value="city",required=false) String city,@RequestParam(value="consigneeName",required=false) String consigneeName,@RequestParam(value="detailAddress",required=false) String detailAddress,@RequestParam(value="phone",required=false) String phone) {
 		//添加收货地址
 		Address address = new Address();
 		address.setClientId(clientId);
@@ -117,16 +118,11 @@ public class ClientResourceController{
 		address.setDetailAddress(detailAddress);
 		address.setPhone(phone);
 		int a = addressService.addAddress(address);
-		System.out.println("--address--"+address);
-		String result = "";
-		if(a!=-1) {
-			result = "success";
-		}
-		return result;
+		return "success";
 	}
 	@RequestMapping("/updateAddress")
 	public String updateAddress(@RequestParam(value="clientId",required=false) Integer clientId,@RequestParam(value="province",required=false) String province,@RequestParam(value="area",required=false) String area,@RequestParam(value="city",required=false) String city,@RequestParam(value="consigneeName",required=false) String consigneeName,@RequestParam(value="detailAddress",required=false) String detailAddress,@RequestParam(value="phone",required=false) String phone) {
-		//添加收货地址
+		//修改收货地址
 		Address address = new Address();
 		address.setConsigneeName(consigneeName);
 		address.setPhone(phone);
@@ -149,35 +145,17 @@ public class ClientResourceController{
 		address = addressService.selectAddessByClientId(clientId);
 		return address;
 	}
-	@RequestMapping(value="/selectProductByIdes")
-	public @ResponseBody String selectProductByIdes(@RequestParam(value="product",required=false,defaultValue="") String product) {
-		//查询包含商品id的商品 
-		String [] ary = product.split(",");
-		List<Integer> list = new ArrayList<Integer>();
-		for (int i = 0; i < ary.length; i++) {
-			list.add(Integer.valueOf(ary[i]));
-		}
-		List<Product> productList = productService.selectProductById(list);
-		String temp = "";
-		for (Product product2 : productList) {
-			temp += product2.getProductName()+",";
-		}
-		return temp;
-	}
-	
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value="/projectPay",produces= {"application/html;charset=utf-8"})
 	public void pay(OrderIndent orderIndent,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		//在线支付
 		Random random = new Random();
 		Date vNow = new Date();
 		String orderCode = getOrderNumber();
 		orderIndent.setOrderCode(orderCode);
 		orderIndent.setOrderStatus("待付款");
-		if("支付宝".equals(orderIndent.getModeOfPayment())) {
-			orderIndent.setModeOfDistribution("快递包邮");
-		}else if("货到付款".equals(orderIndent.getModeOfPayment())) {
-			orderIndent.setModeOfDistribution("公司送货上门");
-		}
+		orderIndent.setModeOfDistribution("快递包邮");
+		
 		int resu = orderIndentService.addOrder(orderIndent);
 		
 		response.setContentType("text/html;charset=utf-8");
@@ -210,6 +188,20 @@ public class ClientResourceController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	@RequestMapping(value="/cashOnDelivery",produces= {"application/html;charset=utf-8"})
+	public String pays(OrderIndent orderIndent){
+		//货到付款
+		Random random = new Random();
+		Date vNow = new Date();
+		String orderCode = getOrderNumber();
+		orderIndent.setOrderCode(orderCode);
+		orderIndent.setModeOfPayment("货到付款");
+		orderIndent.setOrderStatus("待收货");
+		orderIndent.setModeOfDistribution("公司送货上门");
+		int resu = orderIndentService.addOrder(orderIndent);
+		return "admin/views/orderManager/changeHands.jsp";
 	}
 	public static String getOrderNumber() {
 		//格式化当前时间
@@ -243,5 +235,26 @@ public class ClientResourceController{
 			result += randInt;
 		}
 		return result;
+	}
+	
+	
+	@RequestMapping("/reduceProductNumber")
+	public @ResponseBody String reduceProductNumber(@RequestParam(value="productNumber",required=false) String productNumber) {
+		//商品购买后减少
+		System.out.println("productNumber"+productNumber);
+		int result = -1;
+		String [] ary = productNumber.split("-");
+		String [][] arr = new String [ary.length][];
+		for (int i = 0; i < ary.length; i++) {
+			String[] tempAgain = ary[i].split(","); //继续分割并存到另一个一临时的一维数组当中
+			arr[i] = new String[tempAgain.length]; //
+			for (int j = 0; j < tempAgain.length; j++) {
+				arr[i][j] = tempAgain[j];
+			}
+		}
+		for (int i = 0; i < arr.length; i++) {
+			result = productService.reduceProductNumber(Integer.valueOf(arr[i][0]),Integer.valueOf(arr[i][1]));
+		}
+		return "success";
 	}
 }

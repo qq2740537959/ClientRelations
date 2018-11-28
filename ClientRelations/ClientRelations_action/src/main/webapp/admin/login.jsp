@@ -12,15 +12,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="assets/css/layui.css">
-    <link rel="stylesheet" href="assets/css/login.css">
-    <link rel="icon" href="../bitbug_favicon.ico">
-    <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
-    <script type="text/javascript" src="layer/layer.js"></script>
-    <title>花礼网管理后台-登录</title>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/admin/assets/css/layui.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/admin/assets/css/login.css">
+    <link rel="icon" href="<%=request.getContextPath() %>/bitbug_favicon.ico">
+    <script type="text/javascript" src="<%=request.getContextPath() %>/admin/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/admin/layer/layer.js"></script>
+    <title>客户关系管理系统-登录</title>
 </head>
 <body class="login-wrap">
-	
     <div class="login-container" >
         <form class="login-form" >
         	<p><font style="color: #29adeb;font-size: 17px;">后台管理系统登录</font></p>
@@ -40,7 +39,7 @@
         </form>
     </div>
 </body>
-<script src="assets/layui.js"></script>
-<script src="login.js" ></script>
+<script src="<%=request.getContextPath() %>/admin/assets/layui.js"></script>
+<script src="<%=request.getContextPath() %>/admin/login.js" ></script>
 
 </html>

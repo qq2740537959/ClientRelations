@@ -8,7 +8,7 @@
  <mapper namespace="com.znsd.client.dao.OrderIndentMapperDao">
 	<!-- 订单查询 -->
 	<select id="selectOrderIndent" resultType="com.znsd.client.vo.OrderIndentVo">
-		select o.id,o.order_type,o.order_code,o.commodity,ad.consignee_name,o.order_money,o.deal_time,o.order_status,ad.province,ad.city,ad.area,ad.detailAddress from order_indent o,address ad where o.shipping_address_id = ad.id
+		select o.id,o.order_type,o.order_code,o.commodity,ad.consignee_name,o.order_money,DATE_FORMAT(o.deal_time,'%Y-%m-%d %H:%i:%s'),o.order_status,ad.province,ad.city,ad.area,ad.detailAddress from order_indent o,address ad where o.shipping_address_id = ad.id
 		<if test="differentiate != null and differentiate != ''">
 			<if test="differentiate == 'productName' and inputSelect != null and inputSelect != ''">
 				and o.commodity like CONCAT('%',#{inputSelect},'%')
@@ -34,6 +34,7 @@
 		<if test="status != null and status != ''">
 			and o.order_status = #{status}
 		</if>
+		ORDER BY o.deal_time DESC
 	</select>
 	<!-- 修改订单状态 -->
 	<update id="updateOrderStatus">

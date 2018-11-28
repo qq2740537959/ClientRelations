@@ -8,6 +8,7 @@
 	<resultMap type="java.util.HashMap" id="clientResourceMap">
 		<id column="client_id" property="clientId" />
 		<result column="client_name" property="clientName" />
+		<result column="chance_id" property="chanceId"/>
 		<result column="sex" property="sex" />
 		<result column="birthday" property="birthday" />
 		<result column="client_type" property="clientType" />
@@ -30,7 +31,7 @@
 	<!-- 查询所有客户资源信息 -->
 	<select id="selectAllClientByPage" resultMap="clientResourceMap">
 		SELECT 
-		c.client_id,c.client_name,c.sex,DATE_FORMAT(c.birthday,'%Y-%m-%d') as birthday,c.client_type,c.state,c.phone,c.work_phone,c.email,c.family_phone,c.contact_address,c.remark,c.allot_state,DATE_FORMAT(c.in_time,'%Y-%m-%d') as in_time,s.staff_name 
+		c.client_id,c.chance_id,c.client_name,c.sex,DATE_FORMAT(c.birthday,'%Y-%m-%d') as birthday,c.client_type,c.state,c.phone,c.work_phone,c.email,c.family_phone,c.contact_address,c.remark,c.allot_state,DATE_FORMAT(c.in_time,'%Y-%m-%d') as in_time,s.staff_name 
 		from client_resource c INNER JOIN staff s ON c.entry_person = s.staff_id
 		<where>
 			<choose>
@@ -61,5 +62,13 @@
 		update client_resource 
 		set client_name=#{clientName},sex=#{sex},birthday=#{birthday},client_type=#{clientType},state=#{state},phone=#{phone},work_phone=#{workPhone},email=#{email},family_phone=#{familyPhone},contact_address=#{contactAddress},remark=#{remark} 
 		where client_id = #{clientId}
+	</update>
+<!-- 	分配修改服务人id -->
+	<update id="updateStaffId">
+		update client_resource set staff_id = #{staffId},allot_state = 2 where client_id = #{clientId}
+	</update>
+	<!-- 链接机会管理 分配 -->
+	<update id="updateChanceId">
+		update client_resource set chance_id = #{chanceId} where client_id = #{clientId}
 	</update>
 </mapper>

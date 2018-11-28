@@ -3,7 +3,6 @@
 <html>
 <head>
 <base href="<%=basePath%>">
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="/ClientRelations_action/admin/layui/css/layui.css">
 		<link rel="icon" href="/favicon.ico">
@@ -45,7 +44,8 @@
 			</span>
 		</div>
 		<form class="layui-form" action="" lay-filter="example">
-			<input type="hidden" class="formChanceId">
+			<input type="hidden" class="formClientId">
+			<input type="hidden" class="formChanceId"/>
 			<div class="layui-form-item">
 				<label class="layui-form-label">机会名称:</label>
 				<div class="layui-input-block">
@@ -113,9 +113,7 @@
 			</div>
 			<div class="layui-form-item">
 				<div class="layui-input-block" style="padding-left:55px;">
-				
 					<button class="layui-btn" lay-submit="" lay-filter="demo2" style="margin-right: 20px;    border-radius: 28px;">分配</button>
-					
 					<button  class="layui-btn result" style="border-radius: 28px;">返回</button>
 				</div>
 			</div>
@@ -130,13 +128,12 @@
 					layedit = layui.layedit,
 					laydate = layui.laydate;
 					element = layui.element;
-
 				//日期
 				laydate.render({
 					elem: '#date'
 				});
 				
-				 $.ajax({
+				$.ajax({
 					type:"post",
 					url:"/ClientRelations_action/getStaffDeputyData",
 					success:function(t){
@@ -154,13 +151,14 @@
 				
 				/* 分配*/
 				form.on('submit(demo2)', function(data) {
-					var chanceId = $(".formChanceId").val();
-					var handleId = /* #(".handleId").val() */1;
+					var clientId = $(".formClientId").val();
+				//	var handleId = /* #(".handleId").val() */1;
 					var staffId = $(".staffId").val();
+					console.log(clientId+"=========="+staffId);
 					$.ajax({
 						type:"post",
-						url:"/ClientRelations_action/updateAllotHap",
-						data:"staffId="+staffId+"&handleId="+handleId+"&chanceId="+chanceId,
+						url:"/ClientRelations_action/updateStaffId",
+						data:"staffId="+staffId+"&clientId="+clientId,
 						success:function(t){
 							closeIndex(t.msg);
 						}
@@ -168,12 +166,11 @@
 					return false;
 				});
 				
-				
 				function closeIndex(msg){
 					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
 					parent.layer.msg(msg);
 					parent.layer.close(index);
-					parent.refreshTable();
+					parent.referclick();
 				}
 				
 				$(".result").click(function(){
@@ -186,6 +183,11 @@
 				} 
 				 
 			});
+			function beginLoad(){
+				$.ajax({
+					
+				});
+			}
 		</script>
 	</body>
 </html>

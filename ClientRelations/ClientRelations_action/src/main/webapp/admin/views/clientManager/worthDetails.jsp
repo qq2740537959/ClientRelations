@@ -173,6 +173,9 @@
 							d += "<tr><td>"+sa.orderCode+"</td><td>"+sa.commodity+"</td><td>"+sa.dealTime+"</td><td>"+sa.commodityNumber+"</td>"+
 							"<td>"+sa.orderStatus+"</td><td>"+sa.modeOfDistribution+"</td></tr>";
 						}
+						if (d == "") {
+							d = "<tr colspan='6' align='center'>暂无购买记录</tr>";
+						}
 						$("#content").append(d);
 					}
 				});
