@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -19,7 +20,7 @@ import com.znsd.client.vo.StaffLoginVo;
 import com.znsd.client.vo.StaffVo;
 
 @Controller
-@SessionAttributes("userInfo")
+@SessionAttributes({"userInfo"})
 public class StaffController {
 
 	@Autowired
@@ -51,11 +52,17 @@ public class StaffController {
 			map.put("code", 2);
 			map.put("msg", "账号冻结，联系管理员！");
 		} else {
-			model.addAttribute("userInfo",staffLoginVo);
+			model.put("userInfo",staffLoginVo);
 			map.put("code", 0);
 			map.put("msg", "登录成功！");
 		}
 		return map;
+	}
+	
+	@RequestMapping("/userExit")
+	public String userExit(SessionStatus sessionStatus) {
+		sessionStatus.setComplete();
+		return "redirect:/";
 	}
 	
 }

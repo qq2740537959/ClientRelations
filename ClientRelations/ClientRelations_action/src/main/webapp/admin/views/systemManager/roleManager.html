@@ -98,14 +98,14 @@
 		    ,url:'../../../queryRoleByPage'
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
-		      {checkbox:true,fixed:true}
-		      ,{field:'roleId', width:60, title: 'ID', sort: true}
-		      ,{field:'roleName', width:150, title: '角色名称'}
-		      ,{field:'departmentAbbreviation', width:150, title: '所属部门'}
-		      ,{field:'lastTime', width:232, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
-		      ,{field:'staffName', width:120, title: '操作人'}
-		      ,{field:'remarksExplain', width:230, title: '备注说明'}
-		      ,{field: 'right', title: '操作', width:93,toolbar:"#barDemo"}
+		    	{checkbox:true,fixed:true}
+			      ,{field:'roleId', width:60, title: 'ID', sort: true}
+			      ,{field:'roleName', width:150, title: '角色名称'}
+			      ,{field:'departmentAbbreviation', width:150, title: '所属部门'}
+			      ,{field:'lastTime', width:232, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+			      ,{field:'staffName', width:120, title: '操作人'}
+			      ,{field:'remarksExplain', width:230, title: '备注说明'}
+			      ,{field: 'right', title: '操作', width:93,toolbar:"#barDemo"}
 		      ]]
 		    ,page: true
 		  });

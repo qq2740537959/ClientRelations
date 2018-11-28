@@ -20,6 +20,16 @@
 	<link rel="icon" href="/favicon.ico">
 	<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
 	<style>
+		input[type=number] {
+    -moz-appearance:textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+		
+				
 		.layui-input-block {
 			line-height:38px;
 			width:500px;
@@ -84,14 +94,14 @@
   <div class="layui-form-item">
     <label class="layui-form-label">登录账号</label>
     <div class="layui-input-block">
-      <input type="text" required value="${userInfo.userName }" lay-verify="required" placeholder="" autocomplete="off" class="layui-input userNameInput layui-disabled">
+      <input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')" readonly="readonly" value="${userInfo.userName }" lay-verify="required" placeholder="" autocomplete="off" class="layui-input userNameInput layui-disabled">
     	<button class="layui-btn layui-btn-normal" onclick="updatebtn(this)">修改</button>
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">手机号码</label>
     <div class="layui-input-block">
-      <input type="text" required value="${userInfo.contactMode }" lay-verify="required" placeholder="" autocomplete="off" class="layui-input phoneInput layui-disabled">
+      <input type="number" required onkeyup="this.value=this.value.replace(/\s+/g,'')" readonly="readonly" value="${userInfo.contactMode }" lay-verify="required" placeholder="" autocomplete="off" class="layui-input phoneInput layui-disabled">
     	<button class="layui-btn layui-btn-normal" onclick="updatephonebtn(this)">修改</button>
     </div>
   </div>
@@ -100,6 +110,7 @@
 		$(th).text("保存");
 		$(th).attr("onclick","submitphonebtn(this)");
 		$(".phoneInput").removeClass("layui-disabled");
+		$(".phoneInput").removeAttr("readonly");
 		$(th).removeClass("layui-btn-normal");
 	}
 	
@@ -109,6 +120,7 @@
 		$(th).text("修改");
 		$(th).attr("onclick","updatephonebtn(this)");
 		$(th).addClass("layui-btn-normal");
+		$(".phoneInput").attr("readonly","readonly");
 		$(".phoneInput").addClass("layui-disabled");
 		layer.msg("修改成功！", {icon: 1});
 		/* $.ajax({
@@ -125,6 +137,7 @@
 		$(th).text("保存");
 		$(th).attr("onclick","submitbtn(this)");
 		$(".userNameInput").removeClass("layui-disabled");
+		$(".userNameInput").removeAttr("readonly");
 		$(th).removeClass("layui-btn-normal");
 	}
 	
@@ -134,6 +147,7 @@
 		$(th).text("修改");
 		$(th).attr("onclick","updatebtn(this)");
 		$(th).addClass("layui-btn-normal");
+		$(".userNameInput").attr("readonly","readonly");
 		$(".userNameInput").addClass("layui-disabled");
 		layer.msg("修改成功！", {icon: 1});
 		/* $.ajax({

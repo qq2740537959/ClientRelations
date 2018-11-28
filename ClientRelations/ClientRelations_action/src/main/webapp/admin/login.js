@@ -15,6 +15,13 @@ layui.define(['element'],function(exports){
     exports('login');
 });
 
+document.onkeydown = function (e) {
+    if (!e) e = window.event;
+    if ((e.keyCode || e.which) == 13) {
+    	$(".login-button").click();
+    }
+}
+
 $(".login-button").click(function(){
 	var loginForm = $(".login-form").serialize();
 	$.ajax({

@@ -65,12 +65,12 @@
                             <em>系统设置</em>
                         </a>
                         <dl class="layui-nav-child">
-                        	<dd><a href="">角色管理</a></dd>
+                        	<dd><a href="views/systemManager/roleManager.html">角色管理</a></dd>
                         	<dd><a href="views/systemManager/organization.html">组织结构</a></dd>
                         	<dd><a href="views/systemManager/staffManager.html">员工管理</a></dd>
                         	<dd><a href="views/systemManager/noticeManager.html">公告管理</a></dd>
                         	<dd><a href="views/systemManager/staffInfo.jsp">个人信息</a></dd>
-                        	<dd><a href="">基础信息</a></dd>
+                        	<!-- <dd><a href="">基础信息</a></dd> -->
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -174,13 +174,11 @@
     <script src="index.js" data-main="home"></script>
     <script type="text/javascript">
     	$(".exit").click(function(){
-    		$.ajax({
-    			type:"post",
-    			url:"../exitAdminAction",
-    			success:function(t){
-    				location.href="login.jsp";
-    			}
-    		})
+    		layer.confirm("确定要退出登录吗？", function(index){
+		  	      layer.close(index);
+		  	      var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true});
+		  	      location.href = "../userExit";
+		    });
     	})
     </script>
 </body>

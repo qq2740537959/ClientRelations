@@ -98,13 +98,13 @@
 		    ,url:'../../../queryDepartmentByPage'
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
-		      {checkbox:true,fixed:true}
-		      ,{field:'departmentId', width:80, title: 'ID', sort: true}
-		      ,{field:'departmentAbbreviation', width:200, title: '名称'}
-		      ,{field:'lastTime', width:210, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
-		      ,{field:'operationPersonName', width:150, title: '操作人'}
-		      ,{field:'remarksInfo', width:269, title: '备注说明'}
-		      ,{field: 'right', title: '操作', width:127,toolbar:"#barDemo"}
+		    	{checkbox:true,fixed:true}
+			      ,{field:'departmentId', width:80, title: 'ID', sort: true}
+			      ,{field:'departmentAbbreviation', width:200, title: '名称'}
+			      ,{field:'lastTime', width:230, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+			      ,{field:'operationPersonName', width:150, title: '操作人'}
+			      ,{field:'remarksInfo', width:283, title: '备注说明'}
+			      ,{field: 'right', title: '操作', width:93,toolbar:"#barDemo"}
 		    ]]
 		    ,page: true
 		  });
