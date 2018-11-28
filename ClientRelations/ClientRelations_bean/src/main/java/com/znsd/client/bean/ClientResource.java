@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class ClientResource implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int clientId;
+	private Integer clientId;
 	private int allotState;
 	private String clientName;
 	private String clientType;
@@ -38,11 +38,11 @@ public class ClientResource implements Serializable {
 	public ClientResource() {
 	}
 
-	public int getClientId() {
+	public Integer getClientId() {
 		return this.clientId;
 	}
 
-	public void setClientId(int clientId) {
+	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
 	

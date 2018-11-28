@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../assets/css/view.css" />
+		<link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" />
+		<script src="../../layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.content {
+				line-height: 36px;
+			}
+			
+			.layui-form-label {
+				width: 90px;
+			}
+			
+			.layui-input {
+				width: 200px;
+			}
+			#buttonaa button{
+				margin-left: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="addResource" style="padding: 20px;width: 500px;margin: auto;">
+			<div class="pagewrap">
+				<span> <a href="">首页</a> &gt; <a href="">客户管理</a> &gt; <a><cite>客户发展计划</cite></a> &gt; <a><cite></cite> 发展计划增加</a></span>
+				<br /><br /><br /><br /><br /> 
+			</div>
+			<form class="planForm">
+			<input type="hidden" class="clientId" value="" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">计划编码:</label>
+				<div class="layui-input-inline">
+					<input value="" name="" class="layui-input" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">计划人名称：</label>
+				<div class="layui-input-inline">
+					<select name="clientId" class="layui-select planName">
+						<option value="">韩粉</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">计划月份：</label>
+				<div class="layui-input-inline">
+					<input value="" name="" class="layui-input" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">计划状态：</label>
+				<div class="layui-input-block">
+					<div class="content">已创建</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">计划人名称：</label>
+				<div class="layui-input-inline">
+					<textarea name="remark" placeholder="请输入" class="layui-textarea" style="width: 350px;"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div id="buttonaa" style="width: 100%;">
+					<button class="layui-btn add">增加</button>
+					<button class="layui-btn fanhui">返回</button>
+				</div>
+			</div>
+			</form>
+		</div>
+		
+		<script type="text/javascript">
+			function loadClient(){
+				layui.use(['layer'],function(){
+					let layer = layui.layer;
+					$.ajax({
+						url:'/ClientRelations_action/selectClientIdName',
+						type:'post',
+						success:function(data){
+							console.log(data);
+							var trData = "";
+							for (var i=0;i<data.data.length;i++){
+								trData+="<option value='"+data.data[i].clientId+"'>"+data.data[i].clientName+"<option>"
+							}
+							$(".planName").empty();
+							$(".planName").append(trData);
+						},error:function(){
+							layer.alert("网络错误");
+						}
+					});
+				});
+			}
+		</script>
+	</body>
+</html>

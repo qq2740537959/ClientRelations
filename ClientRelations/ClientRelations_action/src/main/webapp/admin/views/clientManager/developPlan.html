@@ -13,6 +13,9 @@
 	#planDiv .layui-form-label{
 		width: 90px;
 	}
+	.allotSpan{
+		line-height: 36px;
+	}
 </style>
 </head>
 
@@ -116,7 +119,7 @@
 			            	$(".planMonth").text(data[0].planMonth);
 			            	$(".planStatus").text(data[0].planStatus);
 			            	$(".planContent").text(data[0].planContent);
-			            	mylay = layer.open({
+			            	layer.open({
 			            		type : 1,
 								anim : 4,
 								area : [ '500px', '300px' ],
@@ -130,7 +133,19 @@
 			              layer.msg('请选择一行');
 			            }else{
 			            	console.log(data);
-			            	console.log("修改");
+			            	mylay = layer.open({
+			            		type : 2,
+								anim : 4,
+								area : [ '700px', '600px' ],
+								title: '计划信息',
+								content : 'worthADD.html',
+								success:function(layero,index){
+									 var body = layer.getChildFrame('body', index);
+									 var iframe = window['layui-layer-iframe'+index]
+									 body.find(".clientId").val(data[0].clientId);
+									 iframe.loadClient();
+								}
+			            	});
 			            }
 			      break;
 			      case 'del':

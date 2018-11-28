@@ -85,7 +85,11 @@
 						<script type="text/html" id="barDemo">
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="edit">修改</a>
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
+							{{#  if(d.allotState == '未分配'){ }}
+    							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
+ 							{{#  } else { }}
+								<a class="layui-btn layui-btn-xs  layui-btn-disabled" lay-event="">分配</a>
+ 							{{#  } }}
 	 					</script>
 						<script type="text/html" id="toolbarDemo" class="layui-table">
 						  <div class="layui-btn-container">
@@ -112,7 +116,7 @@
 				</div>
 			</div>
 
-			<div class="float_left">
+			<div class="float_left sex">
 				<label class="layui-form-label">性别：</label> 
 				<input type="radio" name="sex" value="男" title="男" checked class="man" /> 
 				<input type="radio" name="sex" value="女"  title="女" checked="" class="girl" />
@@ -252,10 +256,10 @@
 				page : true,
 				limits : [2,5,10,15,20]
 			});
-			
+			var data;
 			//监听工具条
 			table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-				var data = obj.data; //获得当前行数据
+				data = obj.data; //获得当前行数据
 				console.log(data);
 				var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 				var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -288,7 +292,6 @@
 					$(".cid").val(data.clientId);
 					$(".clientName").val(data.clientName);
 					$("#date").val(data.birthday);
-					console.log($(".man").val() +"======="+ data.sex);
 					if ($(".man").val() == data.sex) {
 						$(".girl").removeAttr("checked")
 						$(".man").attr("checked",true);
@@ -297,7 +300,6 @@
 						$(".girl").attr("checked",true);
 					}
 					$("#date").val(data.birthday);
-					
 					$(".typeb>option").each(function(){ //遍历全部option
 						var txt = $(this).text(); //获取option的内容
 						if (txt == data.clientType) {
@@ -325,14 +327,12 @@
 							}
 						}
 					});
-					
 					$(".phone").val(data.phone);
 					$(".workPhone").val(data.workPhone);
 					$(".email").val(data.email);
 					$(".familyPhone").val(data.familyPhone);
 					$(".address").val(data.contactAddress);
 					$(".remark").val(data.remark);
-					console.log("进入修改");
 					mylay = layer.open({
 						type : 1,
 						anim : 2,
@@ -379,50 +379,6 @@
 			        }
 			    });
 			});
-			/* 
-			var $ = layui.jquery, active = {
-			    getCheckData: function(){//获取选中数据
-			        var checkStatus = table.checkStatus('contenttable')
-			            ,data = checkStatus.data;
-			        layer.alert(JSON.stringify(data));
-			    }
-			    ,getCheckLength: function(){//获取选中数目
-			        var checkStatus = table.checkStatus('contenttable')
-			            ,data = checkStatus.data;
-			        layer.msg('选中了：'+ data.length + ' 个');
-			    }
-			    ,isAll: function(){//验证是否全选
-			        var checkStatus = table.checkStatus('contenttable');
-			        layer.msg(checkStatus.isAll ? '全选': '未全选')
-			    }
-			    ,parseTable: function(){
-			        table.init('parse-table-demo', {
-			            limit: 3
-			        });
-			    }
-			    ,add: function(){
-			        table.addRow('test')
-			    }
-			    ,delete: function(){
-			        layer.confirm('确认删除吗？', function(index){
-			            table.deleteRow('test')
-			            layer.close(index);
-			        });
-			    }
-			    ,reload:function () {
-			        var keyWord=$("#keyWord").val();
-			        var keyType=$("#key_type option:selected").val();
-			        table.reload('contenttable',{
-			            method:'post',
-			            where:{keyWord:keyWord,keyType:keyType}
-			        });
-			    }
-			}; */
-			//日期时间选择器
-			/* laydate.render({ 
-				  elem: '#date' //或 elem: document.getElementById('test')、elem: lay('#test') 等
-				  ,type: 'datatime'
-				}); */
 			//form 表单
 			var form = layui.form;
 			//监听提交
@@ -458,12 +414,11 @@
 			
 			// 资源增加ajax
 			$(".addSub").on('click',function(){
-				console.log("=====增加点击事件====="+$(".resourceadd").serialize());
-				let data = $(".resourceadd").serialize();
+				let info = $(".resourceadd").serialize();
 				$.ajax({
 					url:'../../../addResource',
 					type:'post',
-					data: data,
+					data: info,
 					success:function(msg){
 						layer.msg(msg.msg);
 						layer.close(mylay);
@@ -474,23 +429,26 @@
 			});
 			// 资源修改ajax
 			$(".updateSub").on('click',function(){
-				console.log("=====修改点击事件====="+$(".resourceadd").serialize());
-				let data = $(".resourceadd").serialize();
-				$.ajax({
+			 	$.ajax({
 					url:'../../../updateResource',
 					type:'post',
-					data: data,
+					data: {
+						clientId: data.clientId,
+						clientName: $(".clientName").val(),
+						sex: $(".sex input[checked]").val(),
+						birthday: $("#date").val(),
+						clientType: $(".typeb").val(),
+						state: $(".state").val(),
+						phone: $(".phone").val(),
+						workPhone: $(".workPhone").val(),
+						email: $(".email").val(),
+						familyPhone:$(".familyPhone").val(),
+						contactAddress:$(".address").val(),
+						remark:$(".remark").val()
+					},
 					success:function(msg){
 						layer.msg(msg.msg);
 						layer.close(mylay);
-						/* table.reload('test',{
-					        method:'post',
-					        where:{
-								allotState:$(".allot").val(),
-								conditionName:$(".cliName").val(),
-								condition:$(".staffName").val()
-					        }
-					    }); */
 						$(".refer_but").click();
 					},error(){
 						alert("壕鳥网络错误！");

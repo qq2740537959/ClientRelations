@@ -104,10 +104,7 @@
 				<label class="layui-form-label">分配给:</label>
 				<div class="layui-input-block" style="width: 165px;">
 			      <select name="staffId" lay-filter="aihao" class="staffId">
-			        <option value="1">陈璇</option>
-			        <option value="2">李彪</option>
-			        <option value="3">吕艳超</option>
-			        <option value="4">赵成</option>
+			      
 			      </select>
 			    </div>
 			</div>
@@ -136,7 +133,7 @@
 					elem: '#date'
 				});
 				
-				 $.ajax({
+				$.ajax({
 					type:"post",
 					url:"/ClientRelations_action/getStaffDeputyData",
 					success:function(t){
