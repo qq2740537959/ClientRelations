@@ -26,7 +26,9 @@
 </head>
 <body class="layui-layout-body">
 	<c:if test="${userInfo eq null }">
-		<jsp:forward page="login.jsp"></jsp:forward>
+		<%
+			response.sendRedirect("../");
+		%>
 	</c:if>
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header custom-header">
@@ -67,7 +69,7 @@
                         	<dd><a href="views/systemManager/organization.html">组织结构</a></dd>
                         	<dd><a href="views/systemManager/staffManager.html">员工管理</a></dd>
                         	<dd><a href="views/systemManager/noticeManager.html">公告管理</a></dd>
-                        	<dd><a href="">个人信息</a></dd>
+                        	<dd><a href="views/systemManager/staffInfo.jsp">个人信息</a></dd>
                         	<dd><a href="">基础信息</a></dd>
                         </dl>
                     </li>

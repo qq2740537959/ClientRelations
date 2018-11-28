@@ -19,7 +19,7 @@ $(".login-button").click(function(){
 	var loginForm = $(".login-form").serialize();
 	$.ajax({
 		type:"post",
-		url:"admin/staffLogin",
+		url:"staffLogin",
 		data:loginForm,
 		success:function(t){
 			if (t.code== 0) {

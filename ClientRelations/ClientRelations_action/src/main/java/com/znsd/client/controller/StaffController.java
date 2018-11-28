@@ -20,7 +20,6 @@ import com.znsd.client.vo.StaffVo;
 
 @Controller
 @SessionAttributes("userInfo")
-@RequestMapping("/admin")
 public class StaffController {
 
 	@Autowired
