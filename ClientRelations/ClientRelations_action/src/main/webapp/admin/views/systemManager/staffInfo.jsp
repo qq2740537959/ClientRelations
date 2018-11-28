@@ -116,20 +116,36 @@ input[type=number]::-webkit-outer-spin-button {
 	
 	function submitphonebtn(th){
 		var phone = $(".phoneInput").val();
-		console.log(phone);
-		$(th).text("修改");
-		$(th).attr("onclick","updatephonebtn(this)");
-		$(th).addClass("layui-btn-normal");
-		$(".phoneInput").attr("readonly","readonly");
-		$(".phoneInput").addClass("layui-disabled");
-		layer.msg("修改成功！", {icon: 1});
-		/* $.ajax({
-			url:"",
+		if(!(/^1[34578]\d{9}$/.test(phone))){ 
+			layer.msg("请输入正确的11位手机号");
+			return false; 
+		}
+		$.ajax({
+			url:"../../../updateStaffPhone",
 			type:"post",
+			data:{
+				"contactMode":phone
+			},
 			success:function(data){
-				
+				if (data.code == 1) {
+					$(th).text("修改");
+					$(th).attr("onclick","updatephonebtn(this)");
+					$(th).addClass("layui-btn-normal");
+					$(".phoneInput").attr("readonly","readonly");
+					$(".phoneInput").addClass("layui-disabled");
+					layer.msg(""+data.msg, {icon: 1});
+				} else if (data.code == 2) {
+					$(th).text("修改");
+					$(th).attr("onclick","updatephonebtn(this)");
+					$(th).addClass("layui-btn-normal");
+					$(".phoneInput").attr("readonly","readonly");
+					$(".phoneInput").addClass("layui-disabled");
+					layer.msg(""+data.msg, {icon: 3});
+				} else{
+					layer.msg(""+data.msg, {icon: 2});
+				}
 			}
-		}) */
+		})
 	}
 	
 	
@@ -142,21 +158,38 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 	
 	function submitbtn(th){
-		var loginUserName = $(".userNameInput").val();
-		console.log(loginUserName);
-		$(th).text("修改");
-		$(th).attr("onclick","updatebtn(this)");
-		$(th).addClass("layui-btn-normal");
-		$(".userNameInput").attr("readonly","readonly");
-		$(".userNameInput").addClass("layui-disabled");
-		layer.msg("修改成功！", {icon: 1});
-		/* $.ajax({
-			url:"",
+		var userName = $(".userNameInput").val();
+		if (!(/^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,10}$/.test(userName))) {
+			layer.msg("登录账号只能是数字+字母组合6-10位！");
+			return ;
+		}
+		$.ajax({
+			url:"../../../updateStaffUserName",
 			type:"post",
+			data:{
+				"userName":userName
+			},
 			success:function(data){
-				
+				console.log(data);
+				if (data.code == 1) {
+					$(th).text("修改");
+					$(th).attr("onclick","updatebtn(this)");
+					$(th).addClass("layui-btn-normal");
+					$(".userNameInput").attr("readonly","readonly");
+					$(".userNameInput").addClass("layui-disabled");
+					layer.msg(""+data.msg, {icon: 1});
+				} else if (data.code == 2) {
+					$(th).text("修改");
+					$(th).attr("onclick","updatebtn(this)");
+					$(th).addClass("layui-btn-normal");
+					$(".userNameInput").attr("readonly","readonly");
+					$(".userNameInput").addClass("layui-disabled");
+					layer.msg(""+data.msg, {icon: 3});
+				} else{
+					layer.msg(""+data.msg, {icon: 2});
+				}
 			}
-		}) */
+		})
 	}
 </script>
 <script>
