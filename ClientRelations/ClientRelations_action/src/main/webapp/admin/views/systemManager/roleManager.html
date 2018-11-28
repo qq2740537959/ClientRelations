@@ -54,7 +54,7 @@
 			<div class="pagewrap">
 				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">销售管理</a> <a><cite>销售计划</cite></a>
 				</span>
-				<h2 class="title">员工管理</h2>
+				<h2 class="title">角色管理</h2>
 			</div>
 		</div>
 		<div class="layui-row">
@@ -63,14 +63,14 @@
 					<div class="form-box">
 						<div class="layui-form layui-form-item">
 							<div class="layui-inline">
-								<div class="layui-form-mid">员工名称：</div>
+								<div class="layui-form-mid">角色名称：</div>
 								<div class="layui-input-inline">
-							      	<input type="text" name="title" class="layui-input staffName">
+							      	<input type="text" name="title" class="layui-input roleName">
 							    </div>
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
 						</div>
-						<table class="layui-hide" id="staff" lay-filter="test"></table>
+						<table class="layui-hide" id="role" lay-filter="test"></table>
 					</div>
 				</div>
 			</div>
@@ -78,12 +78,6 @@
 	</div>
 	
 		<script type="text/html" id="barDemo">
-			{{#  if(d.state == 0){ }}
-    						<a class="layui-btn layui-btn-xs operator" style="background-color:red;" lay-event="dongjie">冻结</a>
- 						{{#  } }}
-						{{#  if(d.state == 1){ }}
-    						<a class="layui-btn layui-btn-xs operator" lay-event="zhengchang">正常</a>
- 						{{#  } }}
 			<a class="layui-btn layui-btn-xs operator" lay-event="edit"><i class="layui-icon" style="font-size:15px;">&#xe642;</i></a>
 			<a class="layui-btn layui-btn-danger layui-btn-xs del_a operator" lay-event="del"><i class="layui-icon" style="font-size:15px;">&#xe640;</i></a>
 		</script>
@@ -100,20 +94,19 @@
 		  var table = layui.table;
 		  
 		  table.render({
-		    elem: '#staff'
-		    ,url:'../../../selectStaffByPage'
+		    elem: '#role'
+		    ,url:'../../../queryRoleByPage'
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {checkbox:true,fixed:true}
-		      ,{field:'staffId', width:50, title: 'ID', sort: true}
-		      ,{field:'staffName', width:120, title: '员工姓名'}
-		      ,{field:'sex', width:80, title: '性别'}
-		      ,{field:'departmentAbbreviation', width:120, title: '所在部门'}
-		      ,{field:'roleName', width:150, title: '角色'}
-		      ,{field:'lastTime', width:219, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
-		      ,{field:'operationPersonName', width:150, title: '操作人'}
-		      ,{field: 'right', title: '操作', width:145,toolbar:"#barDemo"}
-		    ]]
+		      ,{field:'roleId', width:60, title: 'ID', sort: true}
+		      ,{field:'roleName', width:150, title: '角色名称'}
+		      ,{field:'departmentAbbreviation', width:150, title: '所属部门'}
+		      ,{field:'lastTime', width:232, title: '最后修改时间',templet: "<div>{{layui.util.toDateString(d.lastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+		      ,{field:'staffName', width:120, title: '操作人'}
+		      ,{field:'remarksExplain', width:230, title: '备注说明'}
+		      ,{field: 'right', title: '操作', width:93,toolbar:"#barDemo"}
+		      ]]
 		    ,page: true
 		  });
 		  
@@ -314,9 +307,9 @@
 		$(".refer_but").click(function(){
 			layui.use('table', function(){
 			  	var table = layui.table;
-			 	table.reload('staff', {
+			 	table.reload('role', {
 				  where: { //设定异步数据接口的额外参数，任意设
-					  'staffName':$(".staffName").val()
+					  'roleName':$(".roleName").val()
 				  }
 				  ,page: {
 				    curr: 1 //重新从第 1 页开始
