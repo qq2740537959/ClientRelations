@@ -18,6 +18,7 @@
 		<result column = "operationPersonName" property = "operationPersonName" />
 	</resultMap>
  	
+ 	<!-- 分页条件查询员工信息 -->
  	<select id="selectStaffByPage" resultMap="staffResultMap">
  		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
 		<if test="staffName != null and staffName != ''">
@@ -42,6 +43,7 @@
 		<result column = "department_abbreviation" property = "departmentAbbreviation"></result>
 	</resultMap>
  	
+ 	<!-- 员工登录 -->
  	<select id="staffLogin" resultMap = "staffLoginResultMap">
  		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,r.role_name,d.department_abbreviation from staff s,role r,department d where s.role_identity = r.role_id and s.department_id = d.department_id
  		<if test="userName != null and userName != ''">
@@ -52,4 +54,24 @@
  		</if>
  	</select>
  	
+ 	<!-- 根据员工表字段获取数据 -->
+ 	<select id="selectStaffByUserName" resultMap="staffResultMap">
+ 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
+		<if test="userName != null and userName != ''">
+ 			and s.user_name = #{userName}
+ 		</if>
+		<if test="contactMode != null and contactMode != ''">
+ 			and s.contact_mode = #{contactMode}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 根据员工表字段动态修改信息 -->
+ 	<update id="updateStaffUserName">
+ 		update staff
+ 		<set>
+			<if test="contactMode != null and contactMode != ''">contact_mode = #{contactMode},</if>
+			<if test="userName != null and userName != ''">user_name = #{userName},</if>	
+		</set>
+ 		where staff_id  = #{staffId}
+ 	</update>
  </mapper>

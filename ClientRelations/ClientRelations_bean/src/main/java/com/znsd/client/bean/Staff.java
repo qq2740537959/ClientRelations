@@ -143,6 +143,18 @@ public class Staff implements Serializable {
 		return this.userName;
 	}
 
+	@Override
+	public String toString() {
+		return "Staff [staffId=" + staffId + ", contactMode=" + contactMode + ", departmentId=" + departmentId
+				+ ", lastTime=" + lastTime + ", operationPerson=" + operationPerson + ", password=" + password
+				+ ", remarksInfo=" + remarksInfo + ", roleIdentity=" + roleIdentity + ", sex=" + sex + ", staffName="
+				+ staffName + ", state=" + state + ", userName=" + userName + "]";
+	}
+
+
+
+
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
