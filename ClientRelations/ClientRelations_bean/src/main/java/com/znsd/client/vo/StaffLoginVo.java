@@ -17,6 +17,14 @@ public class StaffLoginVo {
 	private String contactMode;
 	private Date lastTime;
 	private String operationPersonName;
+	private String departmentAbbreviation;
+	@Override
+	public String toString() {
+		return "StaffLoginVo [staffId=" + staffId + ", staffName=" + staffName + ", sex=" + sex + ", roleName="
+				+ roleName + ", state=" + state + ", userName=" + userName + ", password=" + password + ", contactMode="
+				+ contactMode + ", lastTime=" + lastTime + ", operationPersonName=" + operationPersonName
+				+ ", departmentAbbreviation=" + departmentAbbreviation + "]";
+	}
 	public int getStaffId() {
 		return staffId;
 	}
@@ -77,10 +85,11 @@ public class StaffLoginVo {
 	public void setOperationPersonName(String operationPersonName) {
 		this.operationPersonName = operationPersonName;
 	}
-	@Override
-	public String toString() {
-		return "StaffLoginVo [staffId=" + staffId + ", staffName=" + staffName + ", sex=" + sex + ", roleName="
-				+ roleName + ", state=" + state + ", userName=" + userName + ", password=" + password + ", contactMode="
-				+ contactMode + ", lastTime=" + lastTime + ", operationPersonName=" + operationPersonName + "]";
+	public String getDepartmentAbbreviation() {
+		return departmentAbbreviation;
 	}
+	public void setDepartmentAbbreviation(String departmentAbbreviation) {
+		this.departmentAbbreviation = departmentAbbreviation;
+	}
+	
 }

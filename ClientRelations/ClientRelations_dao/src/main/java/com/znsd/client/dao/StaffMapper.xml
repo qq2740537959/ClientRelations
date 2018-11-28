@@ -39,10 +39,11 @@
 		<result column = "password" property="password"></result>
 		<result column = "last_time" property = "lastTime" />
 		<result column = "contact_mode" property = "contactMode"></result>
+		<result column = "department_abbreviation" property = "departmentAbbreviation"></result>
 	</resultMap>
  	
  	<select id="staffLogin" resultMap = "staffLoginResultMap">
- 		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,r.role_name from staff s,role r where s.role_identity = r.role_id
+ 		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,r.role_name,d.department_abbreviation from staff s,role r,department d where s.role_identity = r.role_id and s.department_id = d.department_id
  		<if test="userName != null and userName != ''">
 			and s.user_name = #{userName}
 		</if>
