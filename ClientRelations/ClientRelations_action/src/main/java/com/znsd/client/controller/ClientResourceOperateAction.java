@@ -100,7 +100,7 @@ public class ClientResourceOperateAction {
 		return model;
 	}
 	
-	@RequestMapping("/updateStaffId")
+/*	@RequestMapping("/updateStaffId")
 	@ResponseBody
 	public Map<String, Object> updateStaffId(@RequestParam("staffId") Integer staffId, @RequestParam("chanceId") Integer chanceId,Map<String, Object> model){
 		String msg;
@@ -113,7 +113,7 @@ public class ClientResourceOperateAction {
 		model = new HashMap<String, Object>();
 		model.put("msg", msg);
 		return model;
-	}
+	}*/
 	
 	/*@RequestMapping("/updasteChanceId")
 	public Map<String, Object> updateChanceId(@RequestParam("staffId") Integer staffId, @RequestParam("clientId") Integer clientId, Map<String, Object> model){

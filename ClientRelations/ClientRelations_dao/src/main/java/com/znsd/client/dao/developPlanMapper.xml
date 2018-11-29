@@ -41,7 +41,7 @@
 	</insert>
 	
 	<update id="updateDevelopPlan" parameterType="com.znsd.client.bean.DevelopPlan">
-		UPDATE develop_plan SET plan_name = #{planName},client_id = #{clientId},staff_id = #{staffId},plan_content = #{planContent},plan_month = #{planMonth},found_time = #{foundTime},last_opterate_time = #{lastOpterateTime} 
+		UPDATE develop_plan SET plan_name = #{planName},client_id = #{clientId},staff_id = #{staffId},plan_content = #{planContent},plan_month = #{planMonth},last_opterate_time = #{lastOpterateTime} 
 		WHERE plan_id = #{planId}
 	</update>
 	

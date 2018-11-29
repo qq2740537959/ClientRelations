@@ -44,14 +44,14 @@
 				<label class="layui-form-label">计划人名称：</label>
 				<div class="layui-input-inline">
 					<select name="clientId" class="layui-select planName">
-					
+						
 					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划月份：</label>
 				<div class="layui-input-inline">
-					<input value="" name="planMonth" class="layui-input date" />
+					<input value="" name="planMonth" class="layui-input date" id="month" />
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -102,9 +102,36 @@
 							layer.alert("网络错误");
 						}
 					});
+					//执行一个laydate实例
+					laydate.render({
+						elem : '#month' //指定元素
+					});
 					//增加
 					$(".add").on('click',function(){
 						console.log($(".planForm").serialize());
+						$.ajax({
+							url:'/ClientRelations_action/insertDevelopPlan',
+							type:'post',
+							data:$(".planForm").serialize()+"&planName="+$(".layui-anim-upbit .layui-this").text(),
+							success:function(t){
+								console.log(t);
+								layer.msg(t.msg);
+							},error:function(){
+								layer.alert("网络延迟错误");
+							}
+						});
+					});
+					// 修改
+					$(".update").on('click',function(){
+						$.ajax({
+							url:'/ClientRelations_action/updateDevelopPlan',
+							type:'post',
+							data:$(".planForm").serialize()+"&planName="+$(".layui-anim-upbit .layui-this").text(),
+							success:function(t){
+							},error:function(){
+								layer.alert("网络延迟错误");
+							}
+						});
 					});
 					//返回页面
 					$(".fanhui").on('click',function(){

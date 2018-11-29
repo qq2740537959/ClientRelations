@@ -104,7 +104,6 @@
 				page : true,
 				limits : [ 2, 5, 8 ]
 			});
-			  let mylay;
 			//头工具栏事件
 			  table.on('toolbar(test)', function(obj){
 			    var checkStatus = table.checkStatus(obj.config.id)
@@ -133,7 +132,7 @@
 			              layer.msg('请选择一行');
 			            }else{
 			            	console.log(data);
-			            	mylay = layer.open({
+			            	layer.open({
 			            		type : 2,
 								anim : 4,
 								area : [ '700px', '600px' ],
@@ -185,7 +184,20 @@
 				    });
 				});
 			$(".add_but").click(function() {
-
+				layer.open({
+					type : 2,
+					anim : 3,
+					area : [ '700px', '600px' ],
+					title: '计划信息',
+					content : 'worthADD.html',
+					success:function(layero,index){
+						 var body = layer.getChildFrame('body', index);
+						 var iframe = window['layui-layer-iframe'+index]
+						 body.find("#buttonaa").empty();
+						 body.find("#buttonaa").append("<button type='button' class='layui-btn add'>增加</button><button type='button' class='layui-btn fanhui'>返回</button>");
+						 iframe.loadClient();
+					}
+				});
 			})
 		});
 		layui.use('laydate', function() {
