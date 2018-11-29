@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import com.znsd.client.bean.Hap;
 import com.znsd.client.service.ClientService;
 import com.znsd.client.service.HapService;
 import com.znsd.client.service.StaffService;
+import com.znsd.client.vo.StaffLoginVo;
 
 @Controller
 public class HapController {
@@ -48,8 +51,8 @@ public class HapController {
 	}
 	@RequestMapping("updateHap")
 	@ResponseBody
-	public Map<String,Object> updateHap(Hap hap) {
-		hap.setHandleId(1);
+	public Map<String,Object> updateHap(Hap hap,HttpServletRequest request) {
+		hap.setHandleId(getUser(request).getStaffId());
 		hap.setLastTime(new Date());
 		hapBiz.updateHap(hap);
 		map.put("msg","修改成功");
@@ -67,8 +70,9 @@ public class HapController {
 	
 	@RequestMapping("updateAllotHap")
 	@ResponseBody
-	public Map<String,Object> updateAllotHap(@RequestParam("staffId") Integer staffId,@RequestParam("handleId") Integer handleId,@RequestParam("chanceId") Integer chanceId){
-		hapBiz.updateAllotHap(staffId,handleId,chanceId);
+	public Map<String,Object> updateAllotHap(@RequestParam("staffId") Integer staffId,@RequestParam("chanceId") Integer chanceId,HttpServletRequest request){
+		hapBiz.updateAllotHap(staffId,getUser(request).getStaffId(),chanceId);
+		clientBiz.updateStaffId(staffId, chanceId);
 		map.put("msg","分配成功");
 		
 		return map;
@@ -76,7 +80,8 @@ public class HapController {
 	
 	@RequestMapping("addHapData")
 	@ResponseBody
-	public Map<String,Object> addHapData(Hap hap){
+	public Map<String,Object> addHapData(Hap hap,HttpServletRequest request){
+		hap.setHandleId(getUser(request).getStaffId());
 		hap.setEntryTime(new Date());
 		hap.setLastTime(new Date());
 		Integer chanceId = hapBiz.addHap(hap);
@@ -95,6 +100,10 @@ public class HapController {
 	public Map<String,Object> getStaffDeputyData(){
 		map.put("data",staffBiz.getStaffDeputyData());
 		return map;
+	}
+	
+	public StaffLoginVo getUser(HttpServletRequest request) {
+		return (StaffLoginVo) request.getSession().getAttribute("userInfo");
 	}
 
 }	 
