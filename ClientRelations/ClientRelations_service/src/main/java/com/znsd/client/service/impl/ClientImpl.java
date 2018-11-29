@@ -54,8 +54,8 @@ public class ClientImpl implements ClientService{
 		return dao.selectResourceState(allotState, state);
 	}
 	@Override		// 分配
-	public Integer updateStaffId(Integer staffId, Integer clientId) {
-		return dao.updateStaffId(staffId, clientId);
+	public Integer updateStaffId(Integer staffId, Integer chanceId) {
+		return dao.updateStaffId(staffId, chanceId);
 	}
 	@Override		// 客户机会
 	public Integer updateChanceId(Integer chanceId, Integer clientId) {

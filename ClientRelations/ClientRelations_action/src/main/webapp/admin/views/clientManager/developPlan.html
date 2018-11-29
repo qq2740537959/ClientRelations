@@ -142,7 +142,13 @@
 								success:function(layero,index){
 									 var body = layer.getChildFrame('body', index);
 									 var iframe = window['layui-layer-iframe'+index]
+									 body.find(".planId").val(data[0].planId);
 									 body.find(".clientId").val(data[0].clientId);
+									 body.find(".date").val(data[0].planMonth);
+									 body.find(".status").val(data[0].planStatus);
+									 body.find(".content").val(data[0].planContent);
+									 body.find("#buttonaa").empty();
+									 body.find("#buttonaa").append("<button type='button' class='layui-btn update'>修改</button><button type='button' class='layui-btn fanhui'>返回</button>");
 									 iframe.loadClient();
 								}
 			            	});

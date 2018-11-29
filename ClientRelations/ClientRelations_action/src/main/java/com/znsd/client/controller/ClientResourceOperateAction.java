@@ -102,9 +102,9 @@ public class ClientResourceOperateAction {
 	
 	@RequestMapping("/updateStaffId")
 	@ResponseBody
-	public Map<String, Object> updateStaffId(@RequestParam("staffId") Integer staffId, @RequestParam("clientId") Integer clientId,Map<String, Object> model){
+	public Map<String, Object> updateStaffId(@RequestParam("staffId") Integer staffId, @RequestParam("chanceId") Integer chanceId,Map<String, Object> model){
 		String msg;
-		Integer count = service.updateStaffId(staffId, clientId);
+		Integer count = service.updateStaffId(staffId, chanceId);
 		if (count > 0) {
 			msg = "分配成功";
 		}else {

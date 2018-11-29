@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" />
 		<script src="../../layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
-			.content {
+			.status {
 				line-height: 36px;
 			}
 			
@@ -32,44 +32,44 @@
 				<span> <a href="">首页</a> &gt; <a href="">客户管理</a> &gt; <a><cite>客户发展计划</cite></a> &gt; <a><cite></cite> 发展计划增加</a></span>
 				<br /><br /><br /><br /><br /> 
 			</div>
-			<form class="planForm">
+			<form class="planForm layui-form">
 			<input type="hidden" class="clientId" value="" />
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划编码:</label>
 				<div class="layui-input-inline">
-					<input value="" name="" class="layui-input" />
+					<input value="" name="planId" class="layui-input planId" />
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划人名称：</label>
 				<div class="layui-input-inline">
 					<select name="clientId" class="layui-select planName">
-						<option value="">韩粉</option>
+					
 					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划月份：</label>
 				<div class="layui-input-inline">
-					<input value="" name="" class="layui-input" />
+					<input value="" name="planMonth" class="layui-input date" />
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划状态：</label>
 				<div class="layui-input-block">
-					<div class="content">已创建</div>
+					<input value="已创建" name="planStatus" class="status layui-input" style="border:0px" />
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">计划人名称：</label>
+				<label class="layui-form-label">计划内容：</label>
 				<div class="layui-input-inline">
-					<textarea name="remark" placeholder="请输入" class="layui-textarea" style="width: 350px;"></textarea>
+					<textarea name="planContent" placeholder="请输入" class="content layui-textarea" style="width: 350px;"></textarea>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<div id="buttonaa" style="width: 100%;">
-					<button class="layui-btn add">增加</button>
-					<button class="layui-btn fanhui">返回</button>
+					<button type="button" class="layui-btn add">增加</button>
+					<button type="button" class="layui-btn fanhui">返回</button>
 				</div>
 			</div>
 			</form>
@@ -77,8 +77,11 @@
 		
 		<script type="text/javascript">
 			function loadClient(){
-				layui.use(['layer'],function(){
-					let layer = layui.layer;
+				layui.use(['layer','form','laydate'],function(){
+					let layer = layui.layer
+					,form = layui.form
+					,laydate = layui.laydate;
+					
 					$.ajax({
 						url:'/ClientRelations_action/selectClientIdName',
 						type:'post',
@@ -86,16 +89,32 @@
 							console.log(data);
 							var trData = "";
 							for (var i=0;i<data.data.length;i++){
-								trData+="<option value='"+data.data[i].clientId+"'>"+data.data[i].clientName+"<option>"
+								if ($(".clientId").val() == data.data[i].clientId) {
+									trData += "<option value='"+data.data[i].clientId+"' selected>"+data.data[i].clientName+"<option>"
+								}else{
+									trData+="<option value='"+data.data[i].clientId+"'>"+data.data[i].clientName+"<option>"
+								}
 							}
 							$(".planName").empty();
 							$(".planName").append(trData);
+							form.render();
 						},error:function(){
 							layer.alert("网络错误");
 						}
 					});
+					//增加
+					$(".add").on('click',function(){
+						console.log($(".planForm").serialize());
+					});
+					//返回页面
+					$(".fanhui").on('click',function(){
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					});
 				});
 			}
+			
+			
 		</script>
 	</body>
 </html>

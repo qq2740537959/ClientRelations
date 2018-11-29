@@ -151,14 +151,14 @@
 				
 				/* 分配*/
 				form.on('submit(demo2)', function(data) {
-					var clientId = $(".formClientId").val();
+					var chanceId = $(".formChanceId").val();
 				//	var handleId = /* #(".handleId").val() */1;
 					var staffId = $(".staffId").val();
-					console.log(clientId+"=========="+staffId);
+					console.log(chanceId+"=========="+staffId);
 					$.ajax({
 						type:"post",
-						url:"/ClientRelations_action/updateStaffId",
-						data:"staffId="+staffId+"&clientId="+clientId,
+						url:"/ClientRelations_action/updateAllotHap",
+						data:"staffId="+staffId+"&chanceId="+chanceId,
 						success:function(t){
 							closeIndex(t.msg);
 						}

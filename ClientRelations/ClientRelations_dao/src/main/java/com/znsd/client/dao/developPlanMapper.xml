@@ -46,7 +46,7 @@
 	</update>
 	
 	<select id="selectClientName" resultMap="clientNameMap">
-		select client_id,client_name FROM client_resource where state = 1
+		select client_id,client_name FROM client_resource where state = 1 and ISNULL(chance_id)
 	</select>
 	
 </mapper>
