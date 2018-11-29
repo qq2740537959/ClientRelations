@@ -37,4 +37,22 @@ public class NoticeController {
 		return map;
 	}
 	
+	//根据公告Id删除该公告
+	@RequestMapping("/deleteNoticeById")
+	@ResponseBody
+	public Map<String, Object> deleteNoticeById(@RequestParam("nArray")String nArray){
+		Map<String, Object> map = new HashMap<>();
+		String[] spli = nArray.split(",");
+		/*System.out.println(spli);
+		int[] nId= new int[spli.length];
+        for (int i = 0; i < spli.length; i++) {
+        	nId[i]=Integer.parseInt(spli[i]);
+        }
+        System.out.println(nId+"----这是什么"+nId[0]);*/
+		noticeBiz.deleteNoticeById(spli);
+		map.put("code", 1);
+		map.put("msg", "删除成功！");
+		return map;
+	}
+	
 }

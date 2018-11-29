@@ -22,4 +22,15 @@ public interface NoticeMapperDao {
 	*
 	 */
 	public List<NoticeVo> selectNoticeByPage(Notice notice);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param notice
+	* @return void
+	* @time 2018 下午8:41:44
+	* @desc 根据公告Id删除该公告
+	*
+	 */
+	public void deleteNoticeById(String[] array);
 }

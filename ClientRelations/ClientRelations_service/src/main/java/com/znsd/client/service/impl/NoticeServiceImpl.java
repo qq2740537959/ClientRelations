@@ -22,4 +22,10 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNoticeByPage(notice);
 	}
 
+	@Override
+	public void deleteNoticeById(String[] nId) {
+		// TODO Auto-generated method stub
+		noticeDao.deleteNoticeById(nId);
+	}
+
 }

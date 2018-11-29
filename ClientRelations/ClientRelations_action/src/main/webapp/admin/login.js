@@ -6,7 +6,7 @@ layui.define(['element'],function(exports){
             value = $.trim($this.val()),
             $parent = $this.parent();
 
-        if(value !== '' && !$parent.hasClass('field-focus')){
+        if(value !== ''){
             $parent.addClass('field-focus');
         }else{
             $parent.removeClass('field-focus');
