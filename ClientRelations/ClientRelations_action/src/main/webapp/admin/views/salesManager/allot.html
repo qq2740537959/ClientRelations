@@ -156,7 +156,7 @@
 					$.ajax({
 						type:"post",
 						url:"/ClientRelations_action/updateAllotHap",
-						data:"staffId="+staffId+"&handleId="+handleId+"&chanceId="+chanceId,
+						data:"staffId="+staffId+"&chanceId="+chanceId,
 						success:function(t){
 							closeIndex(t.msg);
 						}
