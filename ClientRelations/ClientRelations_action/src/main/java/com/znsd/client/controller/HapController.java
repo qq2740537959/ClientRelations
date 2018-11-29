@@ -70,6 +70,7 @@ public class HapController {
 	public Map<String,Object> updateAllotHap(@RequestParam("staffId") Integer staffId,@RequestParam("handleId") Integer handleId,@RequestParam("chanceId") Integer chanceId){
 		hapBiz.updateAllotHap(staffId,handleId,chanceId);
 		map.put("msg","分配成功");
+		
 		return map;
 	}
 	
@@ -78,8 +79,15 @@ public class HapController {
 	public Map<String,Object> addHapData(Hap hap){
 		hap.setEntryTime(new Date());
 		hap.setLastTime(new Date());
-		hapBiz.addHap(hap);
-		map.put("msg","增加成功");
+		Integer chanceId = hapBiz.addHap(hap);
+		if (chanceId == 0) {
+			map.put("msg","网络异常");
+		}else {
+			clientBiz.updateChanceId(hap.getClientId(), hap.getChanceId());
+			map.put("msg","增加成功");
+		}
+		
+		
 		return map;
 	}
 	@RequestMapping("getStaffDeputyData")

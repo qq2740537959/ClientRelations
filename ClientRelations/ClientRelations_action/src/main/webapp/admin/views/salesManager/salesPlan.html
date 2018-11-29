@@ -176,7 +176,10 @@ layui.use('table', function(){
               layer.msg('请选择一行',{icon: 5});
           }else if(data[0].state == 4){
         	  layer.msg('你没有审核权限',{icon: 5});
-          }else{
+          }else if(data[0].pendingName != $(".enterUserName").val()){
+        	  layer.msg('你不能审核自己的计划',{icon: 5});
+          }
+          else{
             	layer.open({
     	   			type:2,
     	   			content:"examine.html",

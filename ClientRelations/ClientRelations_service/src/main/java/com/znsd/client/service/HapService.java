@@ -59,10 +59,10 @@ public interface HapService {
 	 * 
 	*	@author    Administrator
 	*	@param hap
-	*	@return    void
+	*	@return    Integer
 	*	@time    2018 下午9:55:07
 	*	@desc 增加机会
 	*
 	 */
-	void addHap(Hap hap);
+	Integer addHap(Hap hap);
 }
