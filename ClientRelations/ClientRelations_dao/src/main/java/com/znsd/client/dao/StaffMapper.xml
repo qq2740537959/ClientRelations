@@ -45,13 +45,8 @@
  	
  	<!-- 员工登录 -->
  	<select id="staffLogin" resultMap = "staffLoginResultMap">
- 		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,r.role_name,d.department_abbreviation from staff s,role r,department d where s.role_identity = r.role_id and s.department_id = d.department_id
- 		<if test="userName != null and userName != ''">
-			and s.user_name = #{userName}
-		</if>
- 		<if test="password != null and password != ''">
- 			and s.password = #{password}
- 		</if>
+ 		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,r.role_name,d.department_abbreviation from staff s,role r,department d where s.role_identity = r.role_id and s.department_id = d.department_id 
+		and s.user_name = #{userName} and s.password = #{password}
  	</select>
  	
  	<!-- 根据员工表字段获取数据 -->

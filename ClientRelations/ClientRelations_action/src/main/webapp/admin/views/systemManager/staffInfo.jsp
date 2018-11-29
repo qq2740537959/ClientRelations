@@ -28,7 +28,16 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+		.layui-tab-card {
+		    box-shadow: 0 2px 5px 0 #009688!important;
+		}
 		
+		.layui-this{
+		    background-color: #009688!important;
+   			 color: white!important;
+   			 margin:0px!important;
+    	}
 				
 		.layui-input-block {
 			line-height:38px;
@@ -42,70 +51,133 @@ input[type=number]::-webkit-outer-spin-button {
 	</style>
 	</head>
 	<body class="layui-view-body">
-  <div class="layui-form-item" style="margin-top:30px;">
-    <label class="layui-form-label">员工姓名:</label>
-    <div class="layui-input-block">
-     ${userInfo.staffName}
+	<div class="layui-tab layui-tab-card" style="height:40px;">
+  <ul class="layui-tab-title">
+    <li class="layui-this">个人资料</li>
+    <li>修改密码</li>
+  </ul>
+  <div class="layui-tab-content" style="height: 100px;">
+    <div class="layui-tab-item layui-show">
+    	<div class="layui-form-item" style="margin-top:30px;">
+	    <label class="layui-form-label">员工姓名:</label>
+	    <div class="layui-input-block">
+	     ${userInfo.staffName}
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">员工编号:</label>
+	    <div class="layui-input-block">
+	     ${userInfo.staffId}
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">所在部门:</label>
+	    <div class="layui-input-block">
+	     ${userInfo.departmentAbbreviation}
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">员工姓名:</label>
+	    <div class="layui-input-block">
+	     ${userInfo.staffName}
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">当前状态:</label>
+	    <div class="layui-input-block">
+	    	<c:choose>
+	    		<c:when test="${userInfo.state eq 0 }">
+	    			冻结
+	    		</c:when>
+	    		<c:otherwise>
+	    			正常
+	    		</c:otherwise>
+	    	</c:choose>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">系统角色:</label>
+	    <div class="layui-input-block">
+	     ${userInfo.roleName}
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">创建时间:</label>
+	    <div class="layui-input-block">
+	     <fmt:formatDate value="${userInfo.lastTime}" type="both"/>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">登录账号</label>
+	    <div class="layui-input-block">
+	      <input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')" readonly="readonly" value="${userInfo.userName }"  placeholder="" autocomplete="off" class="layui-input userNameInput layui-disabled">
+	    	<button class="layui-btn layui-btn-normal" onclick="updatebtn(this)">修改</button>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">手机号码</label>
+	    <div class="layui-input-block">
+	      <input type="number" required onkeyup="this.value=this.value.replace(/\s+/g,'')" readonly="readonly" value="${userInfo.contactMode }"  placeholder="" autocomplete="off" class="layui-input phoneInput layui-disabled">
+	    	<button class="layui-btn layui-btn-normal" onclick="updatephonebtn(this)">修改</button>
+	    </div>
+	  </div>
     </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">员工编号:</label>
-    <div class="layui-input-block">
-     ${userInfo.staffId}
+    <div class="layui-tab-item">
+    	<form action="" style="margin-top:20px;">
+	    	<div class="layui-form-item">
+		    	<label class="layui-form-label">原密码:</label>
+		    	<div class="layui-input-block">
+		    		<input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')"  placeholder="" autocomplete="off" class="layui-input yuanpwd">
+		    	</div>
+		  	</div>
+		  	<div class="layui-form-item">
+		    	<label class="layui-form-label">新密码:</label>
+		    	<div class="layui-input-block">
+		    		<input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')"  placeholder="" autocomplete="off" class="layui-input newpwd">
+		    	</div>
+		  	</div>
+		  	<div class="layui-form-item">
+		    	<label class="layui-form-label">确认新密码:</label>
+		    	<div class="layui-input-block">
+		    		<input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')"  placeholder="" autocomplete="off" class="layui-input twonewpwd">
+		    	</div>
+		  	</div>
+		  	<div class="layui-form-item">
+		  		<label class="layui-form-label"></label>
+		  		<div class="layui-input-block">
+		  			<button class="layui-btn" onclick="updatePwd(this)">修改</button>
+		    		<button type="reset" class="layui-btn layui-btn-warm">重置</button>
+		    	</div>
+		  	</div>
+	  	</form>
+	  </div>
     </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">所在部门:</label>
-    <div class="layui-input-block">
-     ${userInfo.departmentAbbreviation}
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">员工姓名:</label>
-    <div class="layui-input-block">
-     ${userInfo.staffName}
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">当前状态:</label>
-    <div class="layui-input-block">
-    	<c:choose>
-    		<c:when test="${userInfo.state eq 0 }">
-    			冻结
-    		</c:when>
-    		<c:otherwise>
-    			正常
-    		</c:otherwise>
-    	</c:choose>
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">系统角色:</label>
-    <div class="layui-input-block">
-     ${userInfo.roleName}
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">创建时间:</label>
-    <div class="layui-input-block">
-     <fmt:formatDate value="${userInfo.lastTime}" type="both"/>
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">登录账号</label>
-    <div class="layui-input-block">
-      <input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')" readonly="readonly" value="${userInfo.userName }" lay-verify="required" placeholder="" autocomplete="off" class="layui-input userNameInput layui-disabled">
-    	<button class="layui-btn layui-btn-normal" onclick="updatebtn(this)">修改</button>
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">手机号码</label>
-    <div class="layui-input-block">
-      <input type="number" required onkeyup="this.value=this.value.replace(/\s+/g,'')" readonly="readonly" value="${userInfo.contactMode }" lay-verify="required" placeholder="" autocomplete="off" class="layui-input phoneInput layui-disabled">
-    	<button class="layui-btn layui-btn-normal" onclick="updatephonebtn(this)">修改</button>
-    </div>
-  </div>
+  </div>	
+  
 <script type="text/javascript">
+
+	function updatePwd(th){
+		var yuanpwd = $(".yuanpwd").val();
+		var newpwd = $(".newpwd").val();
+		var twonewpwd = $(".twonewpwd").val();
+		if (yuanpwd == "" || newpwd == "" || twonewpwd == "") {
+			layer.msg("请将表单填写完成!");
+			return ;
+		}
+		if (!(/^[a-zA-Z]\w{5,17}$/.test(yuanpwd))) {
+			layer.msg("原密码格式不正确!");
+			return ;
+		}
+		if (!(/^[a-zA-Z]\w{5,17}$/.test(newpwd))) {
+			layer.msg("新密码格式不正确!");
+			return ;
+		}
+		if (!(/^[a-zA-Z]\w{5,17}$/.test(twonewpwd))) {
+			layer.msg("确认密码格式不正确!");
+			return ;
+		}
+	}
+
 	function updatephonebtn(th){
 		$(th).text("保存");
 		$(th).attr("onclick","submitphonebtn(this)");
@@ -196,6 +268,10 @@ input[type=number]::-webkit-outer-spin-button {
 //Demo
 layui.use('form', function(){
   var form = layui.form;
+  
+  layui.use('element', function(){
+	  var element = layui.element;
+	});
   
   //监听提交
   form.on('submit(formDemo)', function(data){

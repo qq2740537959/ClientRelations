@@ -102,6 +102,8 @@ public class StaffController {
 	public Map<String, Object> staffLogin(@RequestParam("userName") String userName,@RequestParam("password") String password,ModelMap model){
 		Map<String, Object> map = new HashMap<>();
 		StaffLoginVo staffLoginVo = staffBiz.staffLogin(userName, password);
+		System.out.println(password);
+		System.out.println("登录用户信息==="+staffLoginVo);
 		if (staffLoginVo == null) {
 			map.put("code", 1);
 			map.put("msg", "用户名或密码错误！");

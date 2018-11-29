@@ -23,6 +23,16 @@ document.onkeydown = function (e) {
 }
 
 $(".login-button").click(function(){
+	var username = $("#username").val();
+	var password = $("#password").val();
+	if (username == "" || username == null) {
+		layer.msg("请输入用户名！");
+		return ;
+	}
+	if (password == "" || password == null) {
+		layer.msg("请输入密码");
+		return ;
+	}
 	var loginForm = $(".login-form").serialize();
 	$.ajax({
 		type:"post",
