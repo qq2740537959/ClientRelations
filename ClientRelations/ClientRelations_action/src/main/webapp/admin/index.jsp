@@ -153,7 +153,7 @@
                 </ul>
                 <ul style="margin-top: 10px;">
                 	<li>
-                        <a href="login.jsp" style="margin-left:18px;color: rgba(255,255,255,.7);padding-top: 5px;padding-bottom: 5px;" class="exit-a">
+                        <a href="javascript:;" style="margin-left:18px;color: rgba(255,255,255,.7);padding-top: 5px;padding-bottom: 5px;" class="exit">
                             <i class="layui-icon" style="margin-right: 5px;">&#x1006;</i>
                            	 退出系统
                         </a>
