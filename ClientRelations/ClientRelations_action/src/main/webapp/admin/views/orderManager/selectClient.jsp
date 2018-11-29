@@ -48,6 +48,12 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>

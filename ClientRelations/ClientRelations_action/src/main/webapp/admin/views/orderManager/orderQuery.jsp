@@ -48,6 +48,12 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>
@@ -56,6 +62,7 @@
 			<div class="layui-inline">
 		      <div class="layui-input-inline">
 		      	<form class="layui-form">
+		      		<input type="hidden" name="staffId" value="${userInfo.staffId }">
 		      		<div>
 		      			<span style="position: relative;top: 66px;">
 		      				<select name="differentiate" id="differentiate">
@@ -103,7 +110,7 @@
 			    </div>
 				<table class="layui-hide" id="test" lay-filter="test"></table>
 		    </div>
-		    
+		    <input type="hidden" id="staffId" value="${userInfo.staffId }">
 		</div>
 		<script type="text/html" id="toolbarDemo">
 		  <div class="layui-btn-container">
@@ -116,7 +123,7 @@
 		  var table = layui.table;
 		  table.render({
 		    elem: '#test'
-		    ,url:'../../../selectOrder'
+		    ,url:'../../../selectOrder?staffId='+$("#staffId").val()
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {type:'radio'}
@@ -142,6 +149,7 @@
 	                    	inputSelect:$('#inputSelect').val(),
 	                    	dealTime:$('#dealTime').val(),
 	                    	status:$('#status').val(),
+	                    	staffId:$('#staffId').val(),
 	                    } 
 			   			,page:
 	                    {  
@@ -162,7 +170,7 @@
 		    switch(obj.event){
 		      case 'getCheckData':
 		        var data = checkStatus.data;  //获取选中行数据
-		        layer.alert("<div style='color: rgb(102,102,102);width:320px;height:280px;padding-left: 50px;'><br/><h2 style='margin-left: 40px;'>订单信息</h2><br/><div>订单号："+data[0].orderCode+"</div><div>订单类型："+data[0].orderType+"</div><div>购买的商品："+data[0].commodity+"</div><div>收货人姓名:"+data[0].consigneeName+"</div><div>订单金额：￥"+data[0].orderMoney+"</div><div>下单时间："+data[0].dealTime+"</div><div>状态："+data[0].orderStatus+"</div></div>");
+		        layer.alert("<div style='color: rgb(102,102,102);width:320px;height:280px;padding-left: 50px;'><br/><h2 style='margin-left: 40px;'>订单信息</h2><br/><div>订单号："+data[0].orderCode+"</div><div>订单类型："+data[0].orderType+"</div><div>购买的商品详情："+data[0].shippingDetail+"</div><div>收货人姓名:"+data[0].consigneeName+"</div><div>订单金额：￥"+data[0].orderMoney+"</div><div>下单时间："+data[0].dealTime+"</div><div>状态："+data[0].orderStatus+"</div></div>");
 		      break;
 		    };
 		  });

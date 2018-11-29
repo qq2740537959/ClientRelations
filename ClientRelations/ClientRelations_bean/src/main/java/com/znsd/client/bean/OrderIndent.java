@@ -27,6 +27,8 @@ public class OrderIndent implements Serializable {
 	private String modeOfPayment;
 	private String commercialVoucher;
 	private String modeOfDistribution;
+	private Integer sellPlanId;
+	private String shippingDetail;
 	public OrderIndent() {
 	}
 	public int getId() {
@@ -129,5 +131,19 @@ public class OrderIndent implements Serializable {
 	public void setShippingAddressId(int shippingAddressId) {
 		this.shippingAddressId = shippingAddressId;
 	}
-
+	public Integer getSellPlanId() {
+		return sellPlanId;
+	}
+	public void setSellPlanId(Integer sellPlanId) {
+		this.sellPlanId = sellPlanId;
+	}
+	public String getShippingDetail() {
+		return shippingDetail;
+	}
+	public void setShippingDetail(String shippingDetail) {
+		this.shippingDetail = shippingDetail;
+	}
+	public void setDealTime(Timestamp dealTime) {
+		this.dealTime = dealTime;
+	}
 }

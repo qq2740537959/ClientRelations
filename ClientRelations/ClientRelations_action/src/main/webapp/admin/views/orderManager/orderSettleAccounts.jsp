@@ -66,6 +66,12 @@
 			.layui-input,.layui-textarea{
 				width: 200px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>
@@ -89,7 +95,7 @@
 					<div style="font-size: 17px;">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						收货人信息 &nbsp;&nbsp;
-						<span class="ddr" style='display:block;width:60px;height: 30px;margin-top: -25px;margin-left: 150px;text-align: center;line-height: 30px;background-color: rgb(0,150,136);color: white;'>修改</span><br>
+						<span class="ddr" style='display:block;width:60px;height: 30px;margin-top: -25px;margin-left: 150px;text-align: center;line-height: 30px;background-color: rgb(31,147,231);color: white;'>修改</span><br>
 						<div class="shippingAddress">
 						</div><hr>
 						&nbsp;&nbsp;&nbsp;&nbsp;
@@ -112,8 +118,9 @@
 			    	<input type="hidden" name="commodity" class="commodity">
 			    	<input type="hidden" name="commodityNumber" class="commodityNumber">
 			    	<input type="hidden" value="<%=clientId %>" name="clientId" class="client">
-		   			<input type="hidden" value="<%=clientId %>" name="staffId">
+		   			<input type="hidden" value="${userInfo.staffId }" name="staffId" class="staffId">
 		   			<input type="hidden" name="shippingAddressId" class="shippingAddressId">
+		   			<input type="hidden" name="shippingDetail" class="shippingDetail">
 				</form>
 			</div>
 		    <div style="width: 685px;margin-left: 100px;margin-top: 50px;">
@@ -169,14 +176,17 @@
 		var totalNumber = 0;//总金额
 		var productNumber = "";
 		var product = "";
+		var shippingDetail = "";
         var a = "<tr style='height:45px;' bgcolor='#F2F2F2'><th>商品名称</th><th>型号</th><th>单价（单位：万元）</th><th>数量</th></tr>";
         for (var i = 0; i < dataArr.length; i++) {
         	a+="<tr style='height:45px;'><td>"+dataArr[i][1]+"</td><td>"+dataArr[i][2]+"</td><td>"+dataArr[i][3]+"</td><td>x"+dataArr[i][4]+"</td></tr>";
         	totalMoney += parseInt(dataArr[i][3]);
         	totalNumber += parseInt(dataArr[i][4]);
         	productNumber += parseInt(dataArr[i][0])+","+parseInt(dataArr[i][4])+"-";
+        	shippingDetail += dataArr[i][1]+" x"+dataArr[i][4]+",";
         	product += dataArr[i][1]+",";
 		}
+        $(".shippingDetail").val(shippingDetail);
         $(".commodity").val(product);
         $(".totalMoney").empty();
         $(".totalNumber").empty();
@@ -253,7 +263,6 @@
 									  // 存在就修改收货地址 
 									  address = "updateAddress";
 								  }
-								  console.log("clientId:"+clientId);
 								  $.ajax({
 									url:'../../../'+address,
 									type:'post',
@@ -261,15 +270,12 @@
 									success:function(a){
 										if(a == 'success'){
 											if(data == null){
-												alert("data==null");
 												$.ajax({
 													  url:'../../../selectAddressByClidentId?clientId='+clientId,
 													  type:'post',
 													  dataType:'json',
 													  success:function(dd){
-														  alert("data==null222");
 														  if(dd != null){
-															alert("dd.id:"+dd.id);
 															$(".shippingAddressId").val(dd.id);
 														  }
 													  }

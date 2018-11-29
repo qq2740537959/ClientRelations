@@ -22,6 +22,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.alipay.config.AlipayConfig;
 import com.znsd.client.bean.ResultData;
+import com.znsd.client.bean.SellPlan;
 import com.znsd.client.service.OrderIndentService;
 import com.znsd.client.vo.OrderIndentVo;
 import com.znsd.client.vo.OrderStatisticsVo;
@@ -34,7 +35,7 @@ public class OrderIndentController{
 	
 	
 	@RequestMapping("/selectOrder")
-	public @ResponseBody ResultData selectOrder(@RequestParam("page") Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="differentiate",required=false) String differentiate,@RequestParam(value="inputSelect",required=false) String inputSelect,@RequestParam(value="dealTime",required=false) String dealTime,@RequestParam(value="status",required=false) String status) {
+	public @ResponseBody ResultData selectOrder(@RequestParam(value="staffId")String staffId,@RequestParam("page") Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="differentiate",required=false) String differentiate,@RequestParam(value="inputSelect",required=false) String inputSelect,@RequestParam(value="dealTime",required=false) String dealTime,@RequestParam(value="status",required=false) String status) {
 		//订单查询
 		Page pages = PageHelper.startPage(page, limit);
 		if(page == null) {
@@ -43,7 +44,7 @@ public class OrderIndentController{
 		if(null == inputSelect) {
 			inputSelect = "";
 		}
-		List<OrderIndentVo> orderVo = orderIndentService.selectOrderIndent(differentiate, inputSelect, dealTime, status);
+		List<OrderIndentVo> orderVo = orderIndentService.selectOrderIndent(staffId,differentiate, inputSelect, dealTime, status);
 		ResultData result = new ResultData();
 		result.setCode(0);
 		result.setMsg("");
@@ -53,8 +54,8 @@ public class OrderIndentController{
 	}
 	
 	@RequestMapping("/orderStatistics")
-	public @ResponseBody ResultData orderStatistics(@RequestParam(value="page",required=false) Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="date",required=false) String date){
-		//订单统计w
+	public @ResponseBody ResultData orderStatistics(@RequestParam(value="staffId",required=false) String staffId,@RequestParam(value="page",required=false) Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="date",required=false) String date){
+		//订单统计
 		if(page == null) {
 			page = 1;
 		}
@@ -63,8 +64,9 @@ public class OrderIndentController{
 			dateAry[0] = date.substring(0, 10);
 			dateAry[1] = date.substring(12,23);
 		}
+		System.out.println("----staffId:"+staffId);
 		Page pages = PageHelper.startPage(page, limit);
-		List<OrderStatisticsVo> orderStatisticsVo = orderIndentService.orderStatistics(dateAry[0],dateAry[1]);
+		List<OrderStatisticsVo> orderStatisticsVo = orderIndentService.orderStatistics(staffId,dateAry[0],dateAry[1]);
 		ResultData result = new ResultData();
 		result.setCode(0);
 		result.setMsg("");
@@ -125,4 +127,5 @@ public class OrderIndentController{
 		out.flush();
 		out.close();
 	}
+	
 }

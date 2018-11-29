@@ -1,8 +1,5 @@
 package com.znsd.client.vo;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 public class OrderIndentVo {
 	private Integer id;//订单id
 	private String orderType;//订单类型
@@ -16,10 +13,11 @@ public class OrderIndentVo {
 	private String city;//市
 	private String area;//区
 	private String detailAddress;//详细地址
-	
+	private String shippingDetail;//商品详情
+
 	public OrderIndentVo(Integer id, String orderType, String orderCode, String commodity, String consigneeName,
 			double orderMoney, String dealTime, String orderStatus, String province, String city, String area,
-			String detailAddress) {
+			String detailAddress, String shippingDetail) {
 		super();
 		this.id = id;
 		this.orderType = orderType;
@@ -33,6 +31,7 @@ public class OrderIndentVo {
 		this.city = city;
 		this.area = area;
 		this.detailAddress = detailAddress;
+		this.shippingDetail = shippingDetail;
 	}
 	public Integer getId() {
 		return id;
@@ -114,4 +113,11 @@ public class OrderIndentVo {
 				+ dealTime + ", orderStatus=" + orderStatus + ", province=" + province + ", city=" + city + ", area="
 				+ area + ", detailAddress=" + detailAddress + "]";
 	}
+	public String getShippingDetail() {
+		return shippingDetail;
+	}
+	public void setShippingDetail(String shippingDetail) {
+		this.shippingDetail = shippingDetail;
+	}
+	
 }

@@ -49,7 +49,12 @@
 				padding-left: 100px;
 				margin-top: 50px;
 			}
-			
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>

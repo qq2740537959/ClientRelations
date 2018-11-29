@@ -26,7 +26,10 @@ String basePath = request.getScheme() + "://"
 		}	
 		.successBut:hover{
 			color: white;
-		}		
+		}	
+		.layui-btn{
+			background-color:rgb(31,147,231);
+		}	
 	</style>
 </head>
 <body><br><br><br><br><br><br><br><br><br>

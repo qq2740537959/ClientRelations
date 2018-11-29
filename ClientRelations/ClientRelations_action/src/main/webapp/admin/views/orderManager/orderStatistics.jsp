@@ -48,6 +48,15 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
+			.layui-progress-bar{
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>
@@ -83,6 +92,7 @@
 				<table class="layui-hide" id="test" lay-filter="test"></table>
 		    </div>
 		</div>
+		<input type="hidden" id="staffId" value="${userInfo.staffId }">
 		<script type="text/html" id="toolbarDemo">
 		  <div class="layui-btn-container">
 		    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">查看</button>
@@ -95,15 +105,15 @@
 		  var table = layui.table;
 		  table.render({
 		    elem: '#test'
-		    ,url:'../../../orderStatistics'
+		    ,url:'../../../orderStatistics?staffId='+$("#staffId").val()
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		      {type:'radio'}
 		      ,{field:'months', width:130, title: '月份'}
 		      ,{field:'totalOrderNumber', width:130, title: '订单数量'}
 		      ,{field:'totalOrderMoney', width:150, title: '总金额（万元）'}
-		      ,{field:'target', width:150, title: '本月目标（万元）'}
-		      ,{field:'percentageComplete', width:234, title: '完成率',templet:'#titleTpl'}
+		      ,{field:'targetMoney', width:150, title: '本月目标（万元）'}
+		      ,{field:'completionRate', width:234, title: '完成率',templet:'#titleTpl'}
 		    ]]
 		    ,page: true
 		    ,limit:'2'
@@ -116,6 +126,7 @@
 		             {
 	                    where: { //这里传参  向后台
 	                    	date:$('.date').val(),
+	                    	staffId:$('#staffId').val(),
 	                    } 
 			   			,page:true
 			   			,url: '../../../orderStatistics'//后台做模糊搜索接口路径
@@ -186,9 +197,10 @@
 		  });
 		});
 	</script>
+	
 	<script type="text/html" id="titleTpl">
 		<div class="layui-progress layui-progress-big" lay-showpercent="true">
-		  <div class="layui-progress-bar" style="width:{{d.percentageComplete}};text-align:center">{{d.percentageComplete}}</div>
+		  <div class="layui-progress-bar" style="width:{{d.completionRate}}px;text-align:center">{{d.completionRate}}%</div>
 		</div>
 	</script>
 

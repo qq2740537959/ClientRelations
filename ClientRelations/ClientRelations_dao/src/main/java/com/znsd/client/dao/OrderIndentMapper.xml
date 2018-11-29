@@ -8,7 +8,8 @@
  <mapper namespace="com.znsd.client.dao.OrderIndentMapperDao">
 	<!-- 订单查询 -->
 	<select id="selectOrderIndent" resultType="com.znsd.client.vo.OrderIndentVo">
-		select o.id,o.order_type,o.order_code,o.commodity,ad.consignee_name,o.order_money,DATE_FORMAT(o.deal_time,'%Y-%m-%d %H:%i:%s'),o.order_status,ad.province,ad.city,ad.area,ad.detailAddress from order_indent o,address ad where o.shipping_address_id = ad.id
+		select o.id,o.order_type,o.order_code,o.commodity,ad.consignee_name,o.order_money,DATE_FORMAT(o.deal_time,'%Y-%m-%d %H:%i:%s'),o.order_status,ad.province,ad.city,ad.area,ad.detailAddress,o.shipping_detail 
+		from order_indent o,address ad where o.shipping_address_id = ad.id and o.staff_id = #{staffId}
 		<if test="differentiate != null and differentiate != ''">
 			<if test="differentiate == 'productName' and inputSelect != null and inputSelect != ''">
 				and o.commodity like CONCAT('%',#{inputSelect},'%')
@@ -42,20 +43,21 @@
 	</update>
 	<!-- 添加订单记录 -->
 	<insert id="addOrder">
-		INSERT into order_indent values(#{id},'普通订单',#{orderCode},#{commodity},#{commodityNumber},#{shippingAddressId},#{orderMoney},#{staffId},#{clientId},'0',now(),#{orderStatus},#{modeOfPayment},#{modeOfDistribution},#{commercialVoucher})
+		INSERT into order_indent values(#{id},'普通订单',#{orderCode},#{commodity},#{commodityNumber},#{shippingAddressId},#{orderMoney},#{staffId},#{clientId},'0',now(),#{orderStatus},#{modeOfPayment},#{modeOfDistribution},#{commercialVoucher},#{shippingDetail})
 	</insert>
 	<!-- 订单统计 -->
 	<select id="orderStatistics" resultType="orderStatisticsVo">
-		select DATE_FORMAT(deal_time,'%Y-%m') months,count(id) totalOrderNumber,sum(order_money) totalOrderMoney from order_indent
-		<where>
+		select DATE_FORMAT(o.deal_time,'%Y-%m') months,count(o.id) totalOrderNumber,ROUND(sum(o.order_money)/10000,1) totalOrderMoney,ROUND(s.money/10000,1) targetMoney,ROUND((ROUND(sum(o.order_money)/10000,1)/ROUND(s.money/10000,1))*100,1) completionRate from order_indent o,sell_plan s
+		 where o.staff_id = s.selling_id and o.staff_id = #{staffId}
 			<if test="minDate != null and minDate != ''">
-				 <![CDATA[and deal_time >= #{minDate}]]> 
+				 <![CDATA[and o.deal_time >= #{minDate}]]> 
 			</if>
 			<if test="maxDate != null and maxDate !='' ">
-			 <![CDATA[and deal_time <= #{maxDate}]]> 
+			 <![CDATA[and o.deal_time <= #{maxDate}]]> 
 			</if>
-			and order_status = '已完成'
-		</where>
-		group by months  
+			and o.order_status = '已完成' group by months  
+	</select>
+	<select id="selectPlan" resultType="sellPlan">
+		select * from sell_plan where selling_id = #{sellingId}
 	</select>
  </mapper>
