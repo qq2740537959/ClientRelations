@@ -1,3 +1,15 @@
+.title{
+     background-image: -webkit-linear-gradient(left, #E6D205, #147B96 25%, #E6D205 50%, #147B96 75%, #147B96);
+     -webkit-text-fill-color: transparent;
+     -webkit-background-clip: text;
+     -webkit-background-size: 200% 100%;
+     -webkit-animation: masked-animation 6s infinite linear;
+}
+ @-webkit-keyframes masked-animation {
+         0%{ background-position: 0 0;}
+         100% { background-position: -100% 0;}
+    }
+
 .layui-view-body{
     background-color: #f0f2f5;
 }

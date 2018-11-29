@@ -48,6 +48,26 @@ input[type=number]::-webkit-outer-spin-button {
 			float:left;
 			width:200px;
 		}
+		.pwdmsg{
+		    text-decoration: underline;
+		    position: relative;
+		    font-size: 13px;
+		    top: 11px;
+		    margin-left: 10px;
+		    font-weight: bold;
+		    color:#737373;
+		    
+		    text-align: center;
+        background-image: -webkit-linear-gradient(right, #147B76, #E6D205 25%, #147B96 50%, #E6D205 75%, #147B96);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-background-size: 200% 100%;
+        -webkit-animation: masked-animation 4s infinite linear;
+		}
+    @-webkit-keyframes masked-animation {
+         0%{ background-position: 0 0;}
+         100% { background-position: -100% 0;}
+    }
 	</style>
 	</head>
 	<body class="layui-view-body">
@@ -134,6 +154,7 @@ input[type=number]::-webkit-outer-spin-button {
 		    	<label class="layui-form-label">新密码:</label>
 		    	<div class="layui-input-block">
 		    		<input type="text" required onkeyup="this.value=this.value.replace(/\s+/g,'')"  placeholder="" autocomplete="off" class="layui-input newpwd">
+		    		<span class="pwdmsg">注:密码只能是字母+数字组合并且6-18位格式</span>
 		    	</div>
 		  	</div>
 		  	<div class="layui-form-item">
@@ -145,7 +166,7 @@ input[type=number]::-webkit-outer-spin-button {
 		  	<div class="layui-form-item">
 		  		<label class="layui-form-label"></label>
 		  		<div class="layui-input-block">
-		  			<button class="layui-btn" onclick="updatePwd(this)">修改</button>
+		  			<button type="button" class="layui-btn" onclick="updatePwd(this)">修改</button>
 		    		<button type="reset" class="layui-btn layui-btn-warm">重置</button>
 		    	</div>
 		  	</div>
@@ -162,20 +183,37 @@ input[type=number]::-webkit-outer-spin-button {
 		var twonewpwd = $(".twonewpwd").val();
 		if (yuanpwd == "" || newpwd == "" || twonewpwd == "") {
 			layer.msg("请将表单填写完成!");
-			return ;
-		}
-		if (!(/^[a-zA-Z]\w{5,17}$/.test(yuanpwd))) {
-			layer.msg("原密码格式不正确!");
-			return ;
+			return false;
 		}
 		if (!(/^[a-zA-Z]\w{5,17}$/.test(newpwd))) {
 			layer.msg("新密码格式不正确!");
-			return ;
+			return false;
 		}
 		if (!(/^[a-zA-Z]\w{5,17}$/.test(twonewpwd))) {
 			layer.msg("确认密码格式不正确!");
-			return ;
+			return false;
 		}
+		if (newpwd != twonewpwd) {
+			layer.msg("二次密码输入不一致!");
+			return false;
+		}
+		$.ajax({
+			url:"../../../updatePwd",
+			type:"post",
+			data:{
+				ypassword:yuanpwd,
+				npassword:newpwd
+			},
+			success:function(data){
+				if (data.code == 1) {
+					var yuanpwd = $(".yuanpwd,.newpwd,.twonewpwd").val("");
+					layer.msg(data.msg+"",{icon:1});
+				}else{
+					layer.msg(data.msg);
+				}
+			}
+		})
+		return false;
 	}
 
 	function updatephonebtn(th){

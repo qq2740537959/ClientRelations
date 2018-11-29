@@ -66,6 +66,7 @@
  		<set>
 			<if test="contactMode != null and contactMode != ''">contact_mode = #{contactMode},</if>
 			<if test="userName != null and userName != ''">user_name = #{userName},</if>	
+			<if test="password != null and password != ''">password = #{password}</if>
 		</set>
  		where staff_id  = #{staffId}
  	</update>
