@@ -71,31 +71,67 @@ public class StaffController {
 	}
 	
 	//修改员工登录用户名
-		@RequestMapping("/updateStaffUserName")
-		@ResponseBody
-		public Map<String, Object> updateStaffUserName(Staff staff,HttpSession session){
-			Map<String, Object> map = new HashMap<>();
-			StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
-			if (staffLoginVo.getUserName().equals(staff.getUserName())) {
-				map.put("code", 2);
-				map.put("msg", "未做任何修改操作！");
-				return map;
-			}
-			StaffVo staffVo = staffBiz.selectStaffByUserName(staff);
-			if (staffVo != null) {
-				map.put("code", 0);
-				map.put("msg", "用户名已存在！");
-			}else {
-				staff.setStaffId(staffLoginVo.getStaffId());
-				staffBiz.updateStaffUserName(staff);
-				staffLoginVo.setUserName(staff.getUserName());
-				session.setAttribute("userInfo", staffLoginVo);
-				map.put("code", 1);
-				map.put("msg", "修改登录用户名成功！");
-			}
+	@RequestMapping("/updateStaffUserName")
+	@ResponseBody
+	public Map<String, Object> updateStaffUserName(Staff staff,HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
+		if (staffLoginVo.getUserName().equals(staff.getUserName())) {
+			map.put("code", 2);
+			map.put("msg", "未做任何修改操作！");
 			return map;
 		}
-	
+		StaffVo staffVo = staffBiz.selectStaffByUserName(staff);
+		if (staffVo != null) {
+			map.put("code", 0);
+			map.put("msg", "用户名已存在！");
+		}else {
+			staff.setStaffId(staffLoginVo.getStaffId());
+			staffBiz.updateStaffUserName(staff);
+			staffLoginVo.setUserName(staff.getUserName());
+			session.setAttribute("userInfo", staffLoginVo);
+			map.put("code", 1);
+			map.put("msg", "修改登录用户名成功！");
+		}
+		return map;
+	}
+
+	//修改员工登录密码
+	@RequestMapping("/updatePwd")
+	@ResponseBody
+	public Map<String, Object> updatePwd(@RequestParam("ypassword") String ypassword,@RequestParam("npassword") String npassword,HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
+		if (ypassword == "" || ypassword == null) {
+			map.put("code", 0);
+			map.put("msg", "请输入用户名!");
+			return map;
+		}else if (npassword == "" || npassword == null) {
+			map.put("code", 2);
+			map.put("msg", "请输入密码!");
+			return map;
+		}
+		if (ypassword.equals(staffLoginVo.getPassword())) {
+			map.put("code", 3);
+			map.put("msg", "原密码输入错误!");
+			return map;
+		}
+		if (npassword.equals(ypassword)) {
+			map.put("code", 3);
+			map.put("msg", "新密码不能跟旧密码相等!");
+			return map;
+		}
+		Staff staff = new Staff();
+		staff.setStaffId(staffLoginVo.getStaffId());
+		staff.setPassword(npassword);
+		staffBiz.updateStaffUserName(staff);
+		staffLoginVo.setPassword(npassword);
+		session.setAttribute("userInfo", staffLoginVo);
+		map.put("code", 1);
+		map.put("msg", "修改密码成功!");
+		return map;
+	}
+		
 	//员工登录
 	@RequestMapping("/staffLogin")
 	@ResponseBody

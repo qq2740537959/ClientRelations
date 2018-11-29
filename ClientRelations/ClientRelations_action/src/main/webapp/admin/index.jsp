@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
    <!--  <link rel="icon" href="../bitbug_favicon.ico"> -->
-    <title>客户关系管理系统</title>
+    <title>客户关系管理系统（CRM）</title>
     <style type="text/css">
     	.exit-a:hover{
     		color: #fff!important;
@@ -42,7 +42,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                     	<img src="assets/images/ddr.jpg" class="layui-nav-img">
-   						admin
+   						${userInfo.staffName }
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="exit">退出</a></dd>
@@ -61,7 +61,7 @@
                 <ul id="Nav" class="layui-nav layui-nav-tree">
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            <i class="layui-icon">&#xe652;</i>
+                            <i class="layui-icon">&#xe620;</i>
                             <em>系统设置</em>
                         </a>
                         <dl class="layui-nav-child">
