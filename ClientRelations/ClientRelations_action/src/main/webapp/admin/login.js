@@ -26,11 +26,15 @@ $(".login-button").click(function(){
 	var username = $("#username").val();
 	var password = $("#password").val();
 	if (username == "" || username == null) {
-		layer.msg("请输入用户名！");
+		layer.msg("请输入用户名！",{
+			anim:6
+		});
 		return ;
 	}
 	if (password == "" || password == null) {
-		layer.msg("请输入密码");
+		layer.msg("请输入密码",{
+			anim:6
+		});
 		return ;
 	}
 	var loginForm = $(".login-form").serialize();

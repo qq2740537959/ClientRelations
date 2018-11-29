@@ -10,6 +10,10 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	<icon>
+        <small-icon>/admin/assets/images/logo.png</small-icon>
+        <large-icon>/admin/assets/images/logo.png</large-icon>
+    </icon>
 	<error-page> <!--当系统出现404错误，跳转到页面nopage.html -->
 		<error-code>404</error-code>
 		<location>/nopage.html</location>
