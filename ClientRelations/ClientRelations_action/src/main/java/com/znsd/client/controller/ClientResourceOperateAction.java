@@ -27,6 +27,7 @@ public class ClientResourceOperateAction {
 	@Autowired
 	private ClientService service;
 	
+/*	@Action(value="selectAllClient", results = {@Result(name=ActionSupport.SUCCESS,type="json",params= {"root","map"})})*/
 	@RequestMapping("/selectAllClient")
 	@ResponseBody
 	public Map<String, Object> selectAllClient(@RequestParam(value="allotState",required=false) Integer allotState,@RequestParam(value="conditionName",required=false)String conditionName,
@@ -65,23 +66,19 @@ public class ClientResourceOperateAction {
 	@ResponseBody
 	public Map<String, Object> addResource(ClientResource resource,Map<String, Object> model){
 		StringBuffer msg ;
-		if (resource != null) {
-			resource.setConsumptionTimes(0);
-			resource.setTotalConsumptionAmount(0.0);
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			String dateString = formatter.format(new Date());
-			resource.setInTime(dateString);
-			Integer ccc = service.addResource(resource);
-			if (ccc > 0) {
-				msg = new StringBuffer("增加成功");
-			}else {
-				msg = new StringBuffer("增加失败");
-			}
-			model = new HashMap<String, Object>();
-			model.put("msg", msg);
+		resource.setConsumptionTimes(0);
+		resource.setTotalConsumptionAmount(0.0);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(new Date());
+		resource.setInTime(dateString);
+		Integer ccc = service.addResource(resource);
+		if (ccc > 0) {
+			msg = new StringBuffer("增加成功");
 		}else {
-			model.put("msg", "增加失败");
+			msg = new StringBuffer("增加失败");
 		}
+		model = new HashMap<String, Object>();
+		model.put("msg", msg);
 		return model;
 	}
 	
@@ -89,6 +86,7 @@ public class ClientResourceOperateAction {
 	@ResponseBody
 	public Map<String, Object> updateResource(ClientResource resource,Map<String, Object> model){
 		StringBuffer msg ;
+		System.out.println(resource.toString());
 		Integer ccc = service.updateResource(resource);
 		if (ccc > 0) {
 			msg = new StringBuffer("修改成功");
@@ -100,11 +98,11 @@ public class ClientResourceOperateAction {
 		return model;
 	}
 	
-/*	@RequestMapping("/updateStaffId")
+	@RequestMapping("/updateStaffId")
 	@ResponseBody
-	public Map<String, Object> updateStaffId(@RequestParam("staffId") Integer staffId, @RequestParam("chanceId") Integer chanceId,Map<String, Object> model){
+	public Map<String, Object> updateStaffId(@RequestParam("staffId") Integer staffId, @RequestParam("clientId") Integer clientId,Map<String, Object> model){
 		String msg;
-		Integer count = service.updateStaffId(staffId, chanceId);
+		Integer count = service.updateStaffId(staffId, clientId);
 		if (count > 0) {
 			msg = "分配成功";
 		}else {
@@ -113,7 +111,7 @@ public class ClientResourceOperateAction {
 		model = new HashMap<String, Object>();
 		model.put("msg", msg);
 		return model;
-	}*/
+	}
 	
 	/*@RequestMapping("/updasteChanceId")
 	public Map<String, Object> updateChanceId(@RequestParam("staffId") Integer staffId, @RequestParam("clientId") Integer clientId, Map<String, Object> model){

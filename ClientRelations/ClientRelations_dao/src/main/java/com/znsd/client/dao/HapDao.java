@@ -64,10 +64,10 @@ public interface HapDao {
 	 * 
 	*	@author    Administrator
 	*	@param hap
-	*	@return    Integer
+	*	@return    void
 	*	@time    2018 下午9:55:07
 	*	@desc 增加机会
 	*
 	 */
-	Integer addHap(Hap hap);
+	void addHap(Hap hap);
 }

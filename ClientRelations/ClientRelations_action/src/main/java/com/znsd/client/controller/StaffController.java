@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,17 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.znsd.client.bean.Staff;
 import com.znsd.client.service.StaffService;
 import com.znsd.client.vo.StaffLoginVo;
 import com.znsd.client.vo.StaffVo;
 
 @Controller
-@SessionAttributes({"userInfo"})
+@SessionAttributes("userInfo")
 public class StaffController {
 
 	@Autowired
@@ -43,96 +39,6 @@ public class StaffController {
 		return map;
 	}
 	
-	//修改员工手机号
-	@RequestMapping("/updateStaffPhone")
-	@ResponseBody
-	public Map<String, Object> updateStaffPhone(Staff staff,HttpSession session){
-		Map<String, Object> map = new HashMap<>();
-		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
-		if (staffLoginVo.getContactMode().equals(staff.getContactMode())) {
-			map.put("code", 2);
-			map.put("msg", "未做任何修改操作！");
-			return map;
-		}
-		StaffVo staffVo = staffBiz.selectStaffByUserName(staff);
-		if (staffVo != null) {
-			map.put("code", 0);
-			map.put("msg", "手机号已存在！");
-		}else {
-			staff.setStaffId(staffLoginVo.getStaffId());
-			System.out.println(staff+"-----");
-			staffBiz.updateStaffUserName(staff);
-			staffLoginVo.setContactMode(staff.getContactMode());
-			session.setAttribute("userInfo", staffLoginVo);
-			map.put("code", 1);
-			map.put("msg", "修改手机号成功！");
-		}
-		return map;
-	}
-	
-	//修改员工登录用户名
-	@RequestMapping("/updateStaffUserName")
-	@ResponseBody
-	public Map<String, Object> updateStaffUserName(Staff staff,HttpSession session){
-		Map<String, Object> map = new HashMap<>();
-		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
-		if (staffLoginVo.getUserName().equals(staff.getUserName())) {
-			map.put("code", 2);
-			map.put("msg", "未做任何修改操作！");
-			return map;
-		}
-		StaffVo staffVo = staffBiz.selectStaffByUserName(staff);
-		if (staffVo != null) {
-			map.put("code", 0);
-			map.put("msg", "用户名已存在！");
-		}else {
-			staff.setStaffId(staffLoginVo.getStaffId());
-			staffBiz.updateStaffUserName(staff);
-			staffLoginVo.setUserName(staff.getUserName());
-			session.setAttribute("userInfo", staffLoginVo);
-			map.put("code", 1);
-			map.put("msg", "修改登录用户名成功！");
-		}
-		return map;
-	}
-
-	//修改员工登录密码
-	@RequestMapping("/updatePwd")
-	@ResponseBody
-	public Map<String, Object> updatePwd(@RequestParam("ypassword") String ypassword,@RequestParam("npassword") String npassword,HttpSession session){
-		Map<String, Object> map = new HashMap<>();
-		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
-		if (ypassword == "" || ypassword == null) {
-			map.put("code", 0);
-			map.put("msg", "请输入用户名!");
-			return map;
-		}else if (npassword == "" || npassword == null) {
-			map.put("code", 2);
-			map.put("msg", "请输入密码!");
-			return map;
-		}
-		if (ypassword.equals(staffLoginVo.getPassword())) {
-			map.put("code", 3);
-			map.put("msg", "原密码输入错误!");
-			return map;
-		}
-		if (npassword.equals(ypassword)) {
-			map.put("code", 3);
-			map.put("msg", "新密码不能跟旧密码相等!");
-			return map;
-		}
-		Staff staff = new Staff();
-		staff.setStaffId(staffLoginVo.getStaffId());
-		staff.setPassword(npassword);
-		staffBiz.updateStaffUserName(staff);
-		staffLoginVo.setPassword(npassword);
-		session.setAttribute("userInfo", staffLoginVo);
-		map.put("code", 1);
-		map.put("msg", "修改密码成功!");
-		return map;
-	}
-		
-	//员工登录
 	@RequestMapping("/staffLogin")
 	@ResponseBody
 	public Map<String, Object> staffLogin(@RequestParam("userName") String userName,@RequestParam("password") String password,ModelMap model){
@@ -145,18 +51,11 @@ public class StaffController {
 			map.put("code", 2);
 			map.put("msg", "账号冻结，联系管理员！");
 		} else {
-			model.put("userInfo",staffLoginVo);
+			model.addAttribute("userInfo",staffLoginVo);
 			map.put("code", 0);
 			map.put("msg", "登录成功！");
 		}
 		return map;
-	}
-	
-	//员工退出登录
-	@RequestMapping("/userExit")
-	public String userExit(SessionStatus sessionStatus) {
-		sessionStatus.setComplete();
-		return "redirect:/";
 	}
 	
 }

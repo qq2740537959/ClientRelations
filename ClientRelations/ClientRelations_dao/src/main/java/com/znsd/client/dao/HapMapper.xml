@@ -38,8 +38,8 @@
  	<update id="updateAllotHap"><!-- 分配机会 -->
  		update hap set staff_id = #{staffId},last_time=now(),handle_id=#{handleId} where chance_id = #{chanceId}
  	</update>
- 	<insert id="addHap"  parameterType="com.znsd.client.bean.Hap" useGeneratedKeys="true" keyProperty="chanceId"><!-- 增加机会 -->
- 		insert into hap(chance_name,type_id,entry_time,handle_id,chance_content,entry_id,last_time,remark,client_id) values (#{chanceName},#{typeId},#{entryTime},#{handleId},#{chanceContent},#{entryId},#{lastTime},#{remark},#{clientId})
+ 	<insert id="addHap"  parameterType="com.znsd.client.bean.Hap"><!-- 增加机会 -->
+ 		insert into hap(chance_name,type_id,entry_time,handle_id,chance_content,entry_id,last_time,remark) values (#{chanceName},#{typeId},#{entryTime},#{handleId},#{chanceContent},#{entryId},#{lastTime},#{remark})
  	</insert>
 	<select id="getHapData" resultMap="hapMap">
 		select chance_id,chance_name,t.type_id,chance_content,remark,

@@ -145,14 +145,24 @@
 	
 	<update id = "updateDispel" parameterType = "contract">
 		update contract set 
-		contract_state = #{contractState}
+		contract_state = #{contractState},
+		staff_id = #{staffId},
+		relieve = #{relieve}
 		where contract_id = #{contractId}
 	</update>
 	
 	<update id = "updateRepulse" parameterType = "contract">
 		update contract set 
-		contract_state = #{contractState}
+		contract_state = #{contractState},
 		staff_id = #{staffId}
+		where contract_id = #{contractId}
+	</update>
+	
+	<update id = "updateLetter" parameterType = "contract">
+		update contract set 
+		contract_state = #{contractState},
+		staff_id = #{staffId},
+		transfer_possession = #{transferPossession}
 		where contract_id = #{contractId}
 	</update>
 </mapper>

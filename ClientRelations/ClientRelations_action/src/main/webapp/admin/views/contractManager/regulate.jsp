@@ -39,6 +39,13 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>
@@ -157,6 +164,16 @@
 						})
 			   		}else{
 			   			alert("合同履行中才能解除");
+			   		}
+			   	}else if(layEvent === 'transfer'){
+			   		if(shapeName === '履行中'){
+			   			layer.open({
+			   				type:2,
+			   				area:['800px','600px'],
+			   				content:'skill.jsp?contractId='+con,
+			   			})
+			   		}else{
+			   			alert("合同履行中才能转让");
 			   		}
 			   	}
 			});

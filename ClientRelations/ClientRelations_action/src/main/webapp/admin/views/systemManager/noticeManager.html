@@ -126,14 +126,14 @@
 		    ,url:'../../../selectNoticeByPage'
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
-		    	{checkbox:true,fixed:true}
-			      ,{field:'noticeId', width:50, title: 'ID', sort: true}
-			      ,{field:'noticeTitle', width:141, title: '标题'}
-			      ,{field:'releaseTime', width:222, title: '发布时间',templet: "<div>{{layui.util.toDateString(d.releaseTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
-			      ,{field:'releasePersonName', width:80, title: '发布人'}
-			      ,{field:'releaseContent', width:300, title: '发布内容'}
-			      ,{field:'noticeType', width:149, title: '公告类型',toolbar:"#barType"}
-			      ,{field: 'right', title: '操作', width:93,toolbar:"#barDemo"}
+		      {checkbox:true,fixed:true}
+		      ,{field:'noticeId', width:50, title: 'ID', sort: true}
+		      ,{field:'noticeTitle', width:141, title: '标题'}
+		      ,{field:'releaseTime', width:219, title: '发布时间',templet: "<div>{{layui.util.toDateString(d.releaseTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+		      ,{field:'releasePersonName', width:80, title: '发布人'}
+		      ,{field:'releaseContent', width:290, title: '发布内容'}
+		      ,{field:'noticeType', width:150, title: '公告类型',toolbar:"#barType"}
+		      ,{field: 'right', title: '操作', width:105,toolbar:"#barDemo"}
 		    ]]
 		    ,page: true
 		  });

@@ -23,6 +23,13 @@
 				padding-left:0px;
 				margin-top: 0px;
 			}
+			
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>
@@ -30,52 +37,67 @@
 			<form method = "post" id = "addCon">
 			<h3>合同管理 >> 合同创建</h3>
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
-				<label>合同名称：</label><input type="text" size="67px;" name = "contractName"/>				
+				<label>合同名称：</label>
+				<div class = "layui-input-inline">
+					<input type="text" size="67px;" name = "contractName" class = "layui-input"/>				
+				</div>
 			</div>
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
 				<div style="float:left">
 					<label>合同类型：</label>
-					<select class = "contractType" name = "contractType">
-						
-					</select>
+					<div class = "layui-input-inline">
+						<select class = "contractType layui-select" name = "contractType" >
+							
+						</select>
+					</div>
 				</div>
-				<div style="float: left;margin-left: 171px;">
+				<div style="float: left;margin-left: 176px;">
 					<label>合同金额：</label>
-					<input type = "text" name = "contractMoney"/>
+					<div class = "layui-input-inline">
+						<input type = "text" name = "contractMoney" class = "layui-input"/>
+					</div>
 				</div>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 100px;">
 				<div style="float: left;margin-left: 27px;">
 					<label>甲方：</label>
-					<input type = "text" name = "ownCompany"/>
+					<div class = "layui-input-inline"> 
+						<input type = "text" name = "ownCompany" class = "layui-input"/>
+					</div>
 				</div>
-				<div style="float: left;margin-left: 105px;">
+				<div style="float: left;margin-left: 100px;">
 					<label>乙方：</label>
-					<input type = "text" name = "otherCompany"/>
+					<div class = "layui-input-inline">
+						<input type = "text" name = "otherCompany" class = "layui-input"/>
+					</div>
 				</div>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 43px;">
 				<div style="float: left;">
 					<label>企业经营许可证号：</label>
-					<input type = "text" name = "myselfLicence"/>
+					<div class = "layui-input-inline">
+						<input type = "text" name = "myselfLicence" class = "layui-input"/>
+					</div>
 				</div>
-				<div style="float: left;margin-left:21px;">
+				<div style="float: left;margin-left:16px;">
 					<label>企业经营许可证号：</label>
-					<input type = "text" name = "anotherLicence"/>
+					<div class = "layui-input-inline">
+						<input type = "text" name = "anotherLicence" class = "layui-input"/>
+					</div>
 				</div>
 			</div>
-			<div style="margin-top: 30px;float: left;margin-left: 100px;">
-				<label>合同内容：</label>
-				<input style="width: 499px;height: 150px;border: 1px solid;margin-top: 20px;" name = "contractContent"/>
+			<div style="margin-top: 30px;float: left;margin-left: 62px;">
+				<label class = "layui-form-label" style = "margin-top:75px;">合同内容：</label>
+				<textarea style="width: 508px;height: 150px;margin-top: 20px;" name = "contractContent" class = "contractContent"></textarea>				
 			</div>
-			<div style="margin-top: 30px;float: left;margin-left: 100px;">
-				<label>备注信息：</label>
-				<input style="width: 499px;height: 100px;border: 1px solid;margin-top: 20px;" name = "remarks"/>
+			<div style="margin-top: 30px;float: left;margin-left: 62px;">
+				<label class = "layui-form-label" style = "margin-top:23px;">备注信息：</label>
+				<textarea style="width: 508px;height: 50px;margin-top: 20px;" name = "remarks" class = "remarks"></textarea>
 			</div>
 			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
-				<input type="button" value="保存" style = "width:80px; height:30px;" id = "embrace"/>
+				<input type="button" value="保存"  id = "embrace" class = "layui-btn"/>
 				
-				<a href="" style="display: block; width: 58px;height: 23px;border: 1px solid;padding-top: 5px;padding-left: 20px;float: right;">返回</a>
+				<input type="button" value="返回"  id = "back" class = "layui-btn"/>
 			</div>
 			</form>
 		</div>
@@ -106,7 +128,10 @@
 						type:'post',
 						data:$("#addCon").serialize(),
 						success:function(data){
-							alert("创建成功！");
+							var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+							parent.layer.msg("创建成功！");
+							parent.layer.close(index);
+							parent.refershuaxin();
 						},error:function(){
 							alert("网络错误！");
 						}
@@ -114,6 +139,16 @@
 				})
 			}
 			addContract();
+			
+			function duack(){
+				$("#back").on("click",function(){
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+					parent.layer.msg("返回成功！");
+					parent.layer.close(index);
+					parent.refershuaxin();
+				})
+			}
+			duack();
 		</script>
 	</body>
 </html>

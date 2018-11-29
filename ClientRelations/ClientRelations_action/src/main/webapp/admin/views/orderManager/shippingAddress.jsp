@@ -66,9 +66,6 @@ String basePath = request.getScheme() + "://"
 			.layui-input,.layui-textarea{
 				width: 200px;
 			}
-			.layui-btn{
-				background-color:rgb(31,147,231);
-			}
 		</style>
 </head>
 <body>

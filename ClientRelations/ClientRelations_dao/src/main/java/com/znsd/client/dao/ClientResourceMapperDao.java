@@ -29,7 +29,7 @@ public interface ClientResourceMapperDao {
 	public List<Map<String, Object>> selectResourceState(@Param("allotState")Integer allotState,@Param("state")Integer state);
 	
 	//修改分配后客户服务代表
-	public Integer updateStaffId(@Param("staffId")Integer staffId, @Param("chanceId")Integer chanceId);
+	public Integer updateStaffId(@Param("staffId")Integer staffId, @Param("clientId")Integer clientId);
 	
 	//增加客户的机会
 	public Integer updateChanceId(@Param("chanceId")Integer chanceId, @Param("clientId")Integer clientId);

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
    <!--  <link rel="icon" href="../bitbug_favicon.ico"> -->
-    <title>客户关系管理系统（CRM）</title>
+    <title>客户关系管理系统</title>
     <style type="text/css">
     	.exit-a:hover{
     		color: #fff!important;
@@ -42,7 +42,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                     	<img src="assets/images/ddr.jpg" class="layui-nav-img">
-   						${userInfo.staffName }
+   						admin
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="exit">退出</a></dd>
@@ -61,16 +61,16 @@
                 <ul id="Nav" class="layui-nav layui-nav-tree">
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            <i class="layui-icon">&#xe620;</i>
+                            <i class="layui-icon">&#xe652;</i>
                             <em>系统设置</em>
                         </a>
                         <dl class="layui-nav-child">
-                        	<dd><a href="views/systemManager/roleManager.html">角色管理</a></dd>
+                        	<dd><a href="">角色管理</a></dd>
                         	<dd><a href="views/systemManager/organization.html">组织结构</a></dd>
                         	<dd><a href="views/systemManager/staffManager.html">员工管理</a></dd>
                         	<dd><a href="views/systemManager/noticeManager.html">公告管理</a></dd>
                         	<dd><a href="views/systemManager/staffInfo.jsp">个人信息</a></dd>
-                        	<!-- <dd><a href="">基础信息</a></dd> -->
+                        	<dd><a href="">基础信息</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -174,11 +174,13 @@
     <script src="index.js" data-main="home"></script>
     <script type="text/javascript">
     	$(".exit").click(function(){
-    		layer.confirm("确定要退出登录吗？", function(index){
-		  	      layer.close(index);
-		  	      var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true});
-		  	      location.href = "../userExit";
-		    });
+    		$.ajax({
+    			type:"post",
+    			url:"../exitAdminAction",
+    			success:function(t){
+    				location.href="login.jsp";
+    			}
+    		})
     	})
     </script>
 </body>

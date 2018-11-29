@@ -65,7 +65,7 @@
 	</update>
 <!-- 	分配修改服务人id -->
 	<update id="updateStaffId">
-		update client_resource set staff_id = #{staffId},allot_state = 2 where chance_id = #{chanceId}
+		update client_resource set staff_id = #{staffId},allot_state = 2 where client_id = #{clientId}
 	</update>
 	<!-- 链接机会管理 分配 -->
 	<update id="updateChanceId">

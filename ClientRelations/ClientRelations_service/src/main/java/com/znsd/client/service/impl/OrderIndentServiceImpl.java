@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.znsd.client.bean.OrderIndent;
-import com.znsd.client.bean.SellPlan;
 import com.znsd.client.dao.OrderIndentMapperDao;
 import com.znsd.client.service.OrderIndentService;
 import com.znsd.client.vo.OrderIndentVo;
@@ -19,10 +18,10 @@ public class OrderIndentServiceImpl implements OrderIndentService{
 	@Autowired
 	private OrderIndentMapperDao dao;
 	
-	public List<OrderIndentVo> selectOrderIndent(String staffId,String differentiate, String inputSelect, String dealTime,
+	public List<OrderIndentVo> selectOrderIndent(String differentiate, String inputSelect, String dealTime,
 			String status) {
 		//查询订单信息
-		return dao.selectOrderIndent(staffId,differentiate, inputSelect, dealTime, status);
+		return dao.selectOrderIndent(differentiate, inputSelect, dealTime, status);
 	}
 
 	public int updateOrderStatus(String status,String orderCode) {
@@ -35,9 +34,9 @@ public class OrderIndentServiceImpl implements OrderIndentService{
 		return dao.addOrder(orderIndent);
 	}
 
-	public List<OrderStatisticsVo> orderStatistics(String staffId,String minDate,String maxDate) {
+	public List<OrderStatisticsVo> orderStatistics(String minDate,String maxDate) {
 		// 订单统计
-		return dao.orderStatistics(staffId,minDate,maxDate);
+		return dao.orderStatistics(minDate,maxDate);
 	}
 
 }

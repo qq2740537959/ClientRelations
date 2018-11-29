@@ -54,7 +54,7 @@ public interface ClientService {
 	public List<Map<String, Object>> selectResourceState();
 
 	// 修改分配后客户服务代表  销售代表id 客户id
-	public Integer updateStaffId(Integer staffId, Integer chanceId);
+	public Integer updateStaffId(Integer staffId, Integer clientId);
 
 	// 增加客户的机会	机会id 客户id
 	public Integer updateChanceId(Integer chanceId, Integer clientId);

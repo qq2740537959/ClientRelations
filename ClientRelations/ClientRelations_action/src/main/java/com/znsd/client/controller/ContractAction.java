@@ -116,9 +116,9 @@ public class ContractAction{
 	
 	@ResponseBody
 	@RequestMapping(value = "/delegateAction")
-	public List<RoleVo> delegateAction(){
-		List<RoleVo> selectRole = contractService.selectRole();
-		return selectRole;
+	public Map<String,Object> delegateAction(Map<String,Object> map){
+		
+		return map;
 	}
 	
 	@ResponseBody
@@ -245,9 +245,9 @@ public class ContractAction{
 		con.setContractState(1);
 		int updateRepulse = contractService.updateRepulse(con);
 		if(updateRepulse >0) {
-			msg = "审核成功！";
+			msg = "合同打回审核成功！";
 		}else {
-			msg = "审核失败！";
+			msg = "合同打回审核失败！";
 		}
 		map = new HashMap<String,Object>();
 		map.put("code", updateRepulse);
@@ -255,4 +255,19 @@ public class ContractAction{
 		return map;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/periodAction")
+	public Map<String,Object> periodAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+		con.setContractState(9);
+		int updateLetter = contractService.updateLetter(con);
+		if(updateLetter > 0) {
+			msg = "合同转让成功！";
+		}else {
+			msg = "合同转让失败！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("code", updateLetter);
+		map.put("msg", msg);
+		return map;
+	}
 }

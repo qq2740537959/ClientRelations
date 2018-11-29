@@ -1,12 +1,8 @@
 package com.znsd.client.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +14,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.bean.DevelopPlan;
 import com.znsd.client.service.DevelopPlanService;
-import com.znsd.client.vo.StaffLoginVo;
 
 @Controller
 public class DevelopPlanController {
@@ -61,54 +56,6 @@ public class DevelopPlanController {
 		return model;
 	}
 	
-	@RequestMapping("/insertDevelopPlan")
-	@ResponseBody
-	public Map<String, Object> addDevelopPlan(DevelopPlan plan,HttpServletRequest request){
-		plan.setStaffId(getUser(request).getStaffId());
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		String foundTime = formatter.format(new Date());
-		plan.setFoundTime(foundTime);
-		
-		String msg = "";
-		Integer count = service.insertDevelopPlan(plan);
-		if (count > 0) {
-			msg = "增加成功";
-		}else {
-			msg = "增加失败";
-		}
-		model.put("msg", msg);
-		return model;
-	}
-	
-	@RequestMapping("/updateDevelopPlan")
-	@ResponseBody
-	public Map<String, Object> updateDevelopPlan(DevelopPlan plan,HttpServletRequest request){
-		plan.setStaffId(getUser(request).getStaffId());
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		String lastOpterateTime = formatter.format(new Date());
-		plan.setLastOpterateTime(lastOpterateTime);
-		System.out.println("修改====="+plan.toString());
-		String msg = "";
-		Integer count = service.updateDevelopPlan(plan);
-		if (count > 0) {
-			msg = "修改成功";
-		}else {
-			msg = "修改失败";
-		}
-		model.put("msg", msg);
-		return model;
-	}
-	
-	@RequestMapping("/selectClientIdName")
-	@ResponseBody
-	public Map<String, Object> selectClientIdName(){
-		List<Map<String, Object>> list = service.selectClientName();
-		for (Map<String, Object> map : list) {
-			System.out.println(map);
-		}
-		model.put("data", list);
-		return model;
-	}
 	
 	public Map<String, Object> getModel() {
 		return model;
@@ -116,9 +63,5 @@ public class DevelopPlanController {
 
 	public void setModel(Map<String, Object> model) {
 		this.model = model;
-	}
-	
-	public StaffLoginVo getUser(HttpServletRequest request) {
-		return (StaffLoginVo)request.getSession().getAttribute("userInfo");
 	}
 }

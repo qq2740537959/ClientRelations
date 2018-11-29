@@ -15,32 +15,11 @@ layui.define(['element'],function(exports){
     exports('login');
 });
 
-document.onkeydown = function (e) {
-    if (!e) e = window.event;
-    if ((e.keyCode || e.which) == 13) {
-    	$(".login-button").click();
-    }
-}
-
 $(".login-button").click(function(){
-	var username = $("#username").val();
-	var password = $("#password").val();
-	if (username == "" || username == null) {
-		layer.msg("请输入用户名！",{
-			anim:6
-		});
-		return ;
-	}
-	if (password == "" || password == null) {
-		layer.msg("请输入密码",{
-			anim:6
-		});
-		return ;
-	}
 	var loginForm = $(".login-form").serialize();
 	$.ajax({
 		type:"post",
-		url:"/ClientRelations_action/staffLogin",
+		url:"staffLogin",
 		data:loginForm,
 		success:function(t){
 			if (t.code== 0) {

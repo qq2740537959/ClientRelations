@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.znsd.client.bean.Staff;
 import com.znsd.client.dao.StaffMapperDao;
 import com.znsd.client.service.StaffService;
 import com.znsd.client.vo.StaffLoginVo;
@@ -33,18 +32,6 @@ public class StaffServiceImpl implements StaffService{
 	public StaffLoginVo staffLogin(String userName,String password) {
 		// TODO Auto-generated method stub
 		return staffDao.staffLogin(userName, password);
-	}
-
-	@Override
-	public StaffVo selectStaffByUserName(Staff staff) {
-		// TODO Auto-generated method stub
-		return staffDao.selectStaffByUserName(staff);
-	}
-
-	@Override
-	public void updateStaffUserName(Staff staff) {
-		// TODO Auto-generated method stub
-		staffDao.updateStaffUserName(staff);
 	}
 
 }

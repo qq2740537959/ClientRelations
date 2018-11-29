@@ -103,4 +103,9 @@ public class ContractServiceImp implements ContractService{
 	public int updateRepulse(Contract con) {
 		return dao.updateRepulse(con);
 	}
+
+	@Override
+	public int updateLetter(Contract con) {
+		return dao.updateLetter(con);
+	}
 }

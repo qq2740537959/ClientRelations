@@ -39,6 +39,12 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
 		</style>
 	</head>
 	<body>
@@ -123,6 +129,7 @@
 			   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 			   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 			   	var con = data.contractId;
+			   	var staff = data.staffId;
 			   	//console.log(data)
 			   	if(layEvent == 'query') { //查看
 					layer.open({
@@ -153,13 +160,13 @@
 				  url:'../../../delegateAction',
 				  type:'post',
 				  success:function(data){
-					  for(var i = 0 ;i<data.length;i++){
-						  /* if(data[i].roleId == 4){
+					  /* for(var i = 0 ;i<data.length;i++){
+						  if(data[i].roleId == 4){
 							  
 						  }else{
 							  alert("只能由销售代表创建合同");
-						  } */
-					  }
+						  }
+					  } */
 					  //console.log(data)
 				  },error:function(){
 					  alert("网络错误！");

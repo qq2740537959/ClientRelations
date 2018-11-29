@@ -13,9 +13,6 @@
 	#planDiv .layui-form-label{
 		width: 90px;
 	}
-	.allotSpan{
-		line-height: 36px;
-	}
 </style>
 </head>
 
@@ -104,6 +101,7 @@
 				page : true,
 				limits : [ 2, 5, 8 ]
 			});
+			  let mylay;
 			//头工具栏事件
 			  table.on('toolbar(test)', function(obj){
 			    var checkStatus = table.checkStatus(obj.config.id)
@@ -118,7 +116,7 @@
 			            	$(".planMonth").text(data[0].planMonth);
 			            	$(".planStatus").text(data[0].planStatus);
 			            	$(".planContent").text(data[0].planContent);
-			            	layer.open({
+			            	mylay = layer.open({
 			            		type : 1,
 								anim : 4,
 								area : [ '500px', '300px' ],
@@ -132,25 +130,7 @@
 			              layer.msg('请选择一行');
 			            }else{
 			            	console.log(data);
-			            	layer.open({
-			            		type : 2,
-								anim : 4,
-								area : [ '700px', '600px' ],
-								title: '计划信息',
-								content : 'worthADD.html',
-								success:function(layero,index){
-									 var body = layer.getChildFrame('body', index);
-									 var iframe = window['layui-layer-iframe'+index]
-									 body.find(".planId").val(data[0].planId);
-									 body.find(".clientId").val(data[0].clientId);
-									 body.find(".date").val(data[0].planMonth);
-									 body.find(".status").val(data[0].planStatus);
-									 body.find(".content").val(data[0].planContent);
-									 body.find("#buttonaa").empty();
-									 body.find("#buttonaa").append("<button type='button' class='layui-btn update'>修改</button><button type='button' class='layui-btn fanhui'>返回</button>");
-									 iframe.loadClient();
-								}
-			            	});
+			            	console.log("修改");
 			            }
 			      break;
 			      case 'del':
@@ -184,20 +164,7 @@
 				    });
 				});
 			$(".add_but").click(function() {
-				layer.open({
-					type : 2,
-					anim : 3,
-					area : [ '700px', '600px' ],
-					title: '计划信息',
-					content : 'worthADD.html',
-					success:function(layero,index){
-						 var body = layer.getChildFrame('body', index);
-						 var iframe = window['layui-layer-iframe'+index]
-						 body.find("#buttonaa").empty();
-						 body.find("#buttonaa").append("<button type='button' class='layui-btn add'>增加</button><button type='button' class='layui-btn fanhui'>返回</button>");
-						 iframe.loadClient();
-					}
-				});
+
 			})
 		});
 		layui.use('laydate', function() {

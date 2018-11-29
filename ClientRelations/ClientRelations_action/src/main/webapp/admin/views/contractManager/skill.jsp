@@ -24,10 +24,10 @@
 		</style>
 	</head>
 	<body>
-		<form method = "post" id = "king">
+		<form method = "post" id = "huy">
 		<div class="div_total">
-			<h3>合同管理 >> 合同审核</h3>
 			<input type = "hidden" name = "contractId" class = "contractId" value = "${param.contractId }">
+			<h3>合同管理 >> 解除合同</h3>
 			<div style="margin-top: 30px;margin-left: 100px;float: left;">
 				<label>合同名称：</label>
 				<div class = "layui-input-inline">
@@ -41,8 +41,8 @@
 						<input type="text"  style="width: 75px;" name = "contractMoney" class = "layui-input contractMoney"/>
 					</div>
 				</div>
-				<div style="float: left;margin-left: 246px;">
-					<label class = "layui-form-label">合同类型：</label>
+				<div style="float: left;margin-left: 282px;">
+					<label>合同类型：</label>
 					<div class = "layui-input-inline">
 						<select class = "contractType layui-select" name = "contractType" >
 							
@@ -75,7 +75,7 @@
 						</select>
 					</div>
 				</div>
-				<div style="float: left;margin-left:191px;">
+				<div style="float: left;margin-left:190px;">
 					<label>创建时间：</label>
 					<div class = "layui-input-inline">
 						<input type = "text" name = "lastTime" class = "layui-input lastTime"/>
@@ -91,24 +91,28 @@
 						</select>
 					</div>
 				</div>
-				<div style="float: left;margin-left:162px;">
+				<div style="float: left;margin-left:163px;">
 					<label>经营许可证号：</label>
 					<div class = "layui-input-inline">
 						<input type = "text" name = "anotherLicence" class = "layui-input anotherLicence"/>
 					</div>
 				</div>
 			</div>
-			<div style="margin-top: 30px;float: left;margin-left: 58px;">
+			<div style="margin-top: 30px;float: left;margin-left: 62px;">
 				<label class = "layui-form-label" style = "margin-top:75px;">合同内容：</label>
 				<textarea style="width: 508px;height: 150px;margin-top: 20px;" name = "contractContent" class = "contractContent"></textarea>				
 			</div>
-			<div style="margin-top: 30px;float: left;margin-left: 58px;">
-				<label class = "layui-form-label">审批意见：</label>
-				<textarea style="width: 508px;height: 100px;margin-top: 20px;" name = "examine" class = "examine"></textarea>
+			<div style="margin-top: 30px;float: left;margin-left: 62px;">
+				<label class = "layui-form-label" style = "margin-top:23px;">备注信息：</label>
+				<textarea style="width: 508px;height: 50px;margin-top: 20px;" name = "remarks" class = "remarks"></textarea>
 			</div>
-			<div style="float: left;margin-top: 39px;width:249px ;height: 100px;margin-left: 300px;">
-				<input type="button" value="通过"  id = "repair" class = "layui-btn"/>
-				<input type="button" value="打回"  id = "fight" class = "layui-btn"/>
+			<div style="margin-top: 30px;float: left;margin-left: 62px;">
+				<label class = "layui-form-label" style = "margin-top:48px;">转让原因：</label>
+				<textarea style="width: 508px;height: 100px;margin-top: 20px;" name = "transferPossession" class = "transferPossession"></textarea>
+			</div>
+			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
+				<input type="button" value="转让"  id = "Ability" class = "layui-btn"/>
+				
 				<input type="button" value="返回"  id = "back" class = "layui-btn"/>
 			</div>
 		</div>
@@ -124,9 +128,9 @@
 						for(var i = 0;i<data.length;i++){
 							$(".contractName").val(data[i].contractName);
 							$(".contractMoney").val(data[i].contractMoney);
+							$(".contractType").val(data[i].contractType);
 							typeId = data[i].contractType;
 							stateId = data[i].contractState;
-							$(".contractType").val(data[i].contractType);
 							$(".otherCompany").val(data[i].otherCompany);
 							$(".contractState").val(data[i].contractState);
 							$(".establish").val(data[i].establish);
@@ -135,6 +139,8 @@
 							$(".anotherLicence").val(data[i].anotherLicence);
 							$(".contractContent").val(data[i].contractContent);
 							$(".examine").val(data[i].examine);
+							$(".performance").val(data[i].performance);
+							$(".remarks").val(data[i].remarks);
 						}
 						
 						$.ajax({
@@ -190,7 +196,6 @@
 						$(".staffId").empty();
 						var because = "";
 						for(var i = 0;i<data.length;i++){
-							console.log(data[i])
 							if(data[i].roleIdentity == 2){
 								because += "<option value = "+data[i].staffId+">"+data[i].staffName+"</option>"
 							}
@@ -221,50 +226,34 @@
 			}
 			active();
 			
-			function  weldHoldaing(){
-				$("#repair").on("click",function(){
+			function easyTable(){
+				$("#Ability").on("click",function(){
 					$.ajax({
-						url:'../../../waittingAction?con.contractId='+$(".contractId").val(),
-						data:$("#king").serialize(),
+						url:'../../../periodAction?con.contractId='+$(".contractId").val(),
+						data:$("#huy").serialize(),
 						type:'post',
 						success:function(data){
 							var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-							parent.layer.msg("审核成功！");
+							parent.layer.msg("合同转让成功！");
 							parent.layer.close(index);
-							parent.referhuy();
+							parent.referkop();
 						},error:function(){
 							alert("网络错误！");
 						}
 					})
 				})
 			}
-			weldHoldaing();
+			easyTable();
 			
-			function facebook(){
+			function duack(){
 				$("#back").on("click",function(){
 					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
 					parent.layer.msg("返回成功！");
 					parent.layer.close(index);
-					parent.refershuaxin();
+					parent.referkop();
 				})
 			}
-			facebook();
-			
-			function basketball(){
-				$("#fight").on("click",function(){
-					$.ajax({
-						url:'../../../beachAction?con.contractId='+$(".contractId").val(),
-						type:'post',
-						data:$("#king").serialize(),
-						success:function(data){
-							console.log(data);
-						},error:function(){
-							alert("网络错误！");
-						}
-					})
-				})
-			}
-			basketball();
+			duack();
 		</script>
 	</body>
 </html>

@@ -1,11 +1,11 @@
 package com.znsd.client.vo;
 
+import java.sql.Timestamp;
+
 public class OrderStatisticsVo {
 	private String months;//月份
 	private int totalOrderNumber;//订单总数量
 	private double totalOrderMoney;//订单总金额
-	private double targetMoney;//目标完成金额
-	private double completionRate;//完成率
 	public String getMonths() {
 		return months;
 	}
@@ -28,18 +28,6 @@ public class OrderStatisticsVo {
 	public String toString() {
 		return "OrderStatisticsVo [months=" + months + ", totalOrderNumber=" + totalOrderNumber + ", totalOrderMoney=" + totalOrderMoney
 				+ "]";
-	}
-	public double getTargetMoney() {
-		return targetMoney;
-	}
-	public void setTargetMoney(double targetMoney) {
-		this.targetMoney = targetMoney;
-	}
-	public double getCompletionRate() {
-		return completionRate;
-	}
-	public void setCompletionRate(double completionRate) {
-		this.completionRate = completionRate;
 	}
 	
 }

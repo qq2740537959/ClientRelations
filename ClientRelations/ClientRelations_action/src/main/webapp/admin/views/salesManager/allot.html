@@ -104,7 +104,10 @@
 				<label class="layui-form-label">分配给:</label>
 				<div class="layui-input-block" style="width: 165px;">
 			      <select name="staffId" lay-filter="aihao" class="staffId">
-			      
+			        <option value="1">陈璇</option>
+			        <option value="2">李彪</option>
+			        <option value="3">吕艳超</option>
+			        <option value="4">赵成</option>
 			      </select>
 			    </div>
 			</div>
@@ -112,6 +115,7 @@
 				<div class="layui-input-block" style="padding-left:55px;">
 				
 					<button class="layui-btn" lay-submit="" lay-filter="demo2" style="margin-right: 20px;    border-radius: 28px;">分配</button>
+					
 					<button  class="layui-btn result" style="border-radius: 28px;">返回</button>
 				</div>
 			</div>
@@ -156,7 +160,7 @@
 					$.ajax({
 						type:"post",
 						url:"/ClientRelations_action/updateAllotHap",
-						data:"staffId="+staffId+"&chanceId="+chanceId,
+						data:"staffId="+staffId+"&handleId="+handleId+"&chanceId="+chanceId,
 						success:function(t){
 							closeIndex(t.msg);
 						}

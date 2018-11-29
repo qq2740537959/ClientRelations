@@ -16,7 +16,7 @@ public class SellPlan implements Serializable {
 	private int money;
 	private int pendingId;
 	private String planContent;
-	private String planMonth;
+	private Date planMonth;
 	private int sellingId;
 	private int state;
 
@@ -34,18 +34,17 @@ public class SellPlan implements Serializable {
 	public void setPlanId(int planId) {
 		this.planId = planId;
 	}
+
+
+	
+	
 	public Date getLastTime() {
-		return lastTime;
+		return this.lastTime;
 	}
-
-
-
-
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
 	}
-
 
 
 	public int getMoney() {
@@ -79,11 +78,11 @@ public class SellPlan implements Serializable {
 
 	
 	
-	public String getPlanMonth() {
+	public Date getPlanMonth() {
 		return this.planMonth;
 	}
 
-	public void setPlanMonth(String planMonth) {
+	public void setPlanMonth(Date planMonth) {
 		this.planMonth = planMonth;
 	}
 
@@ -105,39 +104,5 @@ public class SellPlan implements Serializable {
 	public void setState(int state) {
 		this.state = state;
 	}
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "SellPlan [planId=" + planId + ", lastTime=" + lastTime + ", money=" + money + ", pendingId=" + pendingId
-				+ ", planContent=" + planContent + ", planMonth=" + planMonth + ", sellingId=" + sellingId + ", state="
-				+ state + "]";
-	}
-
-
-
-
-
-	public SellPlan(int planId, Date lastTime, int money, int pendingId, String planContent, String planMonth,
-			int sellingId, int state) {
-		super();
-		this.planId = planId;
-		this.lastTime = lastTime;
-		this.money = money;
-		this.pendingId = pendingId;
-		this.planContent = planContent;
-		this.planMonth = planMonth;
-		this.sellingId = sellingId;
-		this.state = state;
-	}
-
-
-
-
-
-	
 
 }
