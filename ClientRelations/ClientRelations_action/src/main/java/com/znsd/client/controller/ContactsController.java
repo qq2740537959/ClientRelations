@@ -17,7 +17,7 @@ import com.znsd.client.bean.SalesContacts;
 import com.znsd.client.service.ContactsService;
 
 @Controller
-public class ContactsAction {
+public class ContactsController {
 	
 	@Autowired
 	private ContactsService contactsBiz;

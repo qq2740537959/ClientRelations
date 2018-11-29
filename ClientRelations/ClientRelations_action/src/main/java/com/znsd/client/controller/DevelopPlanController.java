@@ -56,6 +56,30 @@ public class DevelopPlanController {
 		return model;
 	}
 	
+	@RequestMapping("/insertDevelopPlan")
+	@ResponseBody
+	public Map<String, Object> addDevelopPlan(DevelopPlan plan){
+		
+		return model;
+	}
+	
+	@RequestMapping("/updateDevelopPlan")
+	@ResponseBody
+	public Map<String, Object> updateDevelopPlan(DevelopPlan plan){
+		
+		return model;
+	}
+	
+	@RequestMapping("/selectClientIdName")
+	@ResponseBody
+	public Map<String, Object> selectClientIdName(){
+		List<Map<String, Object>> list = service.selectClientName();
+		for (Map<String, Object> map : list) {
+			System.out.println(map);
+		}
+		model.put("data", list);
+		return model;
+	}
 	
 	public Map<String, Object> getModel() {
 		return model;

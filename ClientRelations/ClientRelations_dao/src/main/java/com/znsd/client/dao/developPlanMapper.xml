@@ -17,6 +17,11 @@
 		<result column="plan_status" property="planStatus"/>
 	</resultMap>
 	
+	<resultMap type="java.util.HashMap" id="clientNameMap">
+		<id column="client_id" property="clientId"/>
+		<result column="client_name" property="clientName"/>
+	</resultMap>
+	
 	<select id="selectDevelopPlan" resultMap="planMap">
 		select plan_id,plan_name,client_id,staff_id,plan_content,plan_month,found_time,last_opterate_time,plan_status from develop_plan 
 		<where>
@@ -29,5 +34,19 @@
 	<delete id="deleteDevelopPlan">
 		delete FROM develop_plan where plan_id = #{planId}
 	</delete>
+	
+	<insert id="insertDevelopPlan" parameterType="com.znsd.client.bean.DevelopPlan">
+		INSERT INTO develop_plan VALUES
+		(NULL,#{planName},#{clientId},#{staffId},#{planContent},#{planMonth},#{foundTime},#{lastOpterateTime},#{planStatus});
+	</insert>
+	
+	<update id="updateDevelopPlan" parameterType="com.znsd.client.bean.DevelopPlan">
+		UPDATE develop_plan SET plan_name = #{planName},client_id = #{clientId},staff_id = #{staffId},plan_content = #{planContent},plan_month = #{planMonth},found_time = #{foundTime},last_opterate_time = #{lastOpterateTime} 
+		WHERE plan_id = #{planId}
+	</update>
+	
+	<select id="selectClientName" resultMap="clientNameMap">
+		select client_id,client_name FROM client_resource where state = 1 and ISNULL(chance_id)
+	</select>
 	
 </mapper>

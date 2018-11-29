@@ -45,9 +45,9 @@ public class HapServiceImpl implements HapService {
 	}
 
 	@Override
-	public void addHap(Hap hap) {
+	public Integer addHap(Hap hap) {
 		// TODO Auto-generated method stub
-		hapDao.addHap(hap);
+		return hapDao.addHap(hap);
 	}
 
 }
