@@ -60,7 +60,6 @@ public class StaffController {
 			map.put("msg", "手机号已存在！");
 		}else {
 			staff.setStaffId(staffLoginVo.getStaffId());
-			System.out.println(staff+"-----");
 			staffBiz.updateStaffUserName(staff);
 			staffLoginVo.setContactMode(staff.getContactMode());
 			session.setAttribute("userInfo", staffLoginVo);
@@ -111,7 +110,7 @@ public class StaffController {
 			map.put("msg", "请输入密码!");
 			return map;
 		}
-		if (ypassword.equals(staffLoginVo.getPassword())) {
+		if (!(ypassword.equals(staffLoginVo.getPassword()))) {
 			map.put("code", 3);
 			map.put("msg", "原密码输入错误!");
 			return map;
@@ -121,14 +120,17 @@ public class StaffController {
 			map.put("msg", "新密码不能跟旧密码相等!");
 			return map;
 		}
-		Staff staff = new Staff();
-		staff.setStaffId(staffLoginVo.getStaffId());
-		staff.setPassword(npassword);
-		staffBiz.updateStaffUserName(staff);
-		staffLoginVo.setPassword(npassword);
-		session.setAttribute("userInfo", staffLoginVo);
-		map.put("code", 1);
-		map.put("msg", "修改密码成功!");
+		if (ypassword.equals(staffLoginVo.getPassword())) {
+			Staff staff = new Staff();
+			staff.setStaffId(staffLoginVo.getStaffId());
+			staff.setPassword(npassword);
+			staffBiz.updateStaffUserName(staff);
+			staffLoginVo.setPassword(npassword);
+			session.setAttribute("userInfo", staffLoginVo);
+			map.put("code", 1);
+			map.put("msg", "修改密码成功!");
+			return map;
+		}
 		return map;
 	}
 		
