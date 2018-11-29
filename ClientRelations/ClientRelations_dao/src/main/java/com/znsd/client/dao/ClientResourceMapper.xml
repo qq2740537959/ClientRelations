@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.ClientResourceMapperDao">
+ 	<sql id="selectSql">
+ 		select c.client_id,c.client_name,c.phone,c.sex,c.client_type,c.state,c.consumption_times,c.total_consumption_amount,s.staff_id,s.staff_name from client_resource c,staff s
+ 	</sql>
+ 	<!-- 按销售代表id查询客户 -->
+ 	<select id="selectClientInfoByPage" resultType="com.znsd.client.vo.ClientVo">
+ 		<include refid="selectSql" />
+ 		 where c.staff_id = s.staff_id
+		<if test="staffId != null and staffId != ''">
+			and c.staff_id= #{staffId}
+		</if>
+		<if test="distinguish != null and distinguish != ''">
+			<if test="distinguish == 'clientName'">
+				<if test="clientNameOrPhone != null and clientNameOrPhone != ''">
+					and c.client_name like #{clientNameOrPhone}
+				</if>
+			</if>
+			<if test="distinguish == 'phone'">
+				<if test="clientNameOrPhone != null and clientNameOrPhone != ''">
+					and c.phone = #{clientNameOrPhone}
+				</if>
+			</if>
+		</if>
+ 	</select>
+ 	
+ 	<!-- 按客户id查询客户信息 -->
+ 	<select id="selectClientById" resultType="com.znsd.client.vo.ClientVo">
+ 		<include refid="selectSql" />
+ 		 where c.staff_id = s.staff_id and c.client_id = #{clientId}
+ 	</select>
+ </mapper>

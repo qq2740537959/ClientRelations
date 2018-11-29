@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.StatisticDao">
+ 	
+ 	<resultMap type="com.znsd.client.bean.Statistic" id="StatisticMap">
+ 		<id column="statistics_Id" property="statisticsId"/>
+ 		<result column="statistics_Contribution" property="statisticsContribution"/>
+ 		<result column="statistics_CustomerNumber" property="statisticsCustomerNumber"/>
+ 		<result column="statistics_Date" property="statisticsDate"/>
+ 		<result column="statistics_LossQuantity" property="statisticsLossQuantity"/>
+ 		<result column="statistics_RingRatio" property="statisticsRingRatio"/>
+ 		<result column="statistics_SameTimeRatio" property="statisticsSameTimeRatio"/>
+ 		<result column="statistics_ServiceQuantity" property="statisticsServiceQuantity"/>
+ 	</resultMap>
+ 	
+	<select id="constituteListByPage" resultMap="StatisticMap">
+		select client_id as statistics_Id,DATE_FORMAT(in_time,'%Y-%m') AS statistics_Date,COUNT(*) AS statistics_CustomerNumber FROM client_resource
+		<if test="startTime==null || startTime==''">
+				GROUP BY statistics_Date
+		</if>
+		<if test="startTime!=null and startTime!=''">
+				where DATE_FORMAT(in_time,'%Y-%m')=#{startTime} GROUP BY statistics_Date
+		</if>
+	</select>
+	
+	<select id="contributionListByPage" resultMap="StatisticMap">
+		select id as statistics_Id,DATE_FORMAT(deal_time,'%Y-%m') AS statistics_Date,sum(order_money) AS statistics_Contribution FROM order_indent
+		<if test="startTime==null || startTime=='' and endTime==null || endTime==''">
+			GROUP BY statistics_Date
+		</if>
+		<if test="startTime!=null and startTime=='' and endTime!=null and endTime!=''">
+			where DATE_FORMAT(deal_time,'%Y-%m') between #{startTime} and #{endTime}  GROUP BY statistics_Date
+		</if>
+	</select>
+
+	<select id="serviceListByPage" resultMap="StatisticMap">
+		select id as statistics_Id,DATE_FORMAT(create_time,'%Y-%m') AS statistics_Date,COUNT(*) AS statistics_ServiceQuantity FROM serve
+		<if test="startTime==null || startTime=='' and endTime==null || endTime==''">
+			GROUP BY statistics_Date
+		</if>
+		<if test="startTime!=null and startTime=='' and endTime!=null and endTime!=''">
+			where DATE_FORMAT(create_time,'%Y-%m') between #{startTime} and #{endTime}  GROUP BY statistics_Date
+		</if>
+	</select>
+	
+ </mapper>

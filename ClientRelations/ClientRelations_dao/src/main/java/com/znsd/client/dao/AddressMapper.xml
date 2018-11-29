@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.AddressMapperDao">
+ 	<!-- 添加收货地址 -->
+ 	<insert id="addAddress">
+ 		insert into address  values (#{id},#{consigneeName},#{phone},#{clientId},#{province},#{city},#{area},#{detailAddress});
+ 	</insert>
+ 	<resultMap type="address" id="addressMap">
+ 		<result property="consigneeName" column="consignee_name"/>
+ 	</resultMap>
+ 	<select id="selectAddessByClientId" resultMap="addressMap">
+ 		select * from address where client_id = #{clidentId}
+ 	</select>
+ 	<update id="updateAddess">
+ 		update address set consignee_name = #{consigneeName},phone=#{phone},province = #{province},city=#{city}
+ 		,area=#{area},detailAddress=#{detailAddress} where client_id = #{clientId}
+ 	</update>
+ </mapper>

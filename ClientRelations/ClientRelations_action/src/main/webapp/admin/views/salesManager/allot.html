@@ -1,0 +1,186 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<base href="<%=basePath%>">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="/ClientRelations_action/admin/layui/css/layui.css">
+		<link rel="icon" href="/favicon.ico">
+		<script type="text/javascript" src="/ClientRelations_action/admin/js/jquery-1.8.3.min.js"></script>
+		<title></title>
+		<style type="text/css">
+			.allotSpan{
+				display: inline-block;
+				height: 38px;
+				line-height: 38px;
+			}
+			
+			
+			/* .layui-textarea{
+				width: 300px;
+			} */
+			.layui-breadcrumb{
+				font-size: 17px;
+			}
+			.daohan{
+				    margin-top: 20px;
+				    margin-left: 21px;
+				    margin-bottom: 20px;
+			}
+			.layui-form{
+				padding: 0px 50px;
+			}
+			
+		</style>
+	</head>
+
+	<body class="layui-view-body">
+		
+		<div class="daohan">
+			<span class="layui-breadcrumb">
+			  <a href="javascript:;">销售管理</a>
+			  <a href="javascript:;">机会管理</a>
+			  <a><cite>机会分配</cite></a>
+			</span>
+		</div>
+		<form class="layui-form" action="" lay-filter="example">
+			<input type="hidden" class="formChanceId">
+			<div class="layui-form-item">
+				<label class="layui-form-label">机会名称:</label>
+				<div class="layui-input-block">
+					<span class="chanceName allotSpan">廖先生咨询氧气发生器</span>
+			    </div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline" style="width: 180px;">
+					<label class="layui-form-label">机会类型:</label>
+					<div class="layui-input-block">
+						<span class="typeName allotSpan">官网流量</span>
+				    </div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">联系电话:</label>
+					<div class="layui-input-block">
+						<span class="typeName allotSpan">15801881818</span>
+				    </div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline" style="width: 160px;">
+					<label class="layui-form-label">录入人:</label>
+					<div class="layui-input-block">
+						<span class="entryName allotSpan">魏丽</span>
+				    </div>
+				</div>
+				<div class="layui-inline" style="width: 260px;">
+					<label class="layui-form-label" style="width: 100px;">录入时间:</label>
+					<div class="layui-input-block">
+						<span class="entryTime allotSpan">2013-10-15 09:24:55</span>
+				    </div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline" style="width: 160px;">
+					<label class="layui-form-label" >操作人:</label>
+					<div class="layui-input-block">
+						<span class="handleName allotSpan">魏丽</span>
+				    </div>
+				</div>
+				<div class="layui-inline" style="width: 260px;">
+					<label class="layui-form-label" style="width: 100px;">最后修改时间:</label>
+					<div class="layui-input-block">
+						<span class="lastTime allotSpan">2013-10-15 09:24:55</span>
+				    </div>
+				</div>
+			</div>
+			<div class="layui-form-item" >
+				<label class="layui-form-label" >机会内容:</label>
+				<div class="layui-input-block">
+					<span class="chanceContent allotSpan" style="margin-top: 9px;line-height: 20px;">郑州廖先生来电咨询我司氧气发生器的价格，有购买意向，需跟进。</span>
+			    </div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">分配给:</label>
+				<div class="layui-input-block" style="width: 165px;">
+			      <select name="staffId" lay-filter="aihao" class="staffId">
+			      
+			      </select>
+			    </div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block" style="padding-left:55px;">
+				
+					<button class="layui-btn" lay-submit="" lay-filter="demo2" style="margin-right: 20px;    border-radius: 28px;">分配</button>
+					<button  class="layui-btn result" style="border-radius: 28px;">返回</button>
+				</div>
+			</div>
+		</form>
+
+		<script src="/ClientRelations_action/admin/layui/layui.js" charset="utf-8"></script>
+		<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+		<script>
+			layui.use(['form', 'layedit', 'laydate','element'], function() {
+				var form = layui.form,
+					layer = layui.layer,
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+					element = layui.element;
+
+				//日期
+				laydate.render({
+					elem: '#date'
+				});
+				
+				 $.ajax({
+					type:"post",
+					url:"/ClientRelations_action/getStaffDeputyData",
+					success:function(t){
+						var data = t.data;
+						var trData = "";
+						for (var i=0;i<data.length;i++){
+							trData+="<option value='"+data[i].staffId+"'>"+data[i].staffName+"<option>"
+						}
+						$(".staffId").empty();
+						$(".staffId").append(trData);
+						referForm();
+					}
+				}) 
+				
+				/* 分配*/
+				form.on('submit(demo2)', function(data) {
+					var chanceId = $(".formChanceId").val();
+					var handleId = /* #(".handleId").val() */1;
+					var staffId = $(".staffId").val();
+					$.ajax({
+						type:"post",
+						url:"/ClientRelations_action/updateAllotHap",
+						data:"staffId="+staffId+"&chanceId="+chanceId,
+						success:function(t){
+							closeIndex(t.msg);
+						}
+					})
+					return false;
+				});
+				
+				
+				function closeIndex(msg){
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+					parent.layer.msg(msg);
+					parent.layer.close(index);
+					parent.refreshTable();
+				}
+				
+				$(".result").click(function(){
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+					parent.layer.close(index); //关闭父窗口
+					
+				})
+				function referForm(){
+					 form.render(); 
+				} 
+				 
+			});
+		</script>
+	</body>
+</html>
