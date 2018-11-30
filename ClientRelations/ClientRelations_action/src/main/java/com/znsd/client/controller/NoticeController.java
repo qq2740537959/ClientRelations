@@ -53,10 +53,12 @@ public class NoticeController {
 		return map;
 	}
 	
-	//修改公告跳转页面
+	//修改或增加公告信息跳转此页面
 	@RequestMapping("/updateIntoPage")
-	public String selectNoticeById(@RequestParam("noticeId") int noticeId,ModelMap map) {
-		map.put("notice", noticeBiz.selectNoticeById(noticeId));
+	public String updateIntoPage(@RequestParam("noticeId") int noticeId,ModelMap map) {
+		if (noticeId != 0) {
+			map.put("notice", noticeBiz.selectNoticeById(noticeId));
+		}
 		return "admin/views/systemManager/addOrUpdateNotice.jsp";
 	}
 	
@@ -65,7 +67,6 @@ public class NoticeController {
 	@ResponseBody
 	public Map<String, Object> addOrUpdateNotice(Notice notice,HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
-		System.out.println(notice+"--床来的");
 		if (notice.getNoticeId() != 0) {
 			noticeBiz.updateNoticeById(notice);
 			map.put("msg", "修改成功！");

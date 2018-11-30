@@ -47,4 +47,22 @@ public class StaffServiceImpl implements StaffService{
 		staffDao.updateStaffUserName(staff);
 	}
 
+	@Override
+	public void deleteStaffById(String[] array) {
+		// TODO Auto-generated method stub
+		staffDao.deleteStaffById(array);
+	}
+
+	@Override
+	public void updateStaffState(Staff staff) {
+		// TODO Auto-generated method stub
+		staffDao.updateStaffState(staff);
+	}
+
+	@Override
+	public void addStaff(Staff staff) {
+		// TODO Auto-generated method stub
+		staffDao.addStaff(staff);
+	}
+
 }

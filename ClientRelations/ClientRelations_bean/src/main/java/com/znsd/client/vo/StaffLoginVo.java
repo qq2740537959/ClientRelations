@@ -14,6 +14,13 @@ public class StaffLoginVo {
 	private String roleName;
 	private int state;
 	private String userName;
+	private String remarksInfo;
+	public String getRemarksInfo() {
+		return remarksInfo;
+	}
+	public void setRemarksInfo(String remarksInfo) {
+		this.remarksInfo = remarksInfo;
+	}
 	private String password;
 	private String contactMode;
 	private Date lastTime;
