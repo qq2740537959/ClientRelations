@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="../../layui/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/view.css" />
+<link rel="icon" href="/favicon.ico">
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<title>机会管理</title>
+<style type="text/css">
+</style>
+</head>
+
+<body class="layui-view-body">
+	<input type="hidden" class="enterRoleName">
+	<div class="layui-content">
+		<div class="layui-page-header">
+			<div class="pagewrap">
+				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">销售管理</a> <a><cite>机会管理</cite></a>
+				</span>
+				<h2 class="title">机会管理</h2>
+			</div>
+		</div>
+		<div class="layui-row">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="form-box">
+						<div class="layui-form layui-form-item">
+							<div class="layui-inline">
+								<div class="layui-form-mid">机会名称：</div>
+								<div class="layui-input-inline">
+							       <input type="text" name="" class="layui-input name">   
+							    </div>
+								<button class="layui-btn layui-btn-blue refer_but">查询</button>
+							</div>
+						</div>
+						<button class="layui-btn layui-btn-blue add_but">
+							<i class="layui-icon">&#xe654;</i>添加
+						</button>
+						<table class="layui-hide" id="test" lay-filter="test"></table>
+ 						<script type="text/html" id="barDemo">
+							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="edit">修改</a>
+							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
+
+							{{#  if(d.staffId == null || d.staffId == ''){ }}
+    							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
+ 							{{#  } else { }}
+								<a class="layui-btn layui-btn-xs  layui-btn-disabled" lay-event="">分配</a>
+ 							{{#  } }}
+							
+	 					</script>
+						<script type="text/html" id="toolbarDemo">
+						  <div class="layui-btn-container">
+						  	
+						  </div>
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../layui/layui.js"></script>
+<script>
+	$.ajax({
+		type:"post",
+		url:"/ClientRelations_action/getUserInfos",
+		success:function(t){
+			 var data = t.user;
+			$(".enterRoleName").val(data.roleName);
+		}
+	})
+</script>
+<script>
+var layer = layui.layer;
+
+layui.use(['table'], function(){
+var table = layui.table;
+  table.render({
+    elem: '#test'
+   	,url:"/ClientRelations_action/selectHapPage"
+    ,toolbar: '#toolbarDemo'
+    ,cols: [[
+      {field:'chanceId', width:80, title: 'ID', sort: true}
+      ,{field:'chanceName', width:200, title: '机会名称'}
+      ,{field:'typeName', width:120, title: '机会类型'}
+      ,{field:'entryTime',width:180, title: '录入时间',templet:'<div>{{ Format(d.entryTime,"yyyy-MM-dd hh:mm:ss")}}</div>', minWidth: 100,sort: true}
+      ,{field:'entryName', width:85, title: '录入人'}
+      ,{field:'entryTime',width:180, title: '最后修改时间',templet:'<div>{{ Format(d.lastTime,"yyyy-MM-dd hh:mm:ss")}}</div>', minWidth: 100,sort: true}
+      ,{field:'handleName', width:85, title: '操作人'}
+      ,{width:165,title:"操作",toolbar:"#barDemo"}
+    ]]
+  	,align:"center"
+ 	,limit:5
+	,limits:[5,10,15,20]
+    ,page: true
+  });
+  
+  
+	//监听工具条
+	table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+	   	var data = obj.data; //获得当前行数据
+	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
+	   	if(layEvent == 'see') { //查看
+	
+	   	} else if(layEvent === 'edit') { //修改
+	   		layer.open({
+				type:2,
+				content:"addOrUpdateHap.jsp?chanceId="+data.chanceId,
+				area:['600px', '555px'],
+				shade: [0.8, '#393D49'],
+				move:false,
+				shadeClose:true,
+				/* end:function(){
+					refreshTable();
+				} */
+			})
+	   	}else if(layEvent == 'allot'){//分配
+	   		if ($(".enterRoleName").val() == "销售代表") {
+				layer.msg("你没有权限",{icon:5});
+			}else{
+				layer.open({
+		   			type:2,
+		   			content:"allot.html",
+		   			area:['600px', '555px'],
+		   			move:false,
+					shadeClose:true,
+					success:function(layero,index){
+						 var body = layer.getChildFrame('body', index);
+						 body.find(".formChanceId").val(data.chanceId);
+						 body.find(".chanceName").text(data.chanceName);
+						 body.find(".typeName").text(data.typeName);
+						 body.find(".entryName").text(data.entryName);
+						 body.find(".handleName").text(data.handleName);
+						 body.find(".lastTime").text(data.lastTime);
+						 body.find(".chanceContent").text(data.chanceContent);
+					}
+		   		})
+			}
+	   		
+	   	}
+	});
+	$(".add_but").click(function(){
+		layer.open({
+   			type:2,
+   			content:"addOrUpdateHap.jsp",
+   			area:['600px', '555px'],
+   			move:false,
+			shadeClose:true,
+   		})
+	})
+	$(".refer_but").click(function(){
+		refreshTable();
+	})
+	
+});
+
+function refreshTable(){
+	
+	layui.table.reload('test',
+    {
+         where: { //这里传参  向后台
+         	name:$(".name").val(),
+         } 
+         ,limit:5
+		 ,limits:[5,10,15,20]
+    });
+}
+
+function Format(datetime,fmt) {
+	  if (datetime == "" || datetime == null) {
+			return "";
+	  }
+	  if (parseInt(datetime)==datetime) {
+	    if (datetime.length==10) {
+	      datetime=parseInt(datetime)*1000;
+	    } else if(datetime.length==13) {
+	      datetime=parseInt(datetime);
+	    }
+	  }
+	  datetime=new Date(datetime);
+	  var o = {
+	  "M+" : datetime.getMonth()+1,                 //月份   
+	  "d+" : datetime.getDate(),                    //日   
+	  "h+" : datetime.getHours(),                   //小时   
+	  "m+" : datetime.getMinutes(),                 //分   
+	  "s+" : datetime.getSeconds(),                 //秒   
+	  "q+" : Math.floor((datetime.getMonth()+3)/3), //季度   
+	  "S"  : datetime.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+	  fmt=fmt.replace(RegExp.$1, (datetime.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+	  if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;
+	}
+</script>
+</body>
+</html>

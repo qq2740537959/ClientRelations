@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.NoticeMapperDao">
+ 	
+ 	<resultMap type="noticeVo" id="NoticeResultMap">
+		<id column="notice_id" property="noticeId"/>
+		<result column = "notice_title" property = "noticeTitle" />
+		<result column = "notice_type" property = "noticeType" />
+		<result column = "release_content" property = "releaseContent" />
+		<result column = "release_time" property = "releaseTime" />
+		<result column = "staff_name" property="releasePersonName"></result>
+	</resultMap>
+ 	
+ 	<!-- 分页条件查询公告 -->
+ 	<select id="selectNoticeByPage" resultMap="NoticeResultMap">
+		select n.notice_id,n.notice_title,n.notice_type,n.release_time,s.staff_name,n.release_content from notice n,staff s where n.release_person = s.staff_id		
+		<if test="noticeTitle != null and noticeTitle != ''">
+			and n.notice_title like CONCAT('%',#{noticeTitle},'%')
+		</if>
+		<if test="noticeType != null and noticeType != '' and noticeType != 0">
+			and n.notice_type = #{noticeType}
+		</if>
+ 	</select>
+ 	
+ 	<!-- 根据公告Id删除该公告 -->
+ 	<delete id="deleteNoticeById" parameterType="java.lang.String">
+ 		delete from notice where notice_id in
+ 		<foreach collection="array" item="notice" index="no" open="(" separator="," close=")">
+ 			#{notice}
+ 		</foreach>
+ 	</delete>
+ </mapper>

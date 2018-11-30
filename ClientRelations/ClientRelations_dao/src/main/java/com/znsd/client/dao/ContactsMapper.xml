@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.znsd.client.dao.ContactsDao">
+ 	<resultMap type="com.znsd.client.bean.SalesContacts" id="contactsMap">
+ 		<id column="contacts_id" property="contactsId"/>
+ 		<result column="name" property="name"/>
+ 		<result column="sex" property="sex"/>
+ 		<result column="phone" property="phone"/>
+ 		<result column="address" property="address"/>
+ 		<result column="remark" property="remark"/>
+ 		<result column="birthday" property="birthday"/>
+ 		<result column="chance_content" property="chanceContent"/>
+ 		<result column="work_phone" property="workPhone"/>
+ 		<result column="family_phone" property="familyPhone"/>
+ 		<result column="email" property="email"/>
+ 	</resultMap>
+ 	<!-- 分页查询数据 -->
+ 	<select id="selectContactsByPage" resultMap="contactsMap" parameterType="java.lang.String">
+ 		select * from sales_contacts where name like "%"#{name}"%"
+ 	</select>
+ 	<select id="getContactsData" resultMap="contactsMap" parameterType="java.lang.Integer">
+ 		select * from sales_contacts where contacts_id = #{id}
+ 	</select>
+	<insert id="addContacts" parameterType="com.znsd.client.bean.SalesContacts">
+		insert into sales_contacts(name,sex,phone,address,remark,birthday,work_phone,family_phone,email) values (#{name},#{sex},#{phone},#{address},#{remark},#{birthday},#{workPhone},#{familyPhone},#{email})
+	</insert>
+	<delete id="deleteContacts" parameterType="java.lang.Integer">
+		delete from sales_contacts where contacts_id = #{id}
+	</delete>
+ 	<update id="updateContacts" parameterType="com.znsd.client.bean.SalesContacts">
+ 		update sales_contacts set name=#{name},sex=#{sex},phone=#{phone},address=#{address},remark=#{remark},birthday=#{birthday},work_phone=#{workPhone},family_phone=#{familyPhone},email=#{email} where contacts_id = #{contactsId}
+ 	</update>
+ </mapper>
