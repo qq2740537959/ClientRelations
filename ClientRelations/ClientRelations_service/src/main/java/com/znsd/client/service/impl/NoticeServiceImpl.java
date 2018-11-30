@@ -28,4 +28,22 @@ public class NoticeServiceImpl implements NoticeService{
 		noticeDao.deleteNoticeById(nId);
 	}
 
+	@Override
+	public NoticeVo selectNoticeById(int noticeId) {
+		// TODO Auto-generated method stub
+		return noticeDao.selectNoticeById(noticeId);
+	}
+
+	@Override
+	public void updateNoticeById(Notice notice) {
+		// TODO Auto-generated method stub
+		noticeDao.updateNoticeById(notice);
+	}
+
+	@Override
+	public void addNotice(Notice notice) {
+		// TODO Auto-generated method stub
+		noticeDao.addNotice(notice);
+	}
+
 }

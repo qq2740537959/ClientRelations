@@ -11,17 +11,19 @@
 <!DOCTYPE HTML >
 <html lang="zh-CN">
 <head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/admin/layui/css/layui.css" />
+	<script src="<%=request.getContextPath() %>/admin/layui/layui.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/admin/assets/css/view.css" />
+	<script type="text/javascript" src="<%=request.getContextPath() %>/admin/js/jquery-1.8.3.min.js" ></script>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../layui/css/layui.css" />
-		<script src="../../layui/layui.js" charset="UTF-8"></script>
-		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
   	<style>
   		body{
   			padding: 20px;
   		}
   		textarea{
+  			padding:5px;
   			  height: 90px;
-    			width: 350px;
+    			width: 338px;
   		}
   		.layui-input{
   			width: 350px;
@@ -29,107 +31,88 @@
   	</style>
   </head>
   <body>
-	<form class="layui-form" id="updateUserform"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
-  <input type="hidden" name="userId" value="${u.userId }">
-  <input type="hidden" name="state" value="${u.state }">
-  <input type="hidden" name="email" value="${u.email }">
-  <input type="hidden" name="headPath" value="${u.headPath }">
+	<form class="layui-form" id="addOrUpdateNotice"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+  <c:if test="${notice.noticeId ne null }">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">公告编码：</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="noticeId" readonly="readonly" value="${notice.noticeId }" required="required" placeholder="" autocomplete="off" class="layui-input layui-disabled">
+	    </div> 	
+	  </div>
+  </c:if>
   <div class="layui-form-item">
-    <label class="layui-form-label">组织编码</label>
+    <label class="layui-form-label">公告标题：</label>
     <div class="layui-input-block">
-      <input type="text" name="nickName" value="${u.nickName }" required="required" placeholder="" autocomplete="off" class="layui-input nickName">
+      <input type="text" name="noticeTitle" value="${notice.noticeTitle }" required="required" placeholder="" autocomplete="off" class="layui-input">
     </div>
   </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">组织简称</label>
-    <div class="layui-input-block">
-      <input type="text" name="nickName" value="${u.nickName }" required="required" placeholder="" autocomplete="off" class="layui-input nickName">
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">组织全称</label>
-    <div class="layui-input-block">
-      <input type="text" name="nickName" value="${u.nickName }" required="required" placeholder="" autocomplete="off" class="layui-input nickName">
-    </div>
-  </div>
+  <c:if test="${notice.noticeId ne null }">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">发布时间：</label>
+	    <div class="layui-input-block">
+	      <input type="text" readonly="readonly" value='<fmt:formatDate value="${notice.releaseTime }" type="both"/>' required="required" placeholder="" autocomplete="off" class="layui-input layui-disabled">
+	    </div>
+	  </div>
+  </c:if>
   <div class="layui-form-item" style="width: 460px;">
-    <label class="layui-form-label">组织全称</label>
+    <label class="layui-form-label">公告类型：</label>
     <div class="layui-input-block">
-    		
-    		<select name="city" lay-verify="" lay-search>
-				  <option value="0">无</option>
-				  <option value="0">总经办</option>
-				  <option value="0">综合部</option>
-				  <option value="0">市场发展部</option>
-				  <option value="0">业务一部</option>
-				  <option value="0">业务二部</option>
-				</select> 
+   		<select name="noticeType" lay-verify="" lay-search>
+			  <option value="1" ${'1'==notice.noticeType?'selected':'' }>全体公告</option>
+			  <option value="2" ${'2'==notice.noticeType?'selected':'' }>部门公告</option>
+			  <option value="3" ${'3'==notice.noticeType?'selected':'' }>行政公告</option>
+			  <option value="4" ${'4'==notice.noticeType?'selected':'' }>通知</option>
+		</select> 
     </div>
   </div>
+  <c:if test="${notice.noticeId ne null }">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">发布人：</label>
+	    <div class="layui-input-block">
+	    	<input type="text" readonly="readonly" value="${notice.releasePersonName }" required="required" placeholder="" autocomplete="off" class="layui-input layui-disabled">
+	    </div>
+	  </div>
+  </c:if>
   <div class="layui-form-item">
-    <label class="layui-form-label">部门简介</label>
+    <label class="layui-form-label">发布内容：</label>
     <div class="layui-input-block">
-    		<textarea></textarea>
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">备注信息</label>
-    <div class="layui-input-block">
-    		<textarea></textarea>
+    	<textarea name="releaseContent">${notice.releaseContent}</textarea>
     </div>
   </div>
   <div class="layui-form-item" style="margin-left:20px;">
     <div class="layui-input-block">
-      <button class="layui-btn addUserSub" lay-submit lay-filter="*">立即提交</button>
-  		<button class="layui-btn layui-btn-primary">重置</button>
+      <button type="button" class="layui-btn addOrUpdateBtn" lay-submit lay-filter="*">立即提交</button>
+  		<button type="reset" class="layui-btn slayui-btn-primary">重置</button>
     </div>
   </div>
   <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
 </form>
 <script type="text/javascript">
-$(".addUserSub").on('click',function(){
+$(".addOrUpdateBtn").on('click',function(){
 	$.ajax({
-		url:"addOrUpdateUser",
+		url:"<%=request.getContextPath()%>/addOrUpdateNotice",
 		type:"post",
-		data:$("#updateUserform").serialize(),
+		data:$("#addOrUpdateNotice").serialize(),
 		success:function(data){
-			console.log(data+"");
-			if (data.code == 1) {
-				layui.use('layer', function(){
-    				var layer = layui.layer;
-    				layer.msg("操作成功！",{time:1100,icon:1},function(){
-    					var index=parent.layer.getFrameIndex(window.name);
-        				parent.layer.close(index);
-    				})
-	    		});
-			}else if(data.code == 0){
-				layui.use('layer', function(){
-    				var layer = layui.layer;
-    				layer.msg("操作成功！",{time:1100,icon:1});
-	    		});
-			}
-		},error:function(){
-			//layui.msg("网络错误",{icon:2});
+			console.log(data);
+			layui.use('layer', function(){
+   				var layer = layui.layer;
+   				layer.msg(""+data.msg,{time:1100,icon:1},function(){
+   					var index=parent.layer.getFrameIndex(window.name);
+       				parent.layer.close(index);
+   				})
+    		});
 		}
 	})
-	return false;
 })
 
-layui.use('laydate', function(){
-	  var laydate = layui.laydate;
-	  
-	  //执行一个laydate实例
-	  laydate.render({
-	    elem: '.time' //指定元素
-	  });
-});
 renderForm();
-function renderForm(){
- layui.use('form', function(){
- var form = layui.form();//高版本建议把括号去掉，有的低版本，需要加()
- form.render();
- });
- }
+		function renderForm(){
+		  layui.use('form', function(){
+		   var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+		   form.render();
+		  });
+		 }
 </script>
    
   </body>
