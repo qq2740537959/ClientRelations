@@ -48,4 +48,16 @@ public class SellPlanServiceImpl implements SellPlanService {
 		dao.examineSellPlan(sellPlan);
 	}
 
+	@Override
+	public int selectSellDate(String planMonth, Integer sellingId) {
+		// TODO Auto-generated method stub
+		return dao.selectSellDate(planMonth, sellingId);
+	}
+
+	@Override
+	public void updateSellPlan(SellPlan sellPlan) {
+		// TODO Auto-generated method stub
+		dao.updateSellPlan(sellPlan);
+	}
+
 }

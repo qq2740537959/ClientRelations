@@ -32,7 +32,8 @@
 							<div class="layui-inline">
 								<div class="layui-form-mid">月份：</div>
 								<div class="layui-input-inline">
-							        <input type="text" class="layui-input planMonth" id="test1" placeholder="yyyy-MM">
+									<span class="planMonth"></span>
+							       <!--  <input type="text" class="layui-input planMonth" id="test1" placeholder="yyyy-MM"> -->
 							    </div>
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
@@ -73,11 +74,12 @@
 		type:"post",
 		url:"/ClientRelations_action/getUserInfos",
 		success:function(t){
-			 var data = t.user;
+			var data = t.user;
 			$(".enterUserName").val(data.staffName); 
 			$(".enterRoleName").val(data.roleName);
 		}
 	})
+	
 </script>
 <script>
 
@@ -114,10 +116,24 @@ layui.use('table', function(){
    	  	 if(data.length === 0){
            layer.msg('请选择一行');
          }else{
-        	 if(data[0].state != 2 && data[0].state == 1){
+        	 if(data[0].state == 1 || data[0].state == 2){
           		 layer.msg("该计划已提交,无法修改",{icon: 5});
           	 }else{
-          		 
+          		layer.open({
+    	   			type:2,
+    	   			content:"updatePlan.html",
+    	   			area:['500px', '400px'],
+    	   			move:false,
+    				shadeClose:true,
+    				success:function(layero,index){
+    					 var body = layer.getChildFrame('body', index);
+    					 body.find(".planId").text(data[0].planId);
+    					 body.find(".sellingName").text(data[0].sellingName);
+    					 body.find(".planMonth").text(data[0].planMonth);
+    					 body.find(".money").val(data[0].money/10000);
+    					 body.find(".planContent").val(data[0].planContent);
+    				}
+    	   		})
           	 }
          }
          
@@ -193,7 +209,7 @@ layui.use('table', function(){
     					 body.find(".planId").text(data[0].planId);
     					 body.find(".sellingName").text(data[0].sellingName);
     					 body.find(".planMonth").text(data[0].planMonth);
-    					 body.find(".money").text(data[0].money);
+    					 body.find(".money").text(data[0].money/10000+" 万");
     					 body.find(".planContent").text(data[0].planContent);
     				}
     	   		})

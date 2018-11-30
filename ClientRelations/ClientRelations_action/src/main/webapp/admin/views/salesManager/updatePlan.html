@@ -14,7 +14,11 @@
 				height: 38px;
 				line-height: 38px;
 			}
-			
+			.drSpan{
+				display: inline-block;
+				height: 38px;
+				line-height: 38px;
+			}
 			
 			/* .layui-textarea{
 				width: 300px;
@@ -31,6 +35,10 @@
 				
 				padding: 0px 20px;
 				padding-top:20px;
+				padding-right: 5px;
+			}
+			.layui-inline{
+				width: 160px;
 			}
 		</style>
 	</head>
@@ -39,23 +47,40 @@
 		
 		<form class="layui-form" action="" lay-filter="example">
 			
-    
+    		
+			
 			<div class="layui-form-item">
-				<label class="layui-form-label">计划月份:</label>
-				<div class="layui-input-block" style="width: 100px;">
-					<span class="planMonth" style="display:inherit;position: relative;top: 11px;"></span>
-			    </div>
+    			<div class="layui-inline">
+					<label class="layui-form-label">计划编码:</label>
+					<div class="layui-input-block" >
+						<span class="planId drSpan"></span>
+				    </div>
+				</div>
+    			<div class="layui-inline">
+					<label class="layui-form-label">计划人姓名:</label>
+					<div class="layui-input-block" >
+						<span class="sellingName drSpan"></span>
+				    </div>
+				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">目标金额:</label>
-				<div class="layui-input-block" style="width: 120px;">
-					<input type="text" lay-verify="required|number|pdMoney"  name="money"  placeholder="" autocomplete="off" class="layui-input" style="width: 100px;display:inline;"><span style="color: red;margin-left: 7px;font-size: 12px;">万</span>					
-			    </div>
+				<div class="layui-inline">
+					<label class="layui-form-label">计划月份:</label>
+					<div class="layui-input-block" style="width: 100px;">
+						<span class="planMonth drSpan"></span>
+				    </div>
+				</div>
+    			<div class="layui-inline">
+					<label class="layui-form-label">目标金额:</label>
+					<div class="layui-input-block" style="width: 120px;">
+						<input type="text" lay-verify="required|number|pdMoney"  name="money"  placeholder="" autocomplete="off" class="layui-input money" style="width: 100px;display:inline;"><span style="color: red;margin-left: 7px;font-size: 12px;">万</span>			
+				    </div>
+				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">计划内容:</label>
 				<div class="layui-input-block" >
-					<textarea placeholder="" name="planContent" lay-verify="required" class="layui-textarea" style="width:350px;"></textarea>
+					<textarea placeholder="" name="planContent"  lay-verify="required" class="layui-textarea planContent" style="width:350px;"></textarea>
 				</div>
 			<div class="layui-form-item" style="margin-top: 15px;">
 				<div class="layui-input-block">
@@ -67,39 +92,7 @@
 
 		<script src="/ClientRelations_action/admin/layui/layui.js" charset="utf-8"></script>
 		<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-		<script type="text/javascript">
-		function Format(datetime,fmt) {
-			  if (datetime == "" || datetime == null) {
-					return "";
-			  }
-			  if (parseInt(datetime)==datetime) {
-			    if (datetime.length==10) {
-			      datetime=parseInt(datetime)*1000;
-			    } else if(datetime.length==13) {
-			      datetime=parseInt(datetime);
-			    }
-			  }
-			  datetime=new Date(datetime);
-			  var o = {
-			  "M+" : datetime.getMonth()+1,                 //月份   
-			  "d+" : datetime.getDate(),                    //日   
-			  "h+" : datetime.getHours(),                   //小时   
-			  "m+" : datetime.getMinutes(),                 //分   
-			  "s+" : datetime.getSeconds(),                 //秒   
-			  "q+" : Math.floor((datetime.getMonth()+3)/3), //季度   
-			  "S"  : datetime.getMilliseconds()             //毫秒   
-			  };   
-			  if(/(y+)/.test(fmt))   
-			  fmt=fmt.replace(RegExp.$1, (datetime.getFullYear()+"").substr(4 - RegExp.$1.length));   
-			  for(var k in o)   
-			  if(new RegExp("("+ k +")").test(fmt))   
-			  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
-			  return fmt;
-			}
-			$(".planMonth").text(Format(new Date(),"yyyy-MM"));
 		
-			
-		</script>
 		<script>
 			  
 			layui.use(['form', 'layedit', 'laydate','element'], function() {
@@ -122,30 +115,25 @@
 				    }
 				  }
 				});   
-				/* 增加 */
+				/* 修改*/
 				form.on('submit(demo2)', function(data) {
-					
+					var planId = $(".planId").text();
 					var formData = $(".layui-form").serialize();
-					var planMonth = $(".planMonth").text();
 					$.ajax({
 						type:"post",
-						url:"/ClientRelations_action/addSellPlan",
-						data:formData+"&planMonth="+planMonth,
+						url:"/ClientRelations_action/updateSellPlan",
+						data:formData+"&planId="+planId,
 						success:function(t){
-							closeIndex(t.msg,t.code);
+							closeIndex(t.msg);
 						}
 					}) 
 					return false;
 				});
 				
 				
-				function closeIndex(msg,code){
+				function closeIndex(msg){
 					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-					if (code == 0) {
-						parent.layer.msg(msg,{icon:1});
-					}else{
-						parent.layer.msg(msg,{icon:5,anim:6});
-					}
+					parent.layer.msg(msg);
 					parent.layer.close(index);
 					parent.refreshTable();
 				}

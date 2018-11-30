@@ -70,4 +70,29 @@ public interface SellPlanDao {
 	 *
 	  */
 	 void examineSellPlan(SellPlan sellPlan);
+	 
+	 
+	 /**
+	  * 
+	 *	@author    Administrator
+	 *	@param planMonth
+	 *	@param sellingId
+	 *	@return
+	 *	@return    int
+	 *	@time    2018 下午10:01:13
+	 *	@desc 根据日期和用户计划人id查询计划
+	 *
+	  */
+	 int selectSellDate(@Param("planMonth") String planMonth,@Param("sellingId") Integer sellingId);
+	 
+	 /**
+	  * 
+	 *	@author    Administrator
+	 *	@param sellPlan
+	 *	@return    void
+	 *	@time    2018 下午11:30:40
+	 *	@desc 修改计划
+	 *
+	  */
+	 void updateSellPlan(SellPlan sellPlan);
 }

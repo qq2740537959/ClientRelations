@@ -44,7 +44,7 @@ public interface SellPlanService {
 	 *	@desc 提交销售计划
 	 *
 	  */
-	 void subSellPlan(@Param("roleName")String roleName,@Param("handleId")Integer handleId,@Param("planId")Integer planId);
+	 void subSellPlan(String roleName,Integer handleId,Integer planId);
 	 /**
 	  * 
 	 *	@author    Administrator
@@ -66,4 +66,28 @@ public interface SellPlanService {
 	 *
 	  */
 	 void examineSellPlan(SellPlan sellPlan);
+	 
+	 /**
+	  * 
+	 *	@author    Administrator
+	 *	@param planMonth
+	 *	@param sellingId
+	 *	@return
+	 *	@return    int
+	 *	@time    2018 下午10:01:13
+	 *	@desc 根据日期和用户计划人id查询计划
+	 *
+	  */
+	 int selectSellDate(String planMonth,Integer sellingId);
+	 
+	 /**
+	  * 
+	 *	@author    Administrator
+	 *	@param sellPlan
+	 *	@return    void
+	 *	@time    2018 下午11:30:40
+	 *	@desc 修改计划
+	 *
+	  */
+	 void updateSellPlan(SellPlan sellPlan);
 }
