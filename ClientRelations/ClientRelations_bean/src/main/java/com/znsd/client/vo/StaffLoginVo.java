@@ -6,7 +6,6 @@ public class StaffLoginVo {
 	private int staffId;
 	public StaffLoginVo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	private String staffName;
 	private String sex;

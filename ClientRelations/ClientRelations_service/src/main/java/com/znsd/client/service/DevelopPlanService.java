@@ -16,7 +16,7 @@ public interface DevelopPlanService {
 	* @desc			查询发展计划
 	*
 	 */
-	public List<DevelopPlan> selectDevelopPlan(String month);
+	public List<Map<String, Object>> selectDevelopPlan(String month,int roleId,int staffId);
 		
 	/**
 	 * 

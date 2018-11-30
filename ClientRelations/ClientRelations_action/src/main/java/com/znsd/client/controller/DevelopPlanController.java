@@ -1,5 +1,7 @@
 package com.znsd.client.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,10 +32,9 @@ public class DevelopPlanController {
 	
 	@RequestMapping("/selectDevelopPlan")
 	@ResponseBody
-	public Map<String, Object> selectDevelopPlan(@RequestParam(value="month",required=false)String month, @RequestParam("page")Integer page,@RequestParam("limit")Integer limit){
-		System.out.println(page+"--------------"+limit);
+	public Map<String, Object> selectDevelopPlan(@RequestParam(value="month",required=false)String month, @RequestParam("page")Integer page,@RequestParam("limit")Integer limit,HttpServletRequest requset){
 		Page<Object> pages = PageHelper.startPage(page, limit);
-		List<DevelopPlan> list =service.selectDevelopPlan(month);
+		List<Map<String, Object>> list = service.selectDevelopPlan(month,getUser(requset).getRoleId(),getUser(requset).getStaffId());
 		model.put("code", 0);
 		model.put("data", list);
 		model.put("page", page);

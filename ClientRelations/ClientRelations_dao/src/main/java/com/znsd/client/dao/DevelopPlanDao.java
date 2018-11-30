@@ -20,7 +20,7 @@ public interface DevelopPlanDao {
 	* @desc			查询发展计划
 	*
 	 */
-	public List<DevelopPlan> selectDevelopPlan(@Param("month")String month);
+	public List<Map<String, Object>> selectDevelopPlan(@Param("month")String month,@Param("roleId")int roleId,@Param("staffId")int staffId);
 	/**
 	 * 
 	* @author Administrator
