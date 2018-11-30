@@ -28,7 +28,7 @@
 
 	<body>
 		<div id="addResource" style="padding: 20px;width: 500px;margin: auto;">
-			<div class="pagewrap">
+			<div class="pagewrap title">
 				<span> <a href="">首页</a> &gt; <a href="">客户管理</a> &gt; <a><cite>客户发展计划</cite></a> &gt; <a><cite></cite> 发展计划增加</a></span>
 				<br /><br /><br /><br /><br /> 
 			</div>
@@ -43,6 +43,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划人名称：</label>
 				<div class="layui-input-inline">
+					<span cl></span>
 					<select name="clientId" class="layui-select planName">
 						
 					</select>
@@ -81,12 +82,11 @@
 					let layer = layui.layer
 					,form = layui.form
 					,laydate = layui.laydate;
-					
+					let condition;
 					$.ajax({
-						url:'/ClientRelations_action/selectClientIdName',
+						url:'/ClientRelations_action/selectPlanNameInfo',
 						type:'post',
 						success:function(data){
-							console.log(data);
 							var trData = "";
 							for (var i=0;i<data.data.length;i++){
 								if ($(".clientId").val() == data.data[i].clientId) {
@@ -114,8 +114,10 @@
 							type:'post',
 							data:$(".planForm").serialize()+"&planName="+$(".layui-anim-upbit .layui-this").text(),
 							success:function(t){
-								console.log(t);
-								layer.msg(t.msg);
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.msg(t.msg);
+								parent.layer.close(index);
+								parent.referclick();
 							},error:function(){
 								layer.alert("网络延迟错误");
 							}
@@ -128,6 +130,10 @@
 							type:'post',
 							data:$(".planForm").serialize()+"&planName="+$(".layui-anim-upbit .layui-this").text(),
 							success:function(t){
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.msg(t.msg);
+								parent.layer.close(index);
+								parent.referclick();
 							},error:function(){
 								layer.alert("网络延迟错误");
 							}
@@ -138,10 +144,18 @@
 						var index = parent.layer.getFrameIndex(window.name);
 						parent.layer.close(index);
 					});
+					
+					
+					/* $('select[name=clientId]').next().find('.layui-select-title input').click();
+					setTimeout(function(){
+						$(".select[name=clientId]").next().find(".layui-anim").children('dd[lay-value="20"]').click(
+							function(){
+								console.log($(this).val()+"-----------------*************");
+							}		
+						),2000;
+					}); */
 				});
 			}
-			
-			
 		</script>
 	</body>
 </html>

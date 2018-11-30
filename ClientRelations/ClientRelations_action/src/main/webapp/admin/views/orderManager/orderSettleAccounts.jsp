@@ -67,11 +67,12 @@
 				width: 200px;
 			}
 			.layui-btn{
-				background-color:rgb(31,147,231);
+				background-color:#177ce3;
 			}
-			.layui-laypage .layui-laypage-curr .layui-laypage-em {
-				background-color:rgb(31,147,231);
+			.layui-laypage .layui-laypage-curr .layui-laypage-em{
+				background-color:#177ce3;
 			}
+			
 		</style>
 	</head>
 	<body>
@@ -95,7 +96,7 @@
 					<div style="font-size: 17px;">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						收货人信息 &nbsp;&nbsp;
-						<span class="ddr" style='display:block;width:60px;height: 30px;margin-top: -25px;margin-left: 150px;text-align: center;line-height: 30px;background-color: rgb(31,147,231);color: white;'>修改</span><br>
+						<span class="ddr" style='display:block;width:60px;height: 30px;margin-top: -25px;margin-left: 150px;text-align: center;line-height: 30px;background-color:#177ce3;color: white;'>修改</span><br>
 						<div class="shippingAddress">
 						</div><hr>
 						&nbsp;&nbsp;&nbsp;&nbsp;

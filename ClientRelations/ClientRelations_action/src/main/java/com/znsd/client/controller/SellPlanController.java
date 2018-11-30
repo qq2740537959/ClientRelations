@@ -38,12 +38,19 @@ public class SellPlanController {
 	@RequestMapping("/addSellPlan")
 	@ResponseBody
 	public Map<String, Object> addSellPlan(SellPlan sellPlan,HttpServletRequest request) {
-		sellPlan.setSellingId(getUser(request).getStaffId());
-		sellPlan.setMoney(sellPlan.getMoney()*10000);
-		sellPlan.setPlanMonth(sellPlan.getPlanMonth()+"-01");
-		sellPlan.setLastTime(new Date());
-		sellPlanBiz.addSellPlan(sellPlan);
-		map.put("msg","增加成功");
+		int decide = sellPlanBiz.selectSellDate(sellPlan.getPlanMonth(),getUser(request).getStaffId());
+		if (decide != 0) {
+			map.put("code",1);
+			map.put("msg","你本月已创建计划");
+		}else {
+			sellPlan.setSellingId(getUser(request).getStaffId());
+			sellPlan.setMoney(sellPlan.getMoney()*10000);
+			sellPlan.setPlanMonth(sellPlan.getPlanMonth()+"-01");
+			sellPlan.setLastTime(new Date());
+			sellPlanBiz.addSellPlan(sellPlan);
+			map.put("msg","增加成功");
+			map.put("code",0);
+		}
 	
 		return map;
 	}
@@ -55,12 +62,20 @@ public class SellPlanController {
 		map.put("msg","提交成功");
 		return map;
 	}
-	
 	@RequestMapping("/delSellPlan")
 	@ResponseBody
 	public Map<String,Object> delSellPlan(@RequestParam("planId")Integer planId,HttpServletRequest request){
 		sellPlanBiz.delSellPlan(planId);
 		map.put("msg","删除成功");
+		return map;
+	}
+	
+	@RequestMapping("/updateSellPlan")
+	@ResponseBody
+	public Map<String,Object> delSellPlan(SellPlan sellPlan,HttpServletRequest request){
+		sellPlan.setMoney(sellPlan.getMoney()*10000);
+		sellPlanBiz.updateSellPlan(sellPlan);
+		map.put("msg","修改成功");
 		return map;
 	}
 	
@@ -93,6 +108,5 @@ public class SellPlanController {
 		StaffLoginVo staff =(StaffLoginVo) request.getSession().getAttribute("userInfo");
 		return staff;
 	}
-
 	
 }	 

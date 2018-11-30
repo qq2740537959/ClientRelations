@@ -62,4 +62,15 @@ public interface DevelopPlanService {
 	*
 	 */
 	public List<Map<String, Object>> selectClientName();
+	
+	/**
+	 * 
+	* @author Administrator
+	* @return
+	* @return List<Map<String,Object>>
+	* @time 2018 下午3:53:04
+	* @desc		客户发展计划用的 查询客户姓名和id
+	*
+	 */
+	public List<Map<String, Object>> selectPlanInClientName();
 }

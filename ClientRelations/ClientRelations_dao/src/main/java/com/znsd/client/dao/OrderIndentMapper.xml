@@ -55,7 +55,7 @@
 			<if test="maxDate != null and maxDate !='' ">
 			 <![CDATA[and o.deal_time <= #{maxDate}]]> 
 			</if>
-			and o.order_status = '已完成' group by months  
+			and o.order_status = '已完成' and s.state = '2' group by months  
 	</select>
 	<select id="selectPlan" resultType="sellPlan">
 		select * from sell_plan where selling_id = #{sellingId}

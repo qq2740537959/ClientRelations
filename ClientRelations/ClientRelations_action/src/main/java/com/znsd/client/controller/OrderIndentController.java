@@ -56,15 +56,15 @@ public class OrderIndentController{
 	@RequestMapping("/orderStatistics")
 	public @ResponseBody ResultData orderStatistics(@RequestParam(value="staffId",required=false) String staffId,@RequestParam(value="page",required=false) Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="date",required=false) String date){
 		//订单统计
-		if(page == null) {
+		if(null == page) {
 			page = 1;
 		}
 		String [] dateAry = {"",""};
-		if(null != date) {
+		System.out.println("date:"+date);
+		if(null != date && date != "") {
 			dateAry[0] = date.substring(0, 10);
 			dateAry[1] = date.substring(12,23);
 		}
-		System.out.println("----staffId:"+staffId);
 		Page pages = PageHelper.startPage(page, limit);
 		List<OrderStatisticsVo> orderStatisticsVo = orderIndentService.orderStatistics(staffId,dateAry[0],dateAry[1]);
 		ResultData result = new ResultData();

@@ -10,6 +10,10 @@
          100% { background-position: -100% 0;}
     }
 
+.layui-form-checked[lay-skin=primary] i{
+	color:white !important;
+}
+	 	
 .layui-view-body{
     background-color: #f0f2f5;
 }
