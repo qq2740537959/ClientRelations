@@ -23,27 +23,27 @@
 			#buttonaa button{
 				margin-left: 100px;
 			}
+			.hangHight{
+				line-height: 36px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="addResource" style="padding: 20px;width: 500px;margin: auto;">
-			<div class="pagewrap title">
-				<span> <a href="">首页</a> &gt; <a href="">客户管理</a> &gt; <a><cite>客户发展计划</cite></a> &gt; <a><cite></cite> 发展计划增加</a></span>
-				<br /><br /><br /><br /><br /> 
-			</div>
 			<form class="planForm layui-form">
 			<input type="hidden" class="clientId" value="" />
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划编码:</label>
 				<div class="layui-input-inline">
+					<span class="hangHight xgId"></span>
 					<input value="" name="planId" class="layui-input planId" />
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划人名称：</label>
 				<div class="layui-input-inline">
-					<span cl></span>
+					<span class="hangHight xgName"></span>
 					<select name="clientId" class="layui-select planName">
 						
 					</select>
@@ -52,12 +52,14 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">计划月份：</label>
 				<div class="layui-input-inline">
+					<span class="hangHight xgMonth"></span>
 					<input value="" name="planMonth" class="layui-input date" id="month" />
 				</div>
 			</div>
-			<div class="layui-form-item">
+			<div class="layui-form-item chuang">
 				<label class="layui-form-label">计划状态：</label>
 				<div class="layui-input-block">
+					<span class="hangHight xgStatus"></span>
 					<input value="已创建" name="planStatus" class="status layui-input" style="border:0px" />
 				</div>
 			</div>
@@ -108,25 +110,8 @@
 					});
 					//增加
 					$(".add").on('click',function(){
-						console.log($(".planForm").serialize());
 						$.ajax({
 							url:'/ClientRelations_action/insertDevelopPlan',
-							type:'post',
-							data:$(".planForm").serialize()+"&planName="+$(".layui-anim-upbit .layui-this").text(),
-							success:function(t){
-								var index = parent.layer.getFrameIndex(window.name);
-								parent.layer.msg(t.msg);
-								parent.layer.close(index);
-								parent.referclick();
-							},error:function(){
-								layer.alert("网络延迟错误");
-							}
-						});
-					});
-					// 修改
-					$(".update").on('click',function(){
-						$.ajax({
-							url:'/ClientRelations_action/updateDevelopPlan',
 							type:'post',
 							data:$(".planForm").serialize()+"&planName="+$(".layui-anim-upbit .layui-this").text(),
 							success:function(t){
@@ -145,7 +130,6 @@
 						parent.layer.close(index);
 					});
 					
-					
 					/* $('select[name=clientId]').next().find('.layui-select-title input').click();
 					setTimeout(function(){
 						$(".select[name=clientId]").next().find(".layui-anim").children('dd[lay-value="20"]').click(
@@ -154,6 +138,35 @@
 							}		
 						),2000;
 					}); */
+				});
+			}
+			function updateMethod(){
+				layui.use(['layer'],function(){
+					let layer = layui.layer;
+					// 修改
+					$(".update").on('click',function(){
+						$.ajax({
+							url:'/ClientRelations_action/updateDevelopPlan',
+							type:'post',
+							data: {
+								planId: $(".xgId").text(),
+								planContent: $(".content").val()
+							},
+							success:function(t){
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.msg(t.msg);
+								parent.layer.close(index);
+								parent.referclick();
+							},error:function(){
+								layer.alert("网络延迟错误");
+							}
+						});
+					});
+					//返回页面
+					$(".fanhui").on('click',function(){
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					});
 				});
 			}
 		</script>

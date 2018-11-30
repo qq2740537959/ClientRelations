@@ -6,11 +6,10 @@ public class StaffLoginVo {
 	private int staffId;
 	public StaffLoginVo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	private String staffName;
 	private String sex;
-	private String roleId;
+	private int roleId;
 	private String roleName;
 	private int state;
 	private String userName;
@@ -37,10 +36,10 @@ public class StaffLoginVo {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public String getRoleId() {
+	public int getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(String roleId) {
+	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
 	public String getRoleName() {
