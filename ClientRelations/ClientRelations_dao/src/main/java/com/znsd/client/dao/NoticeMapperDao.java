@@ -2,6 +2,7 @@ package com.znsd.client.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.znsd.client.bean.Notice;
@@ -32,4 +33,38 @@ public interface NoticeMapperDao {
 	*
 	 */
 	public void deleteNoticeById(String[] array);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param noticeId
+	* @return
+	* @return NoticeVo
+	* @time 2018 下午3:51:11
+	* @desc 根据公告Id获取公告信息
+	*
+	 */
+	public NoticeVo selectNoticeById(@Param("noticeId")int noticeId);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param notice
+	* @return void
+	* @time 2018 下午4:42:03
+	* @desc	根据公告Id修改公告信息
+	*
+	 */
+	public void updateNoticeById(Notice notice);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param notice
+	* @return void
+	* @time 2018 下午4:48:09
+	* @desc	增加公告信息
+	*
+	 */
+	public void addNotice(Notice notice);
 }

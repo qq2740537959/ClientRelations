@@ -49,9 +49,19 @@ public class StaffController {
 	public Map<String, Object> updateStaffPhone(Staff staff,HttpSession session){
 		Map<String, Object> map = new HashMap<>();
 		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
+		if (staff.getContactMode() == "" || staff.getContactMode() == null) {
+			map.put("code", 3);
+			map.put("msg", "手机号不能为空！");
+			return map;
+		}
 		if (staffLoginVo.getContactMode().equals(staff.getContactMode())) {
 			map.put("code", 2);
 			map.put("msg", "未做任何修改操作！");
+			return map;
+		}
+		if (!(staff.getContactMode().matches("^1[3456789]\\d{9}$"))) {
+			map.put("code", 4);
+			map.put("msg", "手机号格式不正确！");
 			return map;
 		}
 		StaffVo staffVo = staffBiz.selectStaffByUserName(staff);
@@ -75,9 +85,19 @@ public class StaffController {
 	public Map<String, Object> updateStaffUserName(Staff staff,HttpSession session){
 		Map<String, Object> map = new HashMap<>();
 		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
+		if (staff.getUserName() == "" || staff.getUserName() == null) {
+			map.put("code", 3);
+			map.put("msg", "登录用户名不能为空！");
+			return map;
+		}
 		if (staffLoginVo.getUserName().equals(staff.getUserName())) {
 			map.put("code", 2);
 			map.put("msg", "未做任何修改操作！");
+			return map;
+		}
+		if (!(staff.getUserName().matches("^(?![\\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\\da-zA-Z!#$%^&*]{6,10}$"))) {
+			map.put("code", 4);
+			map.put("msg", "登录账号只能是数字+字母组合6-10位！");
 			return map;
 		}
 		StaffVo staffVo = staffBiz.selectStaffByUserName(staff);
@@ -98,26 +118,32 @@ public class StaffController {
 	//修改员工登录密码
 	@RequestMapping("/updatePwd")
 	@ResponseBody
-	public Map<String, Object> updatePwd(@RequestParam("ypassword") String ypassword,@RequestParam("npassword") String npassword,HttpSession session){
+	public Map<String, Object> updatePwd(@RequestParam("ypassword") String ypassword,@RequestParam("npassword") String npassword,@RequestParam("twoNewPwd") String twoNewPwd,HttpSession session){
 		Map<String, Object> map = new HashMap<>();
 		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
-		if (ypassword == "" || ypassword == null) {
+		if (ypassword == "" || ypassword == null || npassword == "" || npassword == null || twoNewPwd == "" || twoNewPwd == null) {
 			map.put("code", 0);
-			map.put("msg", "请输入用户名!");
-			return map;
-		}else if (npassword == "" || npassword == null) {
-			map.put("code", 2);
-			map.put("msg", "请输入密码!");
+			map.put("msg", "请将表单填写完整后提交！");
 			return map;
 		}
 		if (!(ypassword.equals(staffLoginVo.getPassword()))) {
-			map.put("code", 3);
+			map.put("code", 2);
 			map.put("msg", "原密码输入错误!");
 			return map;
 		}
 		if (npassword.equals(ypassword)) {
 			map.put("code", 3);
 			map.put("msg", "新密码不能跟旧密码相等!");
+			return map;
+		}
+		if (!(npassword.matches("^[a-zA-Z]\\\\w{5,17}$"))) {
+			map.put("code", 4);
+			map.put("msg", "新密码格式不正确!");
+			return map;
+		}
+		if (npassword != twoNewPwd) {
+			map.put("code", 5);
+			map.put("msg", "两次密码输入不一致!");
 			return map;
 		}
 		if (ypassword.equals(staffLoginVo.getPassword())) {
@@ -139,6 +165,11 @@ public class StaffController {
 	@ResponseBody
 	public Map<String, Object> staffLogin(@RequestParam("userName") String userName,@RequestParam("password") String password,ModelMap model){
 		Map<String, Object> map = new HashMap<>();
+		if (userName == null || userName == "" || password == "" || password == null) {
+			map.put("code", 3);
+			map.put("msg", "请将表单填写完整后提交！");
+			return map;
+		}
 		StaffLoginVo staffLoginVo = staffBiz.staffLogin(userName, password);
 		if (staffLoginVo == null) {
 			map.put("code", 1);
