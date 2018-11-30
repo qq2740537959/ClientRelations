@@ -17,4 +17,15 @@ public interface NoticeService {
 	*
 	 */
 	public List<NoticeVo> selectNoticeByPage(Notice notice);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param notice
+	* @return void
+	* @time 2018 下午8:42:32
+	* @desc	根据公告Id删除该公告
+	*
+	 */
+	public void deleteNoticeById(String[] nId);
 }
