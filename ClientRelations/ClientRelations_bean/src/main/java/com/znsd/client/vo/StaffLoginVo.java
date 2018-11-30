@@ -10,6 +10,7 @@ public class StaffLoginVo {
 	}
 	private String staffName;
 	private String sex;
+	private String roleId;
 	private String roleName;
 	private int state;
 	private String userName;
@@ -18,13 +19,6 @@ public class StaffLoginVo {
 	private Date lastTime;
 	private String operationPersonName;
 	private String departmentAbbreviation;
-	@Override
-	public String toString() {
-		return "StaffLoginVo [staffId=" + staffId + ", staffName=" + staffName + ", sex=" + sex + ", roleName="
-				+ roleName + ", state=" + state + ", userName=" + userName + ", password=" + password + ", contactMode="
-				+ contactMode + ", lastTime=" + lastTime + ", operationPersonName=" + operationPersonName
-				+ ", departmentAbbreviation=" + departmentAbbreviation + "]";
-	}
 	public int getStaffId() {
 		return staffId;
 	}
@@ -42,6 +36,12 @@ public class StaffLoginVo {
 	}
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 	public String getRoleName() {
 		return roleName;
@@ -72,6 +72,13 @@ public class StaffLoginVo {
 	}
 	public void setContactMode(String contactMode) {
 		this.contactMode = contactMode;
+	}
+	@Override
+	public String toString() {
+		return "StaffLoginVo [staffId=" + staffId + ", staffName=" + staffName + ", sex=" + sex + ", roleId=" + roleId
+				+ ", roleName=" + roleName + ", state=" + state + ", userName=" + userName + ", password=" + password
+				+ ", contactMode=" + contactMode + ", lastTime=" + lastTime + ", operationPersonName="
+				+ operationPersonName + ", departmentAbbreviation=" + departmentAbbreviation + "]";
 	}
 	public Date getLastTime() {
 		return lastTime;

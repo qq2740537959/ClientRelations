@@ -19,6 +19,15 @@
     <script type="text/javascript" src="<%=request.getContextPath() %>/admin/layer/layer.js"></script>
     <title>客户关系管理系统-登录</title>
     <style>
+   	body{
+   		position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    background-size: cover;
+   		background-image: url("admin/assets/images/back.png");
+   	}
     	.title{
      background-image: -webkit-linear-gradient(left, #147B96, #FDB90B 25%, #147B96 50%, #FDB90B 75%, #147B96);
      -webkit-text-fill-color: transparent;
