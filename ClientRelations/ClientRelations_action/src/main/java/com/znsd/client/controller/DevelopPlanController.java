@@ -34,9 +34,6 @@ public class DevelopPlanController {
 		System.out.println(page+"--------------"+limit);
 		Page<Object> pages = PageHelper.startPage(page, limit);
 		List<DevelopPlan> list =service.selectDevelopPlan(month);
-		for (DevelopPlan developPlan : list) {
-			System.out.println(developPlan);
-		}
 		model.put("code", 0);
 		model.put("data", list);
 		model.put("page", page);
@@ -49,7 +46,6 @@ public class DevelopPlanController {
 	@ResponseBody
 	public Map<String, Object> deleteDevelopPlan(@RequestParam("planId")Integer planId){
 		String msg = "";
-		
 		Integer count = service.deleteDevelopPlan(planId);
 		if (count > 0) {
 			msg = "删除成功";
@@ -68,7 +64,6 @@ public class DevelopPlanController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String foundTime = formatter.format(new Date());
 		plan.setFoundTime(foundTime);
-		
 		String msg = "";
 		Integer count = service.insertDevelopPlan(plan);
 		if (count > 0) {
@@ -87,7 +82,6 @@ public class DevelopPlanController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String lastOpterateTime = formatter.format(new Date());
 		plan.setLastOpterateTime(lastOpterateTime);
-		System.out.println("修改====="+plan.toString());
 		String msg = "";
 		Integer count = service.updateDevelopPlan(plan);
 		if (count > 0) {
@@ -103,11 +97,20 @@ public class DevelopPlanController {
 	@ResponseBody
 	public Map<String, Object> selectClientIdName(){
 		List<Map<String, Object>> list = service.selectClientName();
-		for (Map<String, Object> map : list) {
-			System.out.println(map);
-		}
 		model.put("data", list);
 		return model;
+	}
+	
+	@RequestMapping("/selectPlanNameInfo")
+	@ResponseBody
+	public Map<String, Object> selectPlanInClientName(){
+		List<Map<String, Object>> list = service.selectPlanInClientName();
+		model.put("data", list);
+		return model;
+	}
+	
+	public StaffLoginVo getUser(HttpServletRequest request) {
+		return (StaffLoginVo)request.getSession().getAttribute("userInfo");
 	}
 	
 	public Map<String, Object> getModel() {
@@ -116,9 +119,5 @@ public class DevelopPlanController {
 
 	public void setModel(Map<String, Object> model) {
 		this.model = model;
-	}
-	
-	public StaffLoginVo getUser(HttpServletRequest request) {
-		return (StaffLoginVo)request.getSession().getAttribute("userInfo");
 	}
 }

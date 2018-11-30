@@ -41,9 +41,6 @@
  			and plan_month like "%${planMonth}%"
  		</if>
  	</select>
- 	<select id="selectSellDate" resultType="java.lang.Integer">
- 		select count(plan_id) from sell_plan where plan_month like "%${planMonth}%" and selling_id = #{sellingId}
- 	</select>
  	
  	<update id="subSellPlan" > <!-- 销售代表，销售经理提交 -->
 		update sell_plan set 
@@ -60,9 +57,6 @@
   	</update>
   	<update id="examineSellPlan" parameterType="com.znsd.client.bean.SellPlan">
 		update sell_plan set state = #{state},pending_id = null,last_time=now(),handle_id=#{handleId} where plan_id = #{planId}
-  	</update>
-  	<update id="updateSellPlan" parameterType="com.znsd.client.bean.SellPlan">
-		update sell_plan set money = #{money},last_time=now(),plan_content =#{planContent} where plan_id = #{planId}
   	</update>
   	<delete id="delSellPlan">
   		delete from sell_plan where plan_id = #{planId}

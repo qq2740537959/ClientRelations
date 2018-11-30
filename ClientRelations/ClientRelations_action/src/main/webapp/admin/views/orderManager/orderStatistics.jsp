@@ -49,13 +49,14 @@
 				width: 100px;
 			}
 			.layui-btn{
-				background-color:rgb(31,147,231);
+				background-color:#177ce3;
 			}
-			.layui-laypage .layui-laypage-curr .layui-laypage-em {
-				background-color:rgb(31,147,231);
+			.layui-laypage .layui-laypage-curr .layui-laypage-em{
+				background-color:#177ce3;
 			}
 			.layui-progress-bar{
-				background-color:rgb(31,147,231);
+				background-color:#177ce3;
+				color:white;
 			}
 		</style>
 	</head>
@@ -200,7 +201,7 @@
 	
 	<script type="text/html" id="titleTpl">
 		<div class="layui-progress layui-progress-big" lay-showpercent="true">
-		  <div class="layui-progress-bar" style="width:{{d.completionRate}}px;text-align:center">{{d.completionRate}}%</div>
+		  <div class="layui-progress-bar" style="width:{{d.completionRate*2}}px;text-align:center">{{d.completionRate}}%</div>
 		</div>
 	</script>
 

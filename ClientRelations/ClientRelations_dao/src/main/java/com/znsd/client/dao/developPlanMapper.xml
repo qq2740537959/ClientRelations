@@ -49,4 +49,8 @@
 		select client_id,client_name FROM client_resource where state = 1 and ISNULL(chance_id)
 	</select>
 	
+	<select id="selectPlanInClientName" resultMap="clientNameMap">
+		select client_id,client_name from client_resource
+	</select>
+	
 </mapper>

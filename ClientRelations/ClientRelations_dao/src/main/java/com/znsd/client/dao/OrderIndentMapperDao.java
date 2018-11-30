@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.znsd.client.bean.OrderIndent;
-import com.znsd.client.bean.Product;
 import com.znsd.client.bean.SellPlan;
 import com.znsd.client.vo.OrderIndentVo;
 import com.znsd.client.vo.OrderStatisticsVo;

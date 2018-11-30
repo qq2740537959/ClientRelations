@@ -22,7 +22,7 @@
 <body class="layui-view-body">
 	<div class="layui-content">
 		<div class="layui-page-header">
-			<div class="pagewrap">
+			<div class="pagewrap title">
 				<span> <a href="">首页</a> <a href="">客户管理</a> <a><cite>客户发展计划</cite></a>
 				</span>
 				<!--<h2 class="title">客户资源管理</h2> class="layui-breadcrumb"-->
@@ -137,7 +137,7 @@
 								anim : 4,
 								area : [ '700px', '600px' ],
 								title: '计划信息',
-								content : 'worthADD.html',
+								content : 'DevelopPlanAdd.html',
 								success:function(layero,index){
 									 var body = layer.getChildFrame('body', index);
 									 var iframe = window['layui-layer-iframe'+index]
@@ -157,7 +157,7 @@
 			    	  if(data.length === 0){
 			              layer.msg('请选择一行');
 			            }else{
-			            	console.log(data[0].planId);
+			            	return layer.confign("确认删除吗？",function(){
 			            	$.ajax({
 			            		url:'/ClientRelations_action/deletePlan',
 			            		type:'post',
@@ -169,6 +169,7 @@
 			            		,error:function(){
 			            			layer.alert("网络连接失败");
 			            		}
+			            	});
 			            	});
 			            }
 			      break;
@@ -189,7 +190,7 @@
 					anim : 3,
 					area : [ '700px', '600px' ],
 					title: '计划信息',
-					content : 'worthADD.html',
+					content : 'DevelopPlanAdd.html',
 					success:function(layero,index){
 						 var body = layer.getChildFrame('body', index);
 						 var iframe = window['layui-layer-iframe'+index]

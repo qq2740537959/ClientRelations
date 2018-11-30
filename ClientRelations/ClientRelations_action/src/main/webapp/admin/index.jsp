@@ -144,10 +144,10 @@
                             <em>统计分析</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="">客户构成统计</a></dd>
-                            <dd><a href="">客户流失统计</a></dd>
-                            <dd><a href="">客户贡献统计</a></dd>
-                            <dd><a href="">客户服务统计</a></dd>
+                            <dd><a href="views/statisticsManager/constituteStatistics.jsp">客户构成统计</a></dd>
+                            <dd><a href="views/statisticsManager/lossStatistics.jsp">客户流失统计</a></dd>
+                            <dd><a href="views/statisticsManager/contributionStatistics.jsp">客户贡献统计</a></dd>
+                            <dd><a href="views/statisticsManager/serviceStatistics.jsp">客户服务统计</a></dd>
                         </dl>
                     </li>
                 </ul>

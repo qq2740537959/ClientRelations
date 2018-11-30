@@ -31,7 +31,6 @@ public class ClientWorthController {
 		Page<Object> pages = PageHelper.startPage(page, limit);
 		List<Map<String, Object>> list = service.selectClientWorthByPage(clientName, clientType);
 		for (Map<String, Object> map : list) {
-			System.out.println(map);
 			map.put("clientType", map.get("clientType") + "客户");
 		}
 		model = new HashMap<String, Object>();
@@ -46,23 +45,15 @@ public class ClientWorthController {
 	@RequestMapping("/selectClientInfo")
 	@ResponseBody
 	public Map<String, Object> selectClientInfo(@RequestParam("clientId") Integer clientId, Map<String, Object> model) {
-		System.out.println("--进入--" + clientId);
-
 		model = service.selectClientInfo(clientId);
 		model.put("clientType", model.get("clientType") + "客户");
-		System.out.println(model);
-
 		return model;
 	}
 
 	@RequestMapping("/consumptionHistory")
 	@ResponseBody
 	public Map<String, Object> consumptionHistory(@RequestParam("clientId") Integer clientId) {
-
 		List<Map<String, Object>> list = service.consumptionHistory(clientId);
-		for (Map<String, Object> map : list) {
-			System.out.println(map);
-		}
 		map.put("data", list);
 		return map;
 	}

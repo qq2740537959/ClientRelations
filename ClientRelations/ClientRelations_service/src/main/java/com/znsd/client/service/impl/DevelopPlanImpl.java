@@ -40,6 +40,11 @@ public class DevelopPlanImpl implements DevelopPlanService {
 	public List<Map<String, Object>> selectClientName() {
 		return dao.selectClientName();
 	}
+
+	@Override
+	public List<Map<String, Object>> selectPlanInClientName() {
+		return dao.selectPlanInClientName();
+	}
 	
 }
 

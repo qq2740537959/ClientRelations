@@ -138,8 +138,6 @@
 				
 			}; */
 			function onLoadCid(){
-				var aa = $(".cId").val();
-				console.log("hjkhkjhkjufg==id=="+aa);
 				$.ajax({
 					url:'../../../selectClientInfo',
 					data:{
@@ -165,7 +163,6 @@
 					url:'../../../consumptionHistory',
 					data: "clientId="+aa,
 					success:function(msg){
-						console.log(msg);
 						$("#content").empty();
 						let d = "";
 						for (var i = 0; i < msg.data.length; i++) {

@@ -108,6 +108,5 @@ public class SellPlanController {
 		StaffLoginVo staff =(StaffLoginVo) request.getSession().getAttribute("userInfo");
 		return staff;
 	}
-
 	
 }	 
