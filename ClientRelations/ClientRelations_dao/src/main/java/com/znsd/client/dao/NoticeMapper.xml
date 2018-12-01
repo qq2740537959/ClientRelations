@@ -27,6 +27,12 @@
 		</if>
  	</select>
  	
+ 	<!-- 根据公告Id获取公告信息 -->
+	<select id="selectNoticeById" resultMap="NoticeResultMap">
+		select n.notice_id,n.notice_title,n.notice_type,n.release_time,s.staff_name,n.release_content from notice n,staff s where n.release_person = s.staff_id
+		and n.notice_id = #{noticeId}
+ 	</select>
+ 	
  	<!-- 根据公告Id删除该公告 -->
  	<delete id="deleteNoticeById" parameterType="java.lang.String">
  		delete from notice where notice_id in
@@ -34,4 +40,14 @@
  			#{notice}
  		</foreach>
  	</delete>
+ 	
+ 	<!-- 根据公告Id修改公告信息 -->
+	<update id="updateNoticeById">
+		update notice set notice_title = #{noticeTitle},notice_type = #{noticeType},release_content = #{releaseContent} where notice_id = #{noticeId}
+	</update>
+	
+	<!-- 增加公告信息 -->
+	<insert id="addNotice">
+		insert into notice values(#{noticeId},#{noticeTitle},#{noticeType},#{releaseTime},#{releasePerson},#{releaseContent})
+	</insert>
  </mapper>

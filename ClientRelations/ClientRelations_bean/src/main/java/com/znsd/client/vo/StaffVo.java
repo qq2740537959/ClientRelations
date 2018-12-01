@@ -8,11 +8,27 @@ public class StaffVo {
 	private String sex;
 	private String departmentAbbreviation;
 	private String roleName;
+	private String remarksInfo;
 	private int state;
+	private Date createTime;
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	private Date lastTime;
 	private String operationPersonName;
+
 	public int getStaffId() {
 		return staffId;
+	}
+	@Override
+	public String toString() {
+		return "StaffVo [staffId=" + staffId + ", staffName=" + staffName + ", sex=" + sex + ", departmentAbbreviation="
+				+ departmentAbbreviation + ", roleName=" + roleName + ", remarksInfo=" + remarksInfo + ", state="
+				+ state + ", createTime=" + createTime + ", lastTime=" + lastTime + ", operationPersonName="
+				+ operationPersonName + "]";
 	}
 	public void setStaffId(int staffId) {
 		this.staffId = staffId;
@@ -41,6 +57,12 @@ public class StaffVo {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+	public String getRemarksInfo() {
+		return remarksInfo;
+	}
+	public void setRemarksInfo(String remarksInfo) {
+		this.remarksInfo = remarksInfo;
+	}
 	public int getState() {
 		return state;
 	}
@@ -59,10 +81,9 @@ public class StaffVo {
 	public void setOperationPersonName(String operationPersonName) {
 		this.operationPersonName = operationPersonName;
 	}
-	@Override
-	public String toString() {
-		return "StaffVo [staffId=" + staffId + ", staffName=" + staffName + ", sex=" + sex + ", departmentAbbreviation="
-				+ departmentAbbreviation + ", roleName=" + roleName + ", state=" + state + ", lastTime=" + lastTime
-				+ ", operationPersonName=" + operationPersonName + "]";
+	public StaffVo() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
+	
 }

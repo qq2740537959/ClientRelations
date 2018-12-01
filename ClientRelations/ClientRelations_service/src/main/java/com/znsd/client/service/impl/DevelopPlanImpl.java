@@ -17,8 +17,8 @@ public class DevelopPlanImpl implements DevelopPlanService {
 	private DevelopPlanDao dao;
 	
 	@Override
-	public List<DevelopPlan> selectDevelopPlan(String month) {
-		return dao.selectDevelopPlan(month);
+	public List<Map<String, Object>> selectDevelopPlan(String month,int roleId,int staffId) {
+		return dao.selectDevelopPlan(month,roleId,staffId);
 	}
 
 	@Override

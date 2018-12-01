@@ -5,13 +5,14 @@
 <!-- 保证唯一性 使用接口方式加载命名空间 使用代理模式 -->
 <mapper namespace="com.znsd.client.dao.DevelopPlanDao">
 	
-	<resultMap type="com.znsd.client.bean.DevelopPlan" id="planMap">
+	<resultMap type="java.util.HashMap" id="planMap">
 		<id column="plan_id" property="planId"/>
 		<result column="plan_name" property="planName"/>
 		<result column="client_id" property="clientId"/>
 		<result column="staff_id" property="staffId"/>
+		<result column="staff_name" property="staffName"/>
 		<result column="plan_content" property="planContent"/>
-		<result column="plan_month" property="planMonth"/>
+		<result column="planMonth" property="planMonth"/>
 		<result column="found_time" property="foundTime"/>
 		<result column="last_opterate_time" property="lastOpterateTime"/>
 		<result column="plan_status" property="planStatus"/>
@@ -23,11 +24,20 @@
 	</resultMap>
 	
 	<select id="selectDevelopPlan" resultMap="planMap">
-		select plan_id,plan_name,client_id,staff_id,plan_content,plan_month,found_time,last_opterate_time,plan_status from develop_plan 
+		select d.plan_id,d.plan_name,d.client_id,d.staff_id,d.plan_content,DATE_FORMAT(d.plan_month,'%Y-%m') as planMonth,DATE_FORMAT(d.found_time,'%Y-%m-%d') as found_time,DATE_FORMAT(d.last_opterate_time,'%Y-%m-%d') as last_opterate_time,d.plan_status,s.staff_name  
+		from develop_plan d INNER JOIN staff s ON d.staff_id = s.staff_id 
 		<where>
-			<if test="month != null and month != ''">
-				month like '%${month}%'
-			</if>
+			<choose>
+				<when test="month != null and month != ''">
+					d.plan_month like '%${month}%' 
+					<if test="roleId == 4">
+						and s.staff_id = #{staffId}
+					</if>
+				</when>
+				<when test="roleId == 4">
+					s.staff_id = #{staffId}
+				</when>
+			</choose>
 		</where>
 	</select>
 	
@@ -41,7 +51,7 @@
 	</insert>
 	
 	<update id="updateDevelopPlan" parameterType="com.znsd.client.bean.DevelopPlan">
-		UPDATE develop_plan SET plan_content = #{planContent},last_opterate_time = #{lastOpterateTime} 
+		UPDATE develop_plan SET staff_id= #{staffId},plan_content = #{planContent},last_opterate_time = #{lastOpterateTime} 
 		WHERE plan_id = #{planId}
 	</update>
 	

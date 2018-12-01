@@ -66,4 +66,37 @@ public interface StaffService {
 	*
 	 */
 	public void updateStaffUserName(Staff staff);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param notice
+	* @return void
+	* @time 2018 下午8:41:44
+	* @desc 根据员工Id删除该员工信息
+	*
+	 */
+	public void deleteStaffById(String[] array);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param staff
+	* @return void
+	* @time 2018 下午5:51:23
+	* @desc	根据员工Id修改员工状态
+	*
+	 */
+	public void updateStaffState(Staff staff);
+	
+	/**
+	 * 
+	* @author jlh
+	* @param staff
+	* @return void
+	* @time 2018 下午8:16:17
+	* @desc	增加员工信息
+	*
+	 */
+	public void addStaff(Staff staff);
 }

@@ -7,7 +7,6 @@
 	<link rel="stylesheet" href="../../layui/css/layui.css" />
 	<script src="../../layui/layui.js" charset="UTF-8"></script>
 	<link rel="stylesheet" href="../../assets/css/view.css" />
-	<link rel="icon" href="/favicon.ico">
 	<script type="text/javascript" src="../../js/jquery-1.8.3.min.js" ></script>
 	<style>
 			div.layui-form.layui-border-box.layui-table-view{
@@ -67,7 +66,7 @@
 								<div class="layui-input-inline">
 							      	<input type="text" name="title" class="layui-input noticeTitle">
 							    </div>
-							    <div class="layui-input-inline">
+							    <div class="layui-inline">
 								    <select name="noticeType" class="noticeType">
 	                                	<option value="0">全部公告</option>
 	                                	<option value="1">全体公告</option>
@@ -76,7 +75,9 @@
 	                                	<option value="4">通知</option>       
 	                                </select>
                                 </div>
-								<button class="layui-btn layui-btn-blue refer_but">查询</button>
+                                <div class="layui-inline">
+									<button class="layui-btn layui-btn-blue refer_but">查询</button>
+								</div>
 							</div>
 						</div>
 						<table class="layui-hide" id="notice" lay-filter="test"></table>
@@ -127,12 +128,12 @@
 		    ,toolbar: '#toolbarDemo'
 		    ,cols: [[
 		    	{checkbox:true,fixed:true}
-			      ,{field:'noticeId', width:50, title: 'ID', sort: true}
+			      ,{field:'noticeId', width:70, title: 'ID', sort: true}
 			      ,{field:'noticeTitle', width:141, title: '标题'}
-			      ,{field:'releaseTime', width:222, title: '发布时间',templet: "<div>{{layui.util.toDateString(d.releaseTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
+			      ,{field:'releaseTime', width:212, title: '发布时间',templet: "<div>{{layui.util.toDateString(d.releaseTime, 'yyyy-MM-dd HH:mm:ss')}}</div>", sort: true}
 			      ,{field:'releasePersonName', width:80, title: '发布人'}
 			      ,{field:'releaseContent', width:300, title: '发布内容'}
-			      ,{field:'noticeType', width:149, title: '公告类型',toolbar:"#barType"}
+			      ,{field:'noticeType', width:139, title: '公告类型',toolbar:"#barType"}
 			      ,{field: 'right', title: '操作', width:93,toolbar:"#barDemo"}
 		    ]]
 		    ,page: true
@@ -147,12 +148,12 @@
 		   		layer.open(
 		  	      {
 	  	             type: 2,
-	  	             title: '增加组织结构',
+	  	             title: '增加公告信息',
 	  	             skin: 'layui-layer-molv',
 	  	             shadeClose: false,
 	  	             shade: 0.3,
-	  	             area: ['550px', '570px'],
-	  	             content: "",//跳转的页面
+	  	             area: ['550px', '470px'],
+	  	             content: "addOrUpdateNotice.jsp",//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
 	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];
@@ -189,7 +190,6 @@
 			   			for (var i = 0; i < data.length; i++) {
 			   				getIdString += data[i].noticeId+",";
 			   			}
-			   			console.log(getIdString);
 			   			$.ajax({
 			   				type:"post",
 			   				data:{
@@ -265,8 +265,8 @@
 	  	             skin: 'layui-layer-molv',
 	  	             shadeClose: false,
 	  	             shade: 0.3,
-	  	             area: ['600px', '630px'],
-	  	             content: "",//跳转的页面
+	  	             area: ['600px', '580px'],
+	  	             content: "../../../updateIntoPage?noticeId="+data.noticeId,//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
 	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];

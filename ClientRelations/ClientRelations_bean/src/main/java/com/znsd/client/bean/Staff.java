@@ -14,6 +14,7 @@ public class Staff implements Serializable {
 	private int staffId;
 	private String contactMode;
 	private int departmentId;
+	private Date createTime;
 	private Date lastTime;
 	private int operationPerson;
 	private String password;
@@ -27,136 +28,121 @@ public class Staff implements Serializable {
 	public Staff() {
 	}
 
-
-	
-	
-	
 	public int getStaffId() {
-		return this.staffId;
+		return staffId;
 	}
 
 	public void setStaffId(int staffId) {
 		this.staffId = staffId;
 	}
 
-
-	
 	public String getContactMode() {
-		return this.contactMode;
+		return contactMode;
 	}
 
 	public void setContactMode(String contactMode) {
 		this.contactMode = contactMode;
 	}
 
-
-	
 	public int getDepartmentId() {
-		return this.departmentId;
+		return departmentId;
 	}
 
 	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;
 	}
 
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-	
-	
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
 	public Date getLastTime() {
-		return this.lastTime;
+		return lastTime;
 	}
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
 	}
 
-
-	
 	public int getOperationPerson() {
-		return this.operationPerson;
+		return operationPerson;
 	}
 
 	public void setOperationPerson(int operationPerson) {
 		this.operationPerson = operationPerson;
 	}
 
-
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
-	
 	public String getRemarksInfo() {
-		return this.remarksInfo;
+		return remarksInfo;
 	}
 
 	public void setRemarksInfo(String remarksInfo) {
 		this.remarksInfo = remarksInfo;
 	}
 
-
-	
 	public int getRoleIdentity() {
-		return this.roleIdentity;
+		return roleIdentity;
 	}
 
 	public void setRoleIdentity(int roleIdentity) {
 		this.roleIdentity = roleIdentity;
 	}
 
-
 	public String getSex() {
-		return this.sex;
+		return sex;
 	}
 
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
-
-	
 	public String getStaffName() {
-		return this.staffName;
+		return staffName;
 	}
 
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
 	}
 
-
 	public int getState() {
-		return this.state;
+		return state;
 	}
 
 	public void setState(int state) {
 		this.state = state;
 	}
 
-
-	
 	public String getUserName() {
-		return this.userName;
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
 		return "Staff [staffId=" + staffId + ", contactMode=" + contactMode + ", departmentId=" + departmentId
-				+ ", lastTime=" + lastTime + ", operationPerson=" + operationPerson + ", password=" + password
-				+ ", remarksInfo=" + remarksInfo + ", roleIdentity=" + roleIdentity + ", sex=" + sex + ", staffName="
-				+ staffName + ", state=" + state + ", userName=" + userName + "]";
+				+ ", createTime=" + createTime + ", lastTime=" + lastTime + ", operationPerson=" + operationPerson
+				+ ", password=" + password + ", remarksInfo=" + remarksInfo + ", roleIdentity=" + roleIdentity
+				+ ", sex=" + sex + ", staffName=" + staffName + ", state=" + state + ", userName=" + userName + "]";
 	}
 
-
-
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 }

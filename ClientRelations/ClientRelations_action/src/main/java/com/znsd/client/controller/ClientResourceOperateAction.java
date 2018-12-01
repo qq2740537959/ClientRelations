@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.bean.ClientResource;
 import com.znsd.client.service.ClientService;
+import com.znsd.client.vo.StaffLoginVo;
 
 @Controller
 public class ClientResourceOperateAction {
@@ -26,9 +29,9 @@ public class ClientResourceOperateAction {
 	@RequestMapping("/selectAllClient")
 	@ResponseBody
 	public Map<String, Object> selectAllClient(@RequestParam(value="allotState",required=false) Integer allotState,@RequestParam(value="conditionName",required=false)String conditionName,
-			@RequestParam(value="condition",required=false)String condition,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit,Map<String, Object> model) {
+			@RequestParam(value="condition",required=false)String condition,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit,Map<String, Object> model,HttpServletRequest request) {
 		Page<Object> pages = PageHelper.startPage(page, limit);		//分页
-		List<Map<String, Object>> list = service.selectAllClientByPage(allotState,conditionName,condition);
+		List<Map<String, Object>> list = service.selectAllClientByPage(allotState,conditionName,condition,getUser(request).getRoleId(),getUser(request).getStaffId());
 		for (Map<String, Object> map : list) {
 			map.put("clientType", map.get("clientType")+"客户");
 			
@@ -94,6 +97,10 @@ public class ClientResourceOperateAction {
 		model = new HashMap<String, Object>();
 		model.put("msg", msg);
 		return model;
+	}
+	
+	public StaffLoginVo getUser(HttpServletRequest request) {
+		return (StaffLoginVo)request.getSession().getAttribute("userInfo");
 	}
 	
 /*	@RequestMapping("/updateStaffId")

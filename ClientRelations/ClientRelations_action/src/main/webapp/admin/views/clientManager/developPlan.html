@@ -28,6 +28,7 @@
 				<!--<h2 class="title">客户资源管理</h2> class="layui-breadcrumb"-->
 			</div>
 		</div>
+		<input type="hidden" class="roleName">
 		<div class="layui-row">
 			<div class="layui-card">
 				<div class="layui-card-body">
@@ -84,6 +85,16 @@
 		</div>
 	</div>
 	<script src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			type:"post",
+			url:"/ClientRelations_action/getUserInfos",
+			success:function(t){
+				var user  = t.user;
+				$(".roleName").val(user.roleName);
+			}
+		})
+	</script>
 	<script>
 		layui.use([ 'table' ], function() {
 			let table = layui.table;
@@ -99,10 +110,10 @@
 				, {field : 'planMonth',width : 160,title : '月份'}
 				, {field : 'foundTime',width : 200,title : '创建时间',minWidth : 100}
 				, {field : 'lastOpterateTime',width : 200,title : '最后操作时间'}
-				, {field : 'staffId',width : 120,title : '操作人'} 
+				, {field : 'staffName',width : 120,title : '操作人'} 
 				] ],
 				page : true,
-				limits : [ 2, 5, 8 ]
+				limits : [ 2, 5, 8 ,10 ]
 			});
 			//头工具栏事件
 			  table.on('toolbar(test)', function(obj){
@@ -127,7 +138,7 @@
 			            	});
 			            }
 			      break;
-			      case 'update':
+			      case 'update':			//修改
 			    	  if(data.length === 0){
 			              layer.msg('请选择一行');
 			            }else{
@@ -135,20 +146,24 @@
 			            	layer.open({
 			            		type : 2,
 								anim : 4,
-								area : [ '700px', '600px' ],
+								area : [ '700px', '500px' ],
 								title: '计划信息',
 								content : 'DevelopPlanAdd.html',
 								success:function(layero,index){
 									 var body = layer.getChildFrame('body', index);
 									 var iframe = window['layui-layer-iframe'+index]
-									 body.find(".planId").val(data[0].planId);
-									 body.find(".clientId").val(data[0].clientId);
-									 body.find(".date").val(data[0].planMonth);
-									 body.find(".status").val(data[0].planStatus);
-									 body.find(".content").val(data[0].planContent);
+									 body.find(".xgId").text(data[0].planId);
+									 body.find(".planId").css("display","none");
+									 body.find(".xgName").text(data[0].planName);
+									 body.find(".planName").css("display","none");
+									 body.find(".xgMonth").text(data[0].planMonth);
+									 body.find(".date").css("display","none");
+									 body.find(".xgStatus").text(data[0].planStatus);
+									 body.find(".status").css("display","none");
+									 body.find(".content").text(data[0].planContent);
 									 body.find("#buttonaa").empty();
 									 body.find("#buttonaa").append("<button type='button' class='layui-btn update'>修改</button><button type='button' class='layui-btn fanhui'>返回</button>");
-									 iframe.loadClient();
+									 iframe.updateMethod();
 								}
 			            	});
 			            }
@@ -158,18 +173,18 @@
 			              layer.msg('请选择一行');
 			            }else{
 			            	return layer.confign("确认删除吗？",function(){
-			            	$.ajax({
-			            		url:'/ClientRelations_action/deletePlan',
-			            		type:'post',
-			            		data:'planId='+data[0].planId,
-			            		success:function(msg){
-			            			layer.msg(msg.msg);
-			            			$(".refer_but").click();
-			            		}
-			            		,error:function(){
-			            			layer.alert("网络连接失败");
-			            		}
-			            	});
+				            	$.ajax({
+				            		url:'/ClientRelations_action/deletePlan',
+				            		type:'post',
+				            		data:'planId='+data[0].planId,
+				            		success:function(msg){
+				            			layer.msg(msg.msg);
+				            			$(".refer_but").click();
+				            		}
+				            		,error:function(){
+				            			layer.alert("网络连接失败");
+				            		}
+				            	});
 			            	});
 			            }
 			      break;
@@ -181,19 +196,23 @@
 				        method:'post',
 				        where:{
 							month:$("#month").val()
-				        }
+				        },
+				        page: true,
+				        limit: 5,
+				        limits : [ 2, 5, 8 ]
 				    });
 				});
 			$(".add_but").click(function() {
 				layer.open({
 					type : 2,
 					anim : 3,
-					area : [ '700px', '600px' ],
+					area : [ '700px', '460px' ],
 					title: '计划信息',
 					content : 'DevelopPlanAdd.html',
 					success:function(layero,index){
 						 var body = layer.getChildFrame('body', index);
 						 var iframe = window['layui-layer-iframe'+index]
+						 body.find(".chuang").css("display","none");
 						 body.find("#buttonaa").empty();
 						 body.find("#buttonaa").append("<button type='button' class='layui-btn add'>增加</button><button type='button' class='layui-btn fanhui'>返回</button>");
 						 iframe.loadClient();
@@ -206,6 +225,7 @@
 			//执行一个laydate实例
 			laydate.render({
 				elem : '#month' //指定元素
+				,type: 'month'
 			});
 		});
 		function referclick(){

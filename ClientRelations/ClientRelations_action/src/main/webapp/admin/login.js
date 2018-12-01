@@ -38,12 +38,18 @@ $(".login-button").click(function(){
 		return ;
 	}
 	var loginForm = $(".login-form").serialize();
+	var index;
 	$.ajax({
 		type:"post",
 		url:"/ClientRelations_action/staffLogin",
 		data:loginForm,
+		beforeSend: function () {
+        	index = index = layer.load(0, {time: 10*1000});
+        },
 		success:function(t){
+			layer.close(index);
 			if (t.code== 0) {
+				layer.msg(""+t.msg);
 				location.href = "admin/index.jsp";
 			}else{
 				layer.msg(""+t.msg);

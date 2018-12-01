@@ -202,7 +202,8 @@ input[type=number]::-webkit-outer-spin-button {
 			type:"post",
 			data:{
 				ypassword:yuanpwd,
-				npassword:newpwd
+				npassword:newpwd,
+				twoNewPwd:twonewpwd
 			},
 			success:function(data){
 				if (data.code == 1) {
@@ -226,7 +227,7 @@ input[type=number]::-webkit-outer-spin-button {
 	
 	function submitphonebtn(th){
 		var phone = $(".phoneInput").val();
-		if(!(/^1[34578]\d{9}$/.test(phone))){ 
+		if(!(/^1[3456789]\d{9}$/.test(phone))){ 
 			layer.msg("请输入正确的11位手机号");
 			return false; 
 		}
