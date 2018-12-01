@@ -92,6 +92,7 @@
 		  <div class="layui-btn-container">
 		    <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
 		  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
+			<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="shouquan">授权</button>
 		  </div>
 		</script>
 		          
@@ -126,12 +127,12 @@
 		   		layer.open(
 		  	      {
 	  	             type: 2,
-	  	             title: '增加组织结构',
+	  	             title: '增加员工信息',
 	  	             skin: 'layui-layer-molv',
 	  	             shadeClose: false,
 	  	             shade: 0.3,
-	  	             area: ['550px', '570px'],
-	  	             content: "addOrUpdateOrganization.html",//跳转的页面
+	  	             area: ['550px', '530px'],
+	  	             content: "../../../intoAddOrUpdateStaffPage?staffId=0",//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
 	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];
@@ -159,77 +160,50 @@
 		  				});
 	  	        	}
 	  		  	  });
-		   	}else if (layEvent === 'del') {
+		   	} else if (layEvent === 'shouquan') {
+				layer.msg("开发中。。。");
+			} else if (layEvent === 'del') {
 		   		var data = checkStatus.data;  //获取选中行数据
 		   		if (data.length > 0) {
-		   			var getIdString = "";
-		   			for (var i = 0; i < data.length; i++) {
-		   				getIdString += data[i].departmentId+",";
-		   				console.log(data[i].departmentId)
-		   			}
-		   			console.log(getIdString);
-		   			$.ajax({
-		   				type:"get",
-		   				url:"",
-		   				async:true
-		   			});
+		   			layer.confirm('确定要删除选择的员工么?', function(index){
+				  		layer.close(index);
+					  	var getIdString = "";
+			   			for (var i = 0; i < data.length; i++) {
+			   				getIdString += data[i].staffId+",";
+			   			}
+			   			$.ajax({
+			   				type:"post",
+			   				data:{
+			   					"nArray":getIdString
+			   				},
+			   				url:"../../../deleteStaffById",
+			   				async:true,
+			   				success:function(data){
+			   					if (data.code == 1) {
+			   						layui.use('layer', function(){
+				  	    				var layer = layui.layer;
+				  	    				layer.msg(""+data.msg,{icon:1});
+				  	    				table.reload('staff', {
+				  		  				  where: { //设定异步数据接口的额外参数，任意设
+				  		  				  
+				  		  				  }
+				  		  				  ,page: {
+				  		  				    curr: 1 //重新从第 1 页开始
+				  		  				  }
+				  		  				});
+				  	    			});    	
+								}else{
+									layer.msg("删除失败！",{icon:2});
+								}
+			   				}
+			   			});
+		   			})
 		   		}else{
 		   			layer.msg("请选择一个或多个选项",{icon:3});
 		   		}
 			    /*layer.alert(JSON.stringify(data));
 			    console.log(data.length);*/
-		   	}else if (layEvent === 'zhengchang') {
-	  		layer.confirm("确定要冻结“"+data.nickName+"”该用户?", function(index){
-		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-		  	      layer.close(index);
-		  	      $.ajax({
-		  	    	  url:"../../updateUserStateAdd?userId="+data.userId+"",
-		  	    	  type:"post",
-		  	    	  success:function(data){
-		  	    		if (data.code == 1) {
-		  	    			layui.use('layer', function(){
-		  	    				var layer = layui.layer;
-		  	    				layer.msg(data.msg+'', {icon: 1});
-		  	    				table.reload('usersInfo', {
-		  		  				  where: { //设定异步数据接口的额外参数，任意设
-		  		  				  
-		  		  				  }
-		  		  				  ,page: {
-		  		  				    curr: 1 //重新从第 1 页开始
-		  		  				  }
-		  		  				});
-		  	    			});    	
-						}
-		  	    	  }
-		  	      })
-		  	    });
-		  	  } else if (layEvent === 'dongjie') {
-				  //解冻
-		  	 	  layer.confirm("确定要给用户“"+data.nickName+"”取消解冻?", function(index){
-		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-		  	      layer.close(index);
-		  	      $.ajax({
-		  	    	  url:"../../updateUserStateDel?userId="+data.userId+"",
-		  	    	  type:"post",
-		  	    	  success:function(data){
-		  	    		if (data.code == 1) {
-		  	    			layui.use('layer', function(){
-		  	    				var layer = layui.layer;
-		  	    				layer.msg(data.msg+'', {icon: 1});
-		  	    				table.reload('usersInfo', {
-		  		  				  where: { //设定异步数据接口的额外参数，任意设
-		  		  				  
-		  		  				  }
-		  		  				  ,page: {
-		  		  				    curr: 1 //重新从第 1 页开始
-		  		  				  }
-		  		  				});
-		  	    			});    	
-						}
-		  	    	  }
-		  	      })
-		  	    });
-			 }
+		   	}
 		  });
 		  
 		  //监听工具条
@@ -238,19 +212,22 @@
 		  	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 		  	  var tr = obj.tr; //获得当前行 tr 的DOM对象
 		  	 if(layEvent === 'del'){ //删除
-		  	    layer.confirm('确定要删除此组织结构么?', function(index){
+		  	    layer.confirm('确定要删除此员工么?', function(index){
 		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 		  	      layer.close(index);
 		  	      //向服务端发送删除指令
 		  	      $.ajax({
-		  	    	  url:"../../delUserInfoAction?userId="+data.userId+"",
+		  	    	  url:"../../../deleteStaffById",
 		  	    	  type:"post",
+			  	      data:{
+		   				"nArray":data.staffId
+		   		      },
 		  	    	  success:function(data){
 		  	    		if (data.code == 1) {
 		  	    			layui.use('layer', function(){
 		  	    				var layer = layui.layer;
 		  	    				layer.msg(data.msg+'', {icon: 1});
-		  	    				table.reload('organization', {
+		  	    				table.reload('staff', {
 		  		  				  where: { //设定异步数据接口的额外参数，任意设
 		  		  				  
 		  		  				  }
@@ -273,12 +250,12 @@
 			  	  layer.open(
 		  	      {
 	  	             type: 2,
-	  	             title: '修改组织结构信息',
+	  	             title: '修改员工信息',
 	  	             skin: 'layui-layer-molv',
 	  	             shadeClose: false,
 	  	             shade: 0.3,
-	  	             area: ['600px', '630px'],
-	  	             content: "../../queryUserByIdAction?userId="+data.userId+"",//跳转的页面
+	  	             area: ['600px', '570px'],
+	  	             content: "../../../intoAddOrUpdateStaffPage?staffId="+data.staffId,//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
 	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];
@@ -306,7 +283,64 @@
 		  				});
 	  	        	}
 	  		  	  })
-		  	   }
+		  	   }else if (layEvent === 'zhengchang') {
+			  		layer.confirm("确定要冻结“"+data.staffName+"”该员工?", function(index){
+				  	      layer.close(index);
+				  	      $.ajax({
+				  	    	  url:"../../../updateStaffState",
+				  	    	  data:{
+				  	    		  staffId:data.staffId,
+				  	    		  state:0
+				  	    	  },
+				  	    	  type:"post",
+				  	    	  success:function(data){
+				  	    		if (data.code == 1) {
+				  	    			layui.use('layer', function(){
+				  	    				var layer = layui.layer;
+				  	    				layer.msg(data.msg+'', {icon: 1});
+				  	    				table.reload('staff', {
+				  		  				  where: { //设定异步数据接口的额外参数，任意设
+				  		  				  
+				  		  				  }
+				  		  				  ,page: {
+				  		  				    curr: 1 //重新从第 1 页开始
+				  		  				  }
+				  		  				});
+				  	    			});    	
+								}
+				  	    	  }
+				  	      })
+				  	    });
+			  	  } else if (layEvent === 'dongjie') {
+					  //解冻
+			  	 	  layer.confirm("确定要给员工“"+data.staffName+"”取消解冻?", function(index){
+			  	      layer.close(index);
+			  	      $.ajax({
+			  	    	url:"../../../updateStaffState",
+			  	    	  data:{
+			  	    		  staffId:data.staffId,
+			  	    		  state:1
+			  	    	  },
+			  	    	  type:"post",
+			  	    	  success:function(data){
+			  	    		if (data.code == 1) {
+			  	    			layui.use('layer', function(){
+			  	    				var layer = layui.layer;
+			  	    				layer.msg(data.msg+'', {icon: 1});
+			  	    				table.reload('staff', {
+			  		  				  where: { //设定异步数据接口的额外参数，任意设
+			  		  				  
+			  		  				  }
+			  		  				  ,page: {
+			  		  				    curr: 1 //重新从第 1 页开始
+			  		  				  }
+			  		  				});
+			  	    			});    	
+							}
+			  	    	  }
+			  	      })
+			  	    });
+				 }
 		  	});
 		  
 		});
