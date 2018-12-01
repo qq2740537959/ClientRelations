@@ -17,7 +17,7 @@ public interface ClientResourceMapperDao {
 	public ClientVo selectClientById(@Param("clientId")int clientId);
 
 	//客户资源信息
-	public List<Map<String, Object>> selectAllClientByPage(@Param("allotState")Integer allotState,@Param("conditionName")String conditionName,@Param("condition")String condition);
+	public List<Map<String, Object>> selectAllClientByPage(@Param("allotState")Integer allotState,@Param("conditionName")String conditionName,@Param("condition")String condition,@Param("roleId")int roleId,@Param("staffId")int staffId);
 	
 	//客户资源增加
 	public Integer addResource(ClientResource resource);
