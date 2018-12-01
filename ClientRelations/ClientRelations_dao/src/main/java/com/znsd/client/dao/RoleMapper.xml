@@ -7,7 +7,7 @@
    -->
  <mapper namespace="com.znsd.client.dao.RoleMapperDao">
  	
- 	<resultMap type="roleQueryVo" id="roleResultMap">
+ 	<resultMap type="roleQueryVo" id="roleVoResultMap">
 		<id column="role_id" property="roleId"/>
 		<result column = "role_name" property = "roleName" />
 		<result column = "department_abbreviation" property = "departmentAbbreviation" />
@@ -15,12 +15,57 @@
 		<result column = "staff_name" property = "staffName" />
 		<result column = "remarks_explain" property="remarksExplain" />
 	</resultMap>
+	
+	<resultMap type="role" id="roleResultMap">
+		<id column="role_id" property="roleId"></id>
+		<result column="role_name" property="roleName" />
+		<result column="department_id" property="departmentId" />
+		<result column="last_time" property="lastTime" />
+		<result column="operation_person" property="operationPerson" />
+		<result column="remarks_explain" property="remarksExplain" />
+	</resultMap>
  	
- 	<select id="selectRoleByPage" resultMap="roleResultMap">
+ 	<!-- 分页条件查询角色信息 -->
+ 	<select id="selectRoleByPage" resultMap="roleVoResultMap">
 		select r.role_id,r.role_name,d.department_abbreviation,r.last_time,s.staff_name,r.remarks_explain from role r,department d,staff s where r.department_id = d.department_id and r.operation_person = s.staff_id
 		<if test="roleName != null and roleName != ''">
 			and r.role_name like CONCAT('%',#{roleName},'%')
 		</if>
  	</select>
  	
+ 	<!-- 根据角色表结构查询角色信息 -->
+ 	<select id="selectRoleByField" resultMap="roleResultMap">
+ 		select r.role_id,r.role_name,r.department_id,r.last_time,r.operation_person,r.remarks_explain from role r
+ 		<where>
+ 			<if test="roleId != 0 and roleId != null">
+ 				and r.role_id = #{roleId}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 根据角色Id删除角色信息 -->
+ 	<delete id="deleteRoleById">
+ 		delete from role where role_id in
+ 		<foreach collection="array" item="role" index="no" open="(" separator="," close=")">
+ 			#{role}
+ 		</foreach>
+ 	</delete>
+ 	
+ 	<!-- 根据角色表字段动态修改信息 -->
+ 	<update id="updateRoleByField">
+ 		update role
+ 		<set>
+ 		 	<if test="roleName != null and roleName != ''">role_name = #{roleName},</if>
+ 		 	<if test="departmentId != 0 and departmentId != null">department_id = #{departmentId},</if>
+ 		 	<if test="lastTime != null">last_time = #{lastTime},</if>
+ 		 	<if test="remarksExplain != null and remarksExplain != ''">remarks_explain = #{remarksExplain},</if>
+			<if test="operationPerson != 0 and operationPerson != null">operation_person = #{operationPerson}</if>
+		</set>
+ 		where role_id  = #{roleId}
+ 	</update>
+ 	
+ 	<!-- 增加角色信息 -->
+ 	<insert id="addRole">
+ 		insert into role values(#{roleId},#{roleName},#{departmentId},#{lastTime},#{operationPerson},#{remarksExplain})
+ 	</insert>
  </mapper>

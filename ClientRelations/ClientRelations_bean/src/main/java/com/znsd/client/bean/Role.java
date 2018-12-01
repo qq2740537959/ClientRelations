@@ -12,6 +12,13 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int roleId;
 	private int departmentId;
+	@Override
+	public String toString() {
+		return "Role [roleId=" + roleId + ", departmentId=" + departmentId + ", lastTime=" + lastTime
+				+ ", operationPerson=" + operationPerson + ", remarksExplain=" + remarksExplain + ", roleName="
+				+ roleName + "]";
+	}
+
 	private Date lastTime;
 	private int operationPerson;
 	private String remarksExplain;
