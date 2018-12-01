@@ -64,6 +64,9 @@
     <label class="layui-form-label">所属部门：</label>
     <div class="layui-input-block">
    		<select name="departmentId" lay-verify="" lay-search>
+   			<c:if test="${staffInfo eq null }">
+   				<option value="">--请选择部门--</option>
+   			</c:if>
 			<c:forEach items="${departmentList }" var = "d">
 				<c:choose>
 					<c:when test="${d.departmentAbbreviation eq staffInfo.departmentAbbreviation }">

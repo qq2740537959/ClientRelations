@@ -22,7 +22,7 @@
  	
  	<!-- 分页条件查询员工信息 -->
  	<select id="selectStaffByPage" resultMap="staffResultMap">
- 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
+ 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s left join role r ON s.role_identity = r.role_id left join department d ON s.department_id = d.department_id
 		<if test="staffName != null and staffName != ''">
 			and s.staff_name like CONCAT('%',#{staffName},'%')
 		</if>
@@ -56,7 +56,7 @@
  	
  	<!-- 根据员工表字段获取数据 -->
  	<select id="selectStaffByUserName" resultMap="staffResultMap">
- 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,s.remarks_info,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s,department d,role r where s.department_id = d.department_id and s.role_identity = r.role_id
+ 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,s.remarks_info,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s left join role r ON s.role_identity = r.role_id inner join department d ON s.department_id = d.department_id
 		<if test="userName != null and userName != ''">
  			and s.user_name = #{userName}
  		</if>
