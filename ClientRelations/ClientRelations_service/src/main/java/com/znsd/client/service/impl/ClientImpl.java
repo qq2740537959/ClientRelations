@@ -31,11 +31,11 @@ public class ClientImpl implements ClientService{
 	 * 分页查询所有客户资源
 	 */
 	@Override
-	public List<Map<String, Object>> selectAllClientByPage(Integer allotState,String conditionName,String condition) {
+	public List<Map<String, Object>> selectAllClientByPage(Integer allotState,String conditionName,String condition,int roleId,int staffId) {
 		if ("clientName".equals(conditionName)) {
 			conditionName = "client_name";
 		}
-		return dao.selectAllClientByPage(allotState,conditionName,condition);
+		return dao.selectAllClientByPage(allotState,conditionName,condition,roleId,staffId);
 	}
 	@Override
 	public Integer addResource(ClientResource resource) {

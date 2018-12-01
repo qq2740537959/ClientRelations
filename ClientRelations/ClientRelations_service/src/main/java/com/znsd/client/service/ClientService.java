@@ -24,7 +24,7 @@ public interface ClientService {
 	 * @desc 查询所有客户资源
 	 *
 	 */
-	public List<Map<String, Object>> selectAllClientByPage(Integer allotState, String conditionName, String condition);
+	public List<Map<String, Object>> selectAllClientByPage(Integer allotState, String conditionName, String condition,int roleId,int staffId);
 
 	/**
 	 * 

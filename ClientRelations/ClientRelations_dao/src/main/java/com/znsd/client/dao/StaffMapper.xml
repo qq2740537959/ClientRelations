@@ -40,6 +40,7 @@
 		<result column = "user_name" property="userName"></result>
 		<result column = "password" property="password"></result>
 		<result column = "last_time" property = "lastTime" />
+		<result column="role_identity" property="roleId"/>
 		<result column = "contact_mode" property = "contactMode"></result>
 		<result column = "department_abbreviation" property = "departmentAbbreviation"></result>
 	</resultMap>

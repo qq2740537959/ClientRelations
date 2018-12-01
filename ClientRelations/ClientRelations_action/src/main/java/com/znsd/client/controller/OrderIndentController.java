@@ -94,9 +94,9 @@ public class OrderIndentController{
 			paramsMap.put(key, requestMap.get(key)[0]);
 		}
 
-		System.out.println("----------支付宝响应数据-----------");
+		/*System.out.println("----------支付宝响应数据-----------");
 		System.out.println(JSON.toJSONString(requestMap));
-		System.out.println(JSON.toJSONString(paramsMap));
+		System.out.println(JSON.toJSONString(paramsMap));*/
 		
 		boolean signVerified = false;
 		try {
@@ -105,7 +105,6 @@ public class OrderIndentController{
 			e.printStackTrace();
 			out.write("error");
 		}
-		System.out.println("signVerified:"+signVerified+"----"+paramsMap.get("out_trade_no"));
 		String order_number = order_number = paramsMap.get("out_trade_no");
 		if (signVerified==false) {
 			// 1. 订单号是否是系统订单号

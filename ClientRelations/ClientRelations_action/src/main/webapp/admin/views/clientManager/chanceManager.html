@@ -50,6 +50,7 @@
 				<!--<h2 class="title">客户资源管理</h2> class="layui-breadcrumb"-->
 			</div>
 		</div>
+		<input type="hidden" class="roleId">
 		<div class="layui-row">
 			<div class="layui-card">
 				<div class="layui-card-body">
@@ -85,11 +86,14 @@
 						<script type="text/html" id="barDemo">
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="edit">修改</a>
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
-							{{#  if(d.allotState == '未分配'){ }}
+							{{#  if($('.roleId').val() != 4){ }}
+								{{#  if(d.allotState == '未分配'){ }}
     							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
- 							{{#  } else { }}
-								<a class="layui-btn layui-btn-xs  layui-btn-disabled" lay-event="">分配</a>
- 							{{#  } }}
+ 								{{#  } else { }}
+									<a class="layui-btn layui-btn-xs  layui-btn-disabled" lay-event="">分配</a>
+ 								{{#  } }}
+							{{#  } }}
+							
 	 					</script>
 						<script type="text/html" id="toolbarDemo" class="layui-table">
 						  <div class="layui-btn-container">
@@ -226,6 +230,17 @@
 		</div>
 	</div>
 	<script src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			type:"post",
+			url:"/ClientRelations_action/getUserInfos",
+			success:function(t){
+				var user  = t.user;
+				$(".roleId").val(user.roleId);
+				console.log(user.roleId);
+			}
+		})
+	</script>
 	<script>
 	$(function(){ 
 	      dataTable();

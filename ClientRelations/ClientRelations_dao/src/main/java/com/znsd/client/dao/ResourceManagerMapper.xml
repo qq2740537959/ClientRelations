@@ -30,19 +30,32 @@
 	</resultMap>
 	<!-- 查询所有客户资源信息 -->
 	<select id="selectAllClientByPage" resultMap="clientResourceMap">
-		SELECT 
-		c.client_id,c.chance_id,c.client_name,c.sex,DATE_FORMAT(c.birthday,'%Y-%m-%d') as birthday,c.client_type,c.state,c.phone,c.work_phone,c.email,c.family_phone,c.contact_address,c.remark,c.allot_state,DATE_FORMAT(c.in_time,'%Y-%m-%d') as in_time,s.staff_name 
+		SELECT c.client_id,c.chance_id,c.client_name,c.sex,DATE_FORMAT(c.birthday,'%Y-%m-%d') as birthday,c.client_type,c.state,c.phone,c.work_phone,c.email,c.family_phone,c.contact_address,c.remark,c.allot_state,DATE_FORMAT(c.in_time,'%Y-%m-%d') as in_time,s.staff_name 
 		from client_resource c INNER JOIN staff s ON c.entry_person = s.staff_id
 		<where>
 			<choose>
 				<when test="allotState != null and allotState gt 0">
 					c.allot_state = #{allotState}
-					<if test="conditionName != null and conditionName != '' and condition != null and condition != ''">
-						and c.${conditionName} = #{condition}
-					</if>
+					<choose>
+						<when test="conditionName != null and conditionName != '' and condition != null and condition != ''">
+							and c.${conditionName} = #{condition}
+							<if test="roleId == 4">
+								and s.staff_id = #{staffId}
+							</if>
+						</when>
+						<when test="roleId == 4">
+							and s.staff_id = #{staffId}
+						</when>
+					</choose>
 				</when>
 				<when test="conditionName != null and conditionName != '' and condition != null and condition != ''">
 					c.${conditionName} = #{condition}
+					<if test="roleId == 4">
+						and s.staff_id = #{staffId}
+					</if>
+				</when>
+				<when test="roleId == 4">
+					and s.staff_id = #{staffId}
 				</when>
 			</choose>
 		</where>
