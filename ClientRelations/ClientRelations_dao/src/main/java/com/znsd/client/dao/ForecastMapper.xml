@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.ForecastDao">
+ 	
+ 	<resultMap type="java.util.HashMap" id="sellPlanMap">
+		
+	</resultMap>
+ 	
+ 	<insert id="addForecast" parameterType="com.znsd.client.bean.Forecast">
+ 		insert into sell_forecast(title,branch_id,forecast_month,found_time,operator_id,sector_scale,client_number,forecast_content) values (#{title},#{branchId},#{forecastMonth},now(),#{operatorId},#{sectorScale},#{clientNumber},#{forecastContent})
+ 	</insert>
+	<select id="selectDateClientNumber" >
+ 		select count(c.staff_id) as clientNumber from staff as s  inner JOIN client_resource as c on s.staff_id = c.staff_id where s.department_id = #{departmentId} and DATE_FORMAT(in_time,'%Y-%m') &lt;= now()
+ 	</select>
+	<select id="selectDateStaffNumber">
+		select count(staff_id) as staffNumber from staff where department_id = 2 and DATE_FORMAT(create_time,'%Y-%m') &lt;= now()
+ 	</select>
+ 	
+ </mapper>

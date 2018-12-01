@@ -35,16 +35,16 @@
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
 						</div>
-						<button class="layui-btn layui-btn-blue add_but">
-							<i class="layui-icon">&#xe654;</i>预测
-						</button>
+						
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
 						  <div class="layui-btn-container">
-						  	
+						  	<button class="layui-btn  layui-btn-sm layui-btn-blue" lay-event="add" >
+								预测
+							</button>
 						  </div>
 						</script>
 					</div>
@@ -59,17 +59,16 @@ layui.use('table', function(){
   
   table.render({
     elem: '#test'
-   
     ,toolbar: '#toolbarDemo'
     ,cols: [[
       {field:'forecastId', width:80, title: 'ID', sort: true}
-      ,{field:'title', width:200, title: '预测结果'}
+      ,{field:'title', width:210, title: '预测结果'}
       ,{field:'planMoth', width:120, title: '预测月份'}
-      ,{field:'state', width:100, title: '类型'}
-      ,{field:'lastTime',width:170, title: '生成时间', minWidth: 100,sort: true}
-      ,{field:'operatorName', width:85, title: '操作人'}
+      ,{field:'state', width:120, title: '类型'}
+      ,{field:'department', width:190, title: '预测目标'}
+      ,{field:'lastTime',width:205, title: '生成时间', minWidth: 100,sort: true}
+      ,{field:'operatorName', width:110, title: '操作人'}
       ,{width:65,title:"操作",toolbar:"#barDemo"}
-      
     ]]
     ,data: [{//测试使用
 		"planId": "10001"
@@ -79,7 +78,22 @@ layui.use('table', function(){
 	}]
     ,page: true
   });
-  
+table.on('toolbar(test)', function(obj){
+   var checkStatus = table.checkStatus(obj.config.id)
+   ,data = checkStatus.data; //获取选中行状态
+   switch(obj.event){
+     case 'add':
+   	  layer.open({
+ 			type:2,
+ 			content:"addAorecast.html",
+ 			area:['480px', '387px'],
+ 			shade: [0.8, '#393D49'],
+ 			move:false,
+ 			shadeClose:true,
+ 		});
+     break;
+   };
+});
   
 	//监听工具条
 	table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -87,7 +101,7 @@ layui.use('table', function(){
 	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 	   	if(layEvent == 'see') { //查看
-	
+	   		addAorecast.html
 	   	} 
 	});
 
