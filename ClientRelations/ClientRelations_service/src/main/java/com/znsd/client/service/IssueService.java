@@ -33,7 +33,7 @@ public interface IssueService {
 		    * @throws
 		    */
 		    
-		List<Issue> issueQuery();
+		List<Issue> issueQuery(Issue issue);
 
 			
 			    /**

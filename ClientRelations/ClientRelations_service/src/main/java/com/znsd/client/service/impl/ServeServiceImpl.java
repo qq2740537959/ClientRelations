@@ -50,8 +50,8 @@ public class ServeServiceImpl implements ServeService{
 
 
 	@Override
-	public List<Serve> serveQuery() {
-		return serveDao.serveQuery();
+	public List<Serve> serveQuery(Serve serve) {
+		return serveDao.serveQuery(serve);
 	}
 
 
@@ -112,6 +112,67 @@ public class ServeServiceImpl implements ServeService{
 	public void serveUpdate(Serve serve) {
 		// TODO Auto-generated method stub
 		serveDao.serveUpdate(serve);
+	}
+
+
+	
+	    /* (非 Javadoc)
+	    * 
+	    * 
+	    * @param serve
+	    * @see com.znsd.client.service.ServeService#servePigeonhole(com.znsd.client.bean.Serve)
+	    */
+	    
+	@Override
+	public void servePigeonhole(Serve serve) {
+		// TODO Auto-generated method stub
+		serveDao.servePigeonhole(serve);
+	}
+
+
+	
+	    /* (非 Javadoc)
+	    * 
+	    * 
+	    * @param serve
+	    * @see com.znsd.client.service.ServeService#serveDispose(com.znsd.client.bean.Serve)
+	    */
+	    
+	@Override
+	public void serveDispose(Serve serve) {
+		// TODO Auto-generated method stub
+		serveDao.serveDispose(serve);
+	}
+
+
+	
+	    /* (非 Javadoc)
+	    * 
+	    * 
+	    * @param serve
+	    * @return
+	    * @see com.znsd.client.service.ServeService#serveStateQuery(com.znsd.client.bean.Serve)
+	    */
+	    
+	@Override
+	public List<Serve> serveStateQuery(Serve serve) {
+		// TODO Auto-generated method stub
+		return serveDao.serveStateQuery(serve);
+	}
+
+
+	
+	    /* (非 Javadoc)
+	    * 
+	    * 
+	    * @param serve
+	    * @see com.znsd.client.service.ServeService#serveAllocation(com.znsd.client.bean.Serve)
+	    */
+	    
+	@Override
+	public void serveAllocation(Serve serve) {
+		// TODO Auto-generated method stub
+		serveDao.serveAllocation(serve);
 	}
 
 

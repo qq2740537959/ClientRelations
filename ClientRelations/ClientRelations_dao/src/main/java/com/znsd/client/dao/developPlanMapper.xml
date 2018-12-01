@@ -60,6 +60,9 @@
 	</select>
 	
 	<select id="selectPlanInClientName" resultMap="clientNameMap">
-		select client_id,client_name from client_resource where client_id NOT in(select client_id from develop_plan)
+		select client_id,client_name from client_resource c INNER JOIN staff s ON c.staff_id = s.staff_id where c.client_id NOT in(select client_id from develop_plan)
+		<if test="roleId == 4">
+			and s.staff_id = #{staffId}
+		</if>
 	</select>
 </mapper>

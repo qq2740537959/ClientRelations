@@ -73,5 +73,5 @@ public interface DevelopPlanDao {
 	* @desc		客户发展计划用的 查询客户姓名和id
 	*
 	 */
-	public List<Map<String, Object>> selectPlanInClientName();
+	public List<Map<String, Object>> selectPlanInClientName(@Param("roleId")int roleId,@Param("staffId")int staffId);
 }

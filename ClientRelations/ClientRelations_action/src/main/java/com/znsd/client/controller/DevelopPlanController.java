@@ -104,8 +104,8 @@ public class DevelopPlanController {
 	
 	@RequestMapping("/selectPlanNameInfo")
 	@ResponseBody
-	public Map<String, Object> selectPlanInClientName(){
-		List<Map<String, Object>> list = service.selectPlanInClientName();
+	public Map<String, Object> selectPlanInClientName(HttpServletRequest request){
+		List<Map<String, Object>> list = service.selectPlanInClientName(getUser(request).getRoleId(),getUser(request).getStaffId());
 		model.put("data", list);
 		return model;
 	}

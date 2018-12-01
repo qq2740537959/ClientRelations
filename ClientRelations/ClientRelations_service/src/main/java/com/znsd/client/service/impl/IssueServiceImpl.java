@@ -50,9 +50,9 @@ public class IssueServiceImpl implements IssueService{
 
 
 	@Override
-	public List<Issue> issueQuery() {
+	public List<Issue> issueQuery(Issue issue) {
 		// TODO Auto-generated method stub
-		return issueDao.issueQuery();
+		return issueDao.issueQuery(issue);
 	}
 
 

@@ -21,6 +21,13 @@
   	
   	<select id="issueQuery"  resultMap="IssueMap">
   		select * from issue where delete_flag=1
+  		<if test="title != null and title != ''">
+			and title LIKE '%${title}%'
+		</if>
+		<if test="issueType != null and issueType != ''">
+			and issue_Type LIKE '%${issueType}%'
+		</if>
+		order by id desc
   	</select>
 	
 	<insert id="issueAdd">

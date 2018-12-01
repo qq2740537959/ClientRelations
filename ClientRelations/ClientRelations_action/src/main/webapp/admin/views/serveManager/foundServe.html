@@ -83,23 +83,50 @@
 				<div class="layui-card-body">
 					<div class="form-box">
 						<div class="layui-form layui-form-item">
-							<div class="demoTable">
-								<div class="layui-form-mid">服务名称：</div>
-								<div class="layui-input-inline">
-							       <input type="text" id="demoReload" class="layui-input staffName">   
-							    </div>
-								<button class="layui-btn layui-btn-blue refer_but">查询</button>
-								<!-- <button class="layui-btn layui-btn-blue add_but">
-									<i class="layui-icon">&#xe654;</i>增加&nbsp;&nbsp;&nbsp;&nbsp;
-								</button> -->
-							</div>
-						</div>
+							<form class="selectAllUserAction">
+	                            <div class="layui-inline">
+	                            	<div class="layui-form-mid">服务名称：</div>
+									<div class="layui-input-inline">
+								       <input type="text" name="serveNames" class="layui-input serveNames">   
+								    </div>
+	                            	<div class="layui-form-mid">服务类型:</div>
+	                                <div class="layui-input-inline" style="width: 100px;">
+	                                    <select name="serveType" class="serveType">
+	                                        <option value="">不限</option>
+									        <option value="咨询服务">咨询服务</option>
+									        <option value="投诉服务">投诉服务</option>
+									        <option value="售前服务">售前服务</option>
+									        <option value="售后服务">售后服务</option>
+	                                    </select>
+	                                </div>
+	                                <div class="layui-form-mid">服务状态:</div>
+	                               	<div class="layui-input-inline" style="width: 100px;">
+	                                    <select name="serveState" class="serveState">
+	                                        <option value="">不限</option>
+									        <option value="新创建">新创建</option>
+									        <option value="已提交">已提交</option>
+									        <option value="已分配">已分配</option>
+									        <option value="已处理">已处理</option>
+									        <option value="已反馈">已反馈</option>
+	                                    </select>
+	                                </div>
+	                                <button type="button" class="layui-btn layui-btn-blue typesearch" id="qqq">查询</button>
+	                            </div>
+	                        </form>
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
  							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="delete">删除</a>
- 							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="sub">提交</a>
+ 							{{#  if(d.serveState == "新创建"){ }}
+								<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>	
+							{{#  } else { }}
+								<a class="layui-btn layui-btn-xs   layui-btn-disabled" lay-event="">修改</a>
+						    {{#  } }}
+							{{#  if(d.serveState == "新创建"){ }}
+								<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="sub">提交</a>	
+							{{#  } else { }}
+								<a class="layui-btn layui-btn-xs   layui-btn-disabled" lay-event="">提交</a>
+						    {{#  } }}
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
 						  <div class="layui-btn-container">
@@ -149,14 +176,13 @@ layui.use('form', function(){
 	})	
 });
 
-layui.use(['table'], function(){
+layui.use('table', function(){
   var table = layui.table;
   var form = layui.form;
   var addButton = '<button class=\"layui-btn layui-btn-xs add_but\"\'>新增</button>';
   table.render({
      elem: '#test'
     ,url:'../../../serveQuery'
-    ,data:{state:1}
   	,id:'userReload'
     ,cols: [[
        {type: 'numbers', fixed: 'left'}
@@ -166,11 +192,11 @@ layui.use(['table'], function(){
       ,{field:'serveState', width:120, title: '状态'}     
       ,{field:'endTime',width:185, title: '最后操作时间',templet:'<div>{{ Format(d.endTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
       ,{field:'operator', width:100, title: '操作人'}
-      ,{field:'pendingPeople', width:95, title: '待处理人'}
+      ,{field:'pendingPeople', width:106, title: '待处理人'}
       ,{field:'createBy',title: '创建人',hide:true}
       ,{field:'createTime', title: '创建时间',templet:'<div>{{ Format(d.createTime,"yyyy-MM-dd hh:mm:ss")}}</div>',hide:true}
       //,{width:210,title:"操作",toolbar:"#barDemo"}
-      ,{ fixed: 'right', title: addButton, width: 210, align: 'center', toolbar: '#barDemo' }
+      ,{ fixed: 'right', title: addButton, width: 230, align: 'center', toolbar: '#barDemo' }
     ]]
     ,page: true
   });
@@ -244,6 +270,23 @@ layui.use(['table'], function(){
 	   		});
 	   	}
 	});
+	
+	$('.typesearch').on('click', function(){
+  		layui.use('table', function(){
+  		  	var table = layui.table;
+  		 	table.reload('userReload', {
+			  where: { //设定异步数据接口的额外参数，任意设
+				  'serveName':$(".serveNames").val(),
+				  'serveType':$(".serveType").val(),
+				  'serveState':$(".serveState").val()
+			  }
+			  ,page: {
+			    curr: 1 //重新从第 1 页开始
+			  }
+			});
+  		});
+  		return false;
+     }); 
 	
 	$(".add_but").click(function(){
 		layer.open({

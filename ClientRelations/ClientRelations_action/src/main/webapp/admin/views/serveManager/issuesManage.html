@@ -72,11 +72,25 @@
 					<div class="form-box">
 						<div class="layui-form layui-form-item">
 							<div class="layui-inline">
-								<div class="layui-form-mid">标题：</div>
-								<div class="layui-input-inline">
-							       <input type="text" name="" class="layui-input staffName">   
-							    </div>
-								<button class="layui-btn layui-btn-blue refer_but">查询</button>
+								<form class="selectAllUserAction">
+	                            <div class="layui-inline">
+	                            	<div class="layui-form-mid">常见问题标题：</div>
+									<div class="layui-input-inline">
+								       <input type="text" name="title" class="layui-input titleSub">   
+								    </div>
+	                            	<div class="layui-form-mid">问题类型:</div>
+	                                <div class="layui-input-inline" style="width: 100px;">
+	                                    <select name="issueType" class="issueTypeSub">
+	                                        <option value="">不限</option>
+									        <option value="咨询问题">咨询问题</option>
+									        <option value="投诉问题">投诉问题</option>
+									        <option value="售前问题">售前问题</option>
+									        <option value="售后问题">售后问题</option>
+	                                    </select>
+	                                </div>
+	                                <button type="button" class="layui-btn layui-btn-blue typesearch" id="qqq">查询</button>
+	                            </div>
+	                        </form>
 							</div>
 						</div>
 						<!-- <button class="layui-btn layui-btn-blue add_but">
@@ -149,10 +163,10 @@ layui.use(['table'], function(){
        {type: 'numbers', fixed: 'left'}
       ,{field:'id', width:80, title: 'ID', hide: true}
       ,{field:'title', width:200, title: '标题'}
-      ,{field:'issueType', width:120, title: '类型'}
-      ,{field:'createBy', width:120, title: '创建人'}
-      ,{field:'endTime',width:170, title: '最后操作时间', minWidth: 100,templet:'<div>{{ Format(d.endTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
-      ,{field:'updateTime',width:170, title: '最后更新时间', minWidth: 100,templet:'<div>{{ Format(d.updateTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
+      ,{field:'issueType', width:127, title: '类型'}
+      ,{field:'createBy', width:125, title: '创建人'}
+      ,{field:'endTime',width:190, title: '最后操作时间', minWidth: 100,templet:'<div>{{ Format(d.endTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
+      ,{field:'updateTime',width:190, title: '最后更新时间', minWidth: 100,templet:'<div>{{ Format(d.updateTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
       ,{ fixed: 'right', title: addButton, width: 210, align: 'center', toolbar: '#barDemo' }
     ]]
     ,page: true
@@ -204,6 +218,24 @@ layui.use(['table'], function(){
 	   	}
 	});
 
+	
+	$('.typesearch').on('click', function(){
+  		layui.use('table', function(){
+  		  	var table = layui.table;
+  		 	table.reload('userReload', {
+			  where: { //设定异步数据接口的额外参数，任意设
+				  'title':$(".titleSub").val(),
+				  'issueType':$(".issueTypeSub").val()
+			  }
+			  ,page: {
+			    curr: 1 //重新从第 1 页开始
+			  }
+			});
+  		});
+  		return false;
+     });
+	
+	
 	$(".add_but").click(function(){
 		layer.open({
 			type: 2,
