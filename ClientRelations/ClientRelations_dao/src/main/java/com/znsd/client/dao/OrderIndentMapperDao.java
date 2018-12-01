@@ -18,7 +18,7 @@ public interface OrderIndentMapperDao {
 	public int updateOrderStatus(@Param("status") String status,@Param("orderCode") String orderCode);
 	
 	//修改订单状态2
-	public int updateOrderByIdStatus(@Param("status") String status,@Param("id") String id);
+	public int updateOrderByIdesStatus(@Param("status") String status,@Param("id") String id);
 	
 	//添加订单记录
 	public int addOrder(OrderIndent orderIndent);

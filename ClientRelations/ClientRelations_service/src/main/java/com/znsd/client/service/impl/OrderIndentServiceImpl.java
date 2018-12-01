@@ -41,9 +41,9 @@ public class OrderIndentServiceImpl implements OrderIndentService{
 	}
 
 	@Override
-	public int updateOrderByIdStatus(String status, String id) {
+	public int updateOrderByIdesStatus(String status, String id) {
 		//修改订单状态2
-		return dao.updateOrderByIdStatus(status, id);
+		return dao.updateOrderByIdesStatus(status, id);
 	}
 
 }

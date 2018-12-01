@@ -30,10 +30,10 @@ import com.znsd.client.vo.OrderStatisticsVo;
 public class OrderIndentController{
 	@Autowired
 	private OrderIndentService orderIndentService;
-	@RequestMapping("/updateOrderByIdStatus")
-	public @ResponseBody String updateOrderByIdStatus(@RequestParam(value="status")String status,@RequestParam("id") String id) {
+	@RequestMapping("/updateOrderByIdesStatus")
+	public @ResponseBody String updateOrderByIdesStatus(@RequestParam(value="status")String status,@RequestParam("id") String id) {
 		//修改订单状态
-		int result = orderIndentService.updateOrderByIdStatus(status, id);
+		int result = orderIndentService.updateOrderByIdesStatus(status, id);
 		return "success";
 	}
 	@RequestMapping("/selectOrder")

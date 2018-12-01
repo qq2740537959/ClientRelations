@@ -136,7 +136,7 @@
 	<script>
 		function OrderByIdStatus(obj,status,id){
 			 $.ajax({
-				  url:'../../../updateOrderByIdStatus?status='+status+"&id="+id,
+				  url:'../../../updateOrderByIdesStatus?status='+status+"&id="+id,
 				  type:'post',
 				  dataType:'json',
 				  success:function(data){

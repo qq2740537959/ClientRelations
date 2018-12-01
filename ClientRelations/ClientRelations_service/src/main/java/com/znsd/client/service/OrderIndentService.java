@@ -15,7 +15,7 @@ public interface OrderIndentService {
 	public int updateOrderStatus(String status,String orderCode);
 	
 	//修改订单状态2
-	public int updateOrderByIdStatus(String status,String id);
+	public int updateOrderByIdesStatus(String status,String id);
 	
 	//添加订单记录
 	public int addOrder(OrderIndent orderIndent);

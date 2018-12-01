@@ -40,13 +40,13 @@
 						</button>
 						<table class="layui-hide" id="test" lay-filter="test"></table>
  						<script type="text/html" id="barDemo">
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
-							<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
+							
 	 					</script>
 						<script type="text/html" id="toolbarDemo">
 						  <div class="layui-btn-container">
-						  	
+						  		<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="update">修改</a>
+								<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="see">查看</a>
+								<a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="allot">分配</a>
 						  </div>
 						</script>
 					</div>
@@ -60,46 +60,47 @@ layui.use(['table'], function(){
   var table = layui.table;
   table.render({
     elem: '#test'
-   
+   	,url: '/ClientRelations_action/selectClientSurvey'
     ,toolbar: '#toolbarDemo'
     ,cols: [[
-      {field:'clientId', width:80, title: '', sort: true}
-      ,{field:'add', width:100, title: '' ,type: 'radio'}
-      ,{field:'clientName', width:200, title: '客户姓名', align: 'center'}
+      {field:'surveyId', width:80, title: '', sort: true}
+      ,{type: 'radio'}
+      ,{field:'clientName', width:200, title: '客户姓名'}
       ,{field:'clientType',width:160, title: '客户类型', minWidth: 100}
-      ,{field:'state', width:200, title: '调查时间'}
-      ,{field:'allotState', width:120, title: '质量满意度'}
-      ,{field:'inTime', width:120, title: '服务满意度'}
-      ,{field:'inTime', width:120, title: '总体满意度'}
-      ,{width:200,title:"操作",toolbar:"#barDemo"}
+      ,{field:'surveyTime', width:0, title: '调查时间'}
+      ,{field:'qualityPleased', width:120, title: '质量满意度'}
+      ,{field:'servePleased', width:120, title: '服务满意度'}
+      ,{field:'totalPleased', width:120, title: '总体满意度'}
     ]]
-    ,data: [{//测试使用
-		"clientId": "10001"
-		,"add": ""
-		,"clientName": "大金牙"
-		,"sex": "男"
-		,"clientType": "金卡客户"
-		,"state": "4150"
-		,"allotState": "13223.0"
-		,"entryPerson": "赵云"
-	}]
+  	,align: 'center'
     ,page: true
+    ,limits: [2,5,8,10]
   });
   
-	//监听工具条
-	table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+	//头工具栏工具
+	table.on('toolbar(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 	   	var data = obj.data; //获得当前行数据
 	   	console.log(data);
 	   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 	   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 	   	if(layEvent == 'see') { //查看
-	
+			
 	   	} else if(layEvent === 'edit') { //修改
 			
 	   	}else if(layEvent == 'allot'){//分配
 	   		
 	   	}
 	});
+	
+	$(".refer_but").on('click',function(){
+		table.reload('test',{
+	        method:'post',
+	        where:{
+	        	staffName: $(".staffName").val()
+	        }
+	    });
+	});
+	
 	$(".add_but").click(function(){
 		
 	})
