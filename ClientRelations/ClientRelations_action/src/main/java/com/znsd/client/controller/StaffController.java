@@ -233,7 +233,7 @@ public class StaffController {
 	@RequestMapping("/intoAddOrUpdateStaffPage")
 	public String intoAddOrUpdateStaffPage(Staff staff,ModelMap map) {
 		if (staff.getStaffId() != 0) {
-			map.put("staff", staffBiz.selectStaffByUserName(staff));
+			map.put("staffInfo", staffBiz.selectStaffByUserName(staff));
 		}
 		map.put("roleList", roleBiz.selectRoleByPage(null));
 		map.put("departmentList", departmentBiz.selectDepartmentByPage(null));
@@ -244,17 +244,18 @@ public class StaffController {
 	@RequestMapping("/addOrUpdateStaff")
 	@ResponseBody
 	public Map<String, Object> addOrUpdateStaff(Staff staff,HttpSession session) {
+		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
 		Map<String, Object> map = new HashMap<>();
 		if (staff.getStaffId() != 0) {
 			staff.setLastTime(new Date());
+			staff.setOperationPerson(staffLoginVo.getStaffId());
 			staffBiz.updateStaffUserName(staff);
 			map.put("msg", "修改成功！");
 		}else {
-			StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
 			String nameHeadPy = PinYinHeadUtil.getPinYinHeadChar(staff.getStaffName());
 			staff.setUserName("admin"+nameHeadPy);
 			staff.setPassword("admin"+nameHeadPy);
-			staff.setLastTime(new Date());
+			staff.setCreateTime(new Date());
 			staff.setOperationPerson(staffLoginVo.getStaffId());
 			staffBiz.addStaff(staff);
 			map.put("msg", "增加成功！");

@@ -73,12 +73,15 @@
  		<set>
  		 	<if test="remarksInfo == null or remarksInfo != null">remarks_info = #{remarksInfo},</if>
  			<if test="departmentId != null and departmentId != 0">department_id = #{departmentId},</if>
- 			<if test="state != null">state = #{state},</if>
+ 			<if test="state != null and staffName != null and staffName != ''">state = #{state},</if>
  			<if test="sex != null and sex != ''">sex = #{sex},</if>
  			<if test="staffName != null and staffName != ''">staff_name = #{staffName},</if>
 			<if test="contactMode != null and contactMode != ''">contact_mode = #{contactMode},</if>
 			<if test="userName != null and userName != ''">user_name = #{userName},</if>	
-			<if test="password != null and password != ''">password = #{password}</if>
+			<if test="password != null and password != ''">password = #{password},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="lastTime != null">last_time = #{lastTime},</if>
+			<if test="operationPerson != null and operationPerson != 0">operation_person = #{operationPerson}</if>
 		</set>
  		where staff_id  = #{staffId}
  	</update>
@@ -98,6 +101,6 @@
  	
  	<!-- 增加员工信息 -->
 	<insert id="addStaff">
-		insert into staff values(#{staffId},#{staffName},#{sex},#{state},#{userName},#{password},#{contactMode},#{departmentId},#{roleIdentity},#{remarksInfo},#{lastTime},#{operationPerson})
+		insert into staff values(#{staffId},#{staffName},#{sex},#{state},#{userName},#{password},#{contactMode},#{departmentId},#{roleIdentity},#{remarksInfo},#{createTime},#{lastTime},#{operationPerson})
 	</insert>
  </mapper>

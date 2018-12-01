@@ -13,16 +13,48 @@
 		<result column = "department_fullname" property = "departmentFullname" />
 		<result column = "department_outline" property = "departmentOutline" />
 		<result column = "remarks_info" property = "remarksInfo" />
+		<result column = "parent_id" property = "parentId"></result>
 		<result column = "operation_person" property="operationPerson" />
 		<result column = "staff_name" property = "operationPersonName" />
 		<result column = "last_time" property = "lastTime" />
 	</resultMap>
  	
+ 	<!-- 分页条件查询部门 -->
  	<select id="selectDepartmentByPage" resultMap="departmentResultMap">
- 		select d.department_id,d.department_abbreviation,d.department_fullname,d.department_outline,d.remarks_info,d.operation_person,s.staff_name,d.last_time from department d,staff s where d.operation_person = s.staff_id
+ 		select d.department_id,d.parent_id,d.department_abbreviation,d.department_fullname,d.department_outline,d.remarks_info,d.operation_person,s.staff_name,d.last_time from department d,staff s where d.operation_person = s.staff_id
+		<if test="departmentId != null and departmentId != 0">
+			and d.department_id = #{departmentId}
+		</if>
 		<if test="departmentFullname != null and departmentFullname != ''">
 			and d.department_fullname like CONCAT('%',#{departmentFullname},'%')
 		</if>
  	</select>
  	
+ 	<!-- 根据部门Id删除部门 -->
+ 	<delete id="deleteDepartmentById" parameterType="java.lang.String">
+ 		delete from department where department_id in
+ 		<foreach collection="array" item="department" index="no" open="(" separator="," close=")">
+ 			#{department}
+ 		</foreach>
+ 	</delete>
+ 	
+ 	<!-- 增加部门信息 -->
+	<insert id="addDepartment">
+		insert into department values(#{departmentId},#{departmentAbbreviation},#{departmentFullname},#{parentId},#{departmentOutline},#{remarksInfo},#{lastTime},#{operationPerson})
+	</insert>
+	
+	<!-- 根据部门表字段动态修改信息 -->
+ 	<update id="updateDepartmentByField">
+ 		update department
+ 		<set>
+ 		 	<if test="departmentAbbreviation != null and departmentAbbreviation != ''">department_abbreviation = #{departmentAbbreviation},</if>
+ 		 	<if test="departmentFullname != null and departmentFullname != ''">department_fullname = #{departmentFullname},</if>
+ 		 	<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+ 		 	<if test="departmentOutline != null and departmentOutline != ''">department_outline = #{departmentOutline},</if>
+ 		 	<if test="remarksInfo != null and remarksInfo != ''">remarks_info = #{remarksInfo},</if>
+ 		 	<if test="lastTime != null">last_time = #{lastTime},</if>
+			<if test="operationPerson != null and operationPerson != 0">operation_person = #{operationPerson}</if>
+		</set>
+ 		where department_id = #{departmentId}
+ 	</update>
  </mapper>
