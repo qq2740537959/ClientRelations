@@ -8,17 +8,41 @@
  <mapper namespace="com.znsd.client.dao.ForecastDao">
  	
  	<resultMap type="java.util.HashMap" id="sellPlanMap">
-		
+		<id property="forecast_id" column="forecastId" />
+		<result property="title" column="title"/>
+		<result property="branchName" column="branchName"/>
+		<result property="lastTime" column="lastTime"/>
+		<result property="forecastMonth" column="forecastMonth"/>
+		<result property="foundTime" column="foundTime"/>
+		<result property="staffName" column="staffName"/>
+		<result property="sector_scale" column="sectorScale"/>
+		<result property="client_number" column="clientNumber"/>
+		<result property="forecast_content" column="forecastContent"/>
+		<result property="type_name" column="typeName"/>
 	</resultMap>
- 	
+ 	<select id="selectForecastByPage" resultMap="sellPlanMap">
+ 		select forecast_id,title,forecast_content,typeName 
+ 		,DATE_FORMAT(last_time,'%Y-%m-%d %H:%i:%s') as lastTime,
+ 		DATE_FORMAT(forecast_month,'%Y-%m') as forecastMonth,
+ 		DATE_FORMAT(found_time,'%Y-%m-%d %H:%i:%s') as foundTime,
+ 		(select department_abbreviation from department as d where d.department_id = s.brance_id) as branchName,
+ 		(select staff_name from staff as st where st.staff_id = s.operator_id) as staffName
+ 		from sell_forecast as s 
+ 		<if test="startTime == null || startTime == ''">
+ 			where forecastMonth like "%${startTime}%"
+  		</if>
+ 	</select>
+	
+	<!-- <select id="referForecast">
+		
+	</select> -->
  	<insert id="addForecast" parameterType="com.znsd.client.bean.Forecast">
  		insert into sell_forecast(title,branch_id,forecast_month,found_time,operator_id,sector_scale,client_number,forecast_content) values (#{title},#{branchId},#{forecastMonth},now(),#{operatorId},#{sectorScale},#{clientNumber},#{forecastContent})
  	</insert>
-	<select id="selectDateClientNumber" >
- 		select count(c.staff_id) as clientNumber from staff as s  inner JOIN client_resource as c on s.staff_id = c.staff_id where s.department_id = #{departmentId} and DATE_FORMAT(in_time,'%Y-%m') &lt;= now()
+	<select id="selectDateClientNumber" resultType="java.lang.Integer">
+ 		select count(c.staff_id) as clientNumber from staff as s  inner JOIN client_resource as c on s.staff_id = c.staff_id where s.department_id = #{branceId} and DATE_FORMAT(in_time,'%Y-%m') &lt;= #{referDate}
  	</select>
-	<select id="selectDateStaffNumber">
-		select count(staff_id) as staffNumber from staff where department_id = 2 and DATE_FORMAT(create_time,'%Y-%m') &lt;= now()
+	<select id="selectDateStaffNumber" resultType="java.lang.Integer">
+		select count(staff_id) as staffNumber from staff where department_id = #{branceId} and DATE_FORMAT(create_time,'%Y-%m') &lt;= #{referDate}
  	</select>
- 	
  </mapper>

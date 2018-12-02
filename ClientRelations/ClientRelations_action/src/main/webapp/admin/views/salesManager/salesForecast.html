@@ -30,7 +30,7 @@
 							<div class="layui-inline">
 								<div class="layui-form-mid">月份：</div>
 								<div class="layui-input-inline">
-							        <input type="text" class="layui-input" id="test1" placeholder="">
+							        <input type="text" class="layui-input startTime" id="test1" placeholder="">
 							    </div>
 								<button class="layui-btn layui-btn-blue refer_but">查询</button>
 							</div>
@@ -59,23 +59,17 @@ layui.use('table', function(){
   
   table.render({
     elem: '#test'
+    ,url:"/ClientRelations_action/selectForecastPage"
     ,toolbar: '#toolbarDemo'
     ,cols: [[
       {field:'forecastId', width:80, title: 'ID', sort: true}
-      ,{field:'title', width:210, title: '预测结果'}
-      ,{field:'planMoth', width:120, title: '预测月份'}
-      ,{field:'state', width:120, title: '类型'}
-      ,{field:'department', width:190, title: '预测目标'}
-      ,{field:'lastTime',width:205, title: '生成时间', minWidth: 100,sort: true}
-      ,{field:'operatorName', width:110, title: '操作人'}
+      ,{field:'title', minWidth: 210 title: '预测结果'}
+      ,{field:'forecastMonth', width:120, title: '预测月份'}
+      ,{field:'typeName', width:120,minWidth: 120 title: '类型'}
+      ,{field:'foundTime',title: '生成时间', minWidth: 205,sort: true}
+      ,{field:'operatorName', minwidth:110, title: '操作人'}
       ,{width:65,title:"操作",toolbar:"#barDemo"}
     ]]
-    ,data: [{//测试使用
-		"planId": "10001"
-		,"sellingName": "杜甫"
-		,"planMoth": "x"
-		,"pendingName": "男"
-	}]
     ,page: true
   });
 table.on('toolbar(test)', function(obj){
@@ -104,9 +98,20 @@ table.on('toolbar(test)', function(obj){
 	   		addAorecast.html
 	   	} 
 	});
-
+	
 });
-
+refreshTable(){
+	function refreshTable(){
+		layui.table.reload('test',
+        {
+             where: { //这里传参  向后台
+             	name:$(".startName").val(),
+             } 
+             ,limit:5
+ 			 ,limits:[5,10,15,20]
+        });
+	}
+}
 layui.use('laydate', function(){
   var laydate = layui.laydate;
   

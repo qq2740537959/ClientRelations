@@ -55,7 +55,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">指定预测部门:</label>
 				<div class="layui-input-block" style="width: 160px;">
-			      <select name="branchId" lay-filter="aihao" class="dr_select">
+			      <select name="branchId" lay-filter="aihao" class="branchId">
 			        <option>市场发展部</option>
 			      </select>
 			    </div>
@@ -64,13 +64,13 @@
 				<div class="layui-form-item">
 				<label class="layui-form-label">部门规模:</label>
 				<div class="layui-input-block" ">
-					<input type="text" lay-verify="required|number|drNumber"  name="sectorScale"  placeholder="" autocomplete="off" class="layui-input" style="width: 100px;display:inline;"> 				
+					<input type="text" lay-verify="required|number|drNumber"  name="sectorScale"  placeholder="" autocomplete="off" class="layui-input sectorScale" style="width: 100px;display:inline;"> 				
 			    </div>
 			</div>
     		<div class="layui-form-item">
 				<label class="layui-form-label">客户数量:</label>
 				<div class="layui-input-block" >
-					<input type="text" lay-verify="required|number|drNumber"  name="clientNumber"  placeholder="" autocomplete="off" class="layui-input" style="width: 100px;display:inline;"> 				
+					<input type="text" lay-verify="required|number|drNumber"  name="clientNumber"  placeholder="" autocomplete="off" class="layui-input clientNumber" style="width: 100px;display:inline;"> 				
 			    </div>
 			</div>
 			<div class="layui-form-item" style="margin-top: 15px;">
@@ -115,6 +115,8 @@
 			$(".forecastMonth").text(Format(new Date(),"yyyy-MM"));
 		
 			
+		
+			
 		</script>
 		<script>
 			  
@@ -148,14 +150,15 @@
 					
 					var formData = $(".layui-form").serialize();
 					var forecastMonth = $(".forecastMonth").text();
-					$.ajax({
+					var branchName = $(".layui-anim-upbit .layui-this").text();
+					 $.ajax({
 						type:"post",
-						url:"/ClientRelations_action/",
-						data:formData+"&planMonth="+planMonth,
+						url:"/ClientRelations_action/addForecast",
+						data:formData+"&planMonth="+forecastMonth+"&branchName="+branchName,
 						success:function(t){
-							
+							closeIndex(t.msg,t.code);
 						}
-					}) 
+					})
 					return false;
 				});
 				
@@ -177,7 +180,37 @@
 				function referForm(){
 					 form.render();
 				} 
-				 
+				form.on('select(aihao)', function(data){
+					referNumber(data.value);
+				}); 
+				$.ajax({
+					type:"post",
+					url:"/ClientRelations_action/getBranceData",
+					success:function(t){
+						var data = t.data;
+						var brance = "";
+						for (var i = 0; i < data.length; i++) {
+							brance+="<option value='"+data[i].departmentId+"'>"+data[i].departmentAbbreviation+"</option>"
+						}
+						$(".branchId").empty();
+						$(".branchId").append(brance);
+						referForm();
+						referNumber($(".branchId").val());
+					}
+				
+				})
+				function referNumber(branceId){
+					
+					$.ajax({
+						type:"post",
+						url:"/ClientRelations_action/selectBranceNumberData",
+						data:'branceId='+branceId+"&referDate="+$(".forecastMonth").text(),
+						success:function(t){
+							$(".sectorScale").val(t.sectorScale);
+							$(".clientNumber").val(t.clientNumber);
+						}
+					})
+				}
 			});
 		</script>
 	</body>

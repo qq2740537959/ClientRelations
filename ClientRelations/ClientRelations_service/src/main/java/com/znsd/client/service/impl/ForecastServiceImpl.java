@@ -23,15 +23,21 @@ public class ForecastServiceImpl implements ForecastService {
 	}
 
 	@Override
-	public int selectDateClientNumber(Integer branceId) {
+	public int selectDateClientNumber(Integer branceId,String referDate) {
 		// TODO Auto-generated method stub
-		return dao.selectDateClientNumber(branceId);
+		return dao.selectDateClientNumber(branceId,referDate);
 	}
 
 	@Override
-	public int selectDateStaffNumber(Integer branceId) {
+	public int selectDateStaffNumber(Integer branceId,String referDate) {
 		// TODO Auto-generated method stub
-		return dao.selectDateStaffNumber(branceId);
+		return dao.selectDateStaffNumber(branceId,referDate);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectForecastByPage(String startTime) {
+		// TODO Auto-generated method stub
+		return dao.selectForecastByPage(startTime);
 	}
 
 }
