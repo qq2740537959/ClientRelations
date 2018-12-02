@@ -92,7 +92,6 @@
 		  <div class="layui-btn-container">
 		    <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
 		  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
-			<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="shouquan">授权</button>
 		  </div>
 		</script>
 		          
@@ -150,7 +149,7 @@
 	  	        	},
 	  	        	end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
 	  	        	location.reload();　//layer.open关闭刷新
-	  	        	table.reload('organization', {
+	  	        	table.reload('staff', {
 		  				  where: { //设定异步数据接口的额外参数，任意设
 		  				  
 		  				  }
@@ -160,9 +159,7 @@
 		  				});
 	  	        	}
 	  		  	  });
-		   	} else if (layEvent === 'shouquan') {
-				layer.msg("开发中。。。");
-			} else if (layEvent === 'del') {
+		   	} else if (layEvent === 'del') {
 		   		var data = checkStatus.data;  //获取选中行数据
 		   		if (data.length > 0) {
 		   			layer.confirm('确定要删除选择的员工么?', function(index){
@@ -254,7 +251,7 @@
 	  	             skin: 'layui-layer-molv',
 	  	             shadeClose: false,
 	  	             shade: 0.3,
-	  	             area: ['600px', '570px'],
+	  	             area: ['600px', '580px'],
 	  	             content: "../../../intoAddOrUpdateStaffPage?staffId="+data.staffId,//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象

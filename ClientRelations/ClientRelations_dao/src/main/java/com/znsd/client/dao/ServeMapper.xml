@@ -27,6 +27,27 @@
   	
   	<select id="serveQuery"  resultMap="serveMap">
   		select * from serve where delete_flag=1
+  		<if test="serveName != null and serveName != ''">
+			and serve_name LIKE '%${serveName}%'
+		</if>
+		<if test="serveType != null and serveType != ''">
+			and serve_type LIKE '%${serveType}%'
+		</if>
+		<if test="serveState != null and serveState != ''">
+			and serve_state LIKE '%${serveState}%'
+		</if>
+		order by id desc
+  	</select>
+  	
+  	<select id="serveStateQuery" resultMap="serveMap">
+  		select * from serve where delete_flag=1 and serve_state=#{serveState}
+  		<if test="serveName != null and serveName != ''">
+			and serve_name LIKE '%${serveName}%'
+		</if>
+		<if test="serveType != null and serveType != ''">
+			and serve_type LIKE '%${serveType}%'
+		</if>
+		order by id desc
   	</select>
 	
 	<insert id="serveAdd">
@@ -38,11 +59,23 @@
   	</update>
   	
   	<update id="serveSub">
-  		update serve set serve_state='已提交',end_time=NOW(),operator=#{operator} where id = #{id} 
+  		update serve set serve_state='已提交',end_time=NOW(),operator=#{operator},pending_people=#{pendingPeople} where id = #{id} 
   	</update>
   	
   	<update id="serveUpdate">
   		update serve set serve_name=#{serveName},serve_type=#{serveType},serve_client=#{serveClient},phone=#{phone},serve_content=#{serveContent},comment=#{comment},update_by=#{updateBy},update_time=NOW(),end_time=NOW(),operator=#{operator} WHERE id=#{id}
+  	</update>
+  	
+  	<update id="servePigeonhole">
+  		update serve set serve_state='已归档',end_time=NOW(),operator=#{operator} where id = #{id} 
+  	</update>
+  	
+  	<update id="serveDispose">
+  		update serve set serve_state=#{serveState},end_time=NOW(),operator=#{operator},comment=#{comment},pending_people=#{pendingPeople} where id = #{id}
+  	</update>
+  	
+  	<update id="serveAllocation">
+  		update serve set serve_state=#{serveState},pending_people=#{pendingPeople},operator=#{operator},end_time=NOW() WHERE id=#{id}
   	</update>
   	
   </mapper>

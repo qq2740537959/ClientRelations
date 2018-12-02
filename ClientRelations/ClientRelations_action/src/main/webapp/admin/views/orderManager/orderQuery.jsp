@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+ <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-%>
+%> 
 <!DOCTYPE HTML >
 <html lang="zh-CN">
 	<head>
@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="../../layui/layui.js"></script>
 		<style>
 			div.layui-form.layui-border-box.layui-table-view{
-				width: 850px;
+				width: 970px;
 			}
 			.span_title{
 				float: left;
@@ -100,7 +100,7 @@
 		      </div>
 		    </div><br>
 		    <div style="margin-top: -80px;">
-		    	<div style="width: 850px;">
+		    	<div style="width: 950px;">
 			    	<hr>
 			    </div>
 			    <div class="div_title_btn">
@@ -108,6 +108,21 @@
 				    	订单信息列表
 				    </span>
 			    </div>
+			    <script type="text/html" id="statues">
+				 {{#  if(d.orderStatus =='待付款'){ }}
+					<button class="layui-btn" onclick="OrderByIdStatus(this,'已取消',{{d.id}});" style="width: 85px;line-height: 1px;height: 30px;">取消订单</button>			 
+				 {{#  } }}  
+				 {{# var a = "  等待收货   "; if( a.indexOf(d.orderStatus) != -1){ }}
+					<button class="layui-btn" onclick="OrderByIdStatus(this,'已完成',{{d.id}});" style="width: 85px;line-height: 1px;height: 30px;">确认收货</button>			 
+				 {{#  } }}  
+				 {{#  if(d.orderStatus =='已完成'){ }}
+					<button class="layui-btn-disabled" style="width: 85px;line-height: 1px;height: 30px;">已完成</button>			 
+				 {{#  } }}  
+				 {{#  if(d.orderStatus =='已取消'){ }}
+					<button class="layui-btn-disabled" style="width: 85px;line-height: 1px;height: 30px;">已取消</button>			 
+				 {{#  } }}
+
+				</script>
 				<table class="layui-hide" id="test" lay-filter="test"></table>
 		    </div>
 		    <input type="hidden" id="staffId" value="${userInfo.staffId }">
@@ -119,6 +134,17 @@
 		</script>
 		          
 	<script>
+		function OrderByIdStatus(obj,status,id){
+			 $.ajax({
+				  url:'../../../updateOrderByIdesStatus?status='+status+"&id="+id,
+				  type:'post',
+				  dataType:'json',
+				  success:function(data){
+				  }
+			  }); 
+			 $(obj).text(status).removeClass("layui-btn");
+			 $(obj).text(status).addClass("layui-btn-disabled");
+		}
 		layui.use('table', function(){
 		  var table = layui.table;
 		  table.render({
@@ -134,6 +160,7 @@
 		      ,{field:'orderMoney', width:110, title: '订单金额'}
 		      ,{field:'dealTime', width:110, title: '下单时间'}
 		      ,{field:'orderStatus', width:120, title: '状态'}
+		      ,{field:'status', width:120, title: '状态操作',templet:'#statues'}
 		    ]]
 		 	,page:true
 		    ,limit:5
@@ -183,6 +210,6 @@
 		  });
 		 }
 	</script>
-
+	
 </body>
 </html>

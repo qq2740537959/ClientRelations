@@ -35,7 +35,7 @@ public interface ServeDao {
 		    * @throws
 		    */
 		    
-		List<Serve> serveQuery();
+		List<Serve> serveQuery(Serve serve);
 
 			
 			    /**
@@ -83,6 +83,55 @@ public interface ServeDao {
 						    */
 						    
 						void serveUpdate(Serve serve);
+
+
+							
+							    /**
+							    * @Title: servePigeonhole
+							    * @Description: TODO(这里用一句话描述这个方法的作用)
+							    * @param @param serve    参数
+							    * @return void    返回类型
+							    * @throws
+							    */
+							    
+							void servePigeonhole(Serve serve);
+
+
+								
+								    /**
+								    * @Title: serveDispose
+								    * @Description: TODO(这里用一句话描述这个方法的作用)
+								    * @param @param serve    参数
+								    * @return void    返回类型
+								    * @throws
+								    */
+								    
+								void serveDispose(Serve serve);
+
+
+									
+									    /**
+									    * @Title: serveStateQuery
+									    * @Description: TODO(这里用一句话描述这个方法的作用)
+									    * @param @param serve
+									    * @param @return    参数
+									    * @return List<Serve>    返回类型
+									    * @throws
+									    */
+									    
+									List<Serve> serveStateQuery(Serve serve);
+
+
+										
+										    /**
+										    * @Title: serveAllocation
+										    * @Description: TODO(这里用一句话描述这个方法的作用)
+										    * @param @param serve    参数
+										    * @return void    返回类型
+										    * @throws
+										    */
+										    
+										void serveAllocation(Serve serve);
 
 
 }

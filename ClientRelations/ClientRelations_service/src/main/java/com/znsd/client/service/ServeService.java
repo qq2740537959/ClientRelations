@@ -23,7 +23,7 @@ import com.znsd.client.bean.Serve;
     */
 
 public interface ServeService {
-	public List<Serve> serveQuery();
+	public List<Serve> serveQuery(Serve serve);
 
 	
 	    /**
@@ -71,5 +71,54 @@ public interface ServeService {
 				    */
 				    
 				public void serveUpdate(Serve serve);
+
+
+					
+					    /**
+					    * @Title: servePigeonhole
+					    * @Description: TODO(这里用一句话描述这个方法的作用)
+					    * @param @param serve    参数
+					    * @return void    返回类型
+					    * @throws
+					    */
+					    
+					public void servePigeonhole(Serve serve);
+
+
+						
+						    /**
+						    * @Title: serveDispose
+						    * @Description: TODO(这里用一句话描述这个方法的作用)
+						    * @param @param serve    参数
+						    * @return void    返回类型
+						    * @throws
+						    */
+						    
+						public void serveDispose(Serve serve);
+
+
+							
+							    /**
+							    * @Title: serveStateQuery
+							    * @Description: TODO(这里用一句话描述这个方法的作用)
+							    * @param @param serve
+							    * @param @return    参数
+							    * @return List<Serve>    返回类型
+							    * @throws
+							    */
+							    
+							public List<Serve> serveStateQuery(Serve serve);
+
+
+								
+								    /**
+								    * @Title: serveAllocation
+								    * @Description: TODO(这里用一句话描述这个方法的作用)
+								    * @param @param serve    参数
+								    * @return void    返回类型
+								    * @throws
+								    */
+								    
+								public void serveAllocation(Serve serve);
 
 }

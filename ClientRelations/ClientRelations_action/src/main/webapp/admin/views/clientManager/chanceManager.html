@@ -51,6 +51,7 @@
 			</div>
 		</div>
 		<input type="hidden" class="roleId">
+		<input type="hidden" class="roleName"/>	
 		<div class="layui-row">
 			<div class="layui-card">
 				<div class="layui-card-body">
@@ -237,7 +238,7 @@
 			success:function(t){
 				var user  = t.user;
 				$(".roleId").val(user.roleId);
-				console.log(user.roleId);
+				$(".roleName").val(user.roleName);
 			}
 		})
 	</script>
@@ -266,7 +267,7 @@
 					{field : 'state',width : 100,title : '状态'}, 
 					{field : 'allotState',width : 90,title : '分配状态'}, 
 					{field : 'inTime',width : 0,title : '录入时间'}, 
-					{field : 'staffName',width : 120,title : '录入人'}, 
+					{field : 'entryPerson',width : 120,title : '录入人'}, 
 					{width : 200,title : "操作",toolbar : "#barDemo"}
 				] ],
 				page : true,
@@ -431,7 +432,7 @@
 			
 			// 资源增加ajax
 			$(".addSub").on('click',function(){
-				let info = $(".resourceadd").serialize();
+				let info = $(".resourceadd").serialize()+"&entryPerson="+$(".roleName").val();
 				$.ajax({
 					url:'../../../addResource',
 					type:'post',

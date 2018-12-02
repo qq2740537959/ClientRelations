@@ -40,4 +40,10 @@ public class OrderIndentServiceImpl implements OrderIndentService{
 		return dao.orderStatistics(staffId,minDate,maxDate);
 	}
 
+	@Override
+	public int updateOrderByIdesStatus(String status, String id) {
+		//修改订单状态2
+		return dao.updateOrderByIdesStatus(status, id);
+	}
+
 }

@@ -25,51 +25,34 @@
   			  height: 90px;
     			width: 338px;
   		}
-  		.layui-input,.layui-form-select{
+  		.layui-input{
   			width: 350px;
   		}
   	</style>
   </head>
   <body>
 	<form class="layui-form" id="addOrUpdateStaff"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
-  <c:if test="${staffInfo.staffId ne null }">
+  <c:if test="${roleInfo ne null}">
 	  <div class="layui-form-item">
-	    <label class="layui-form-label">员工编码：</label>
+	    <label class="layui-form-label">角色编码：</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="staffId" readonly="readonly" value="${staffInfo.staffId }" required="required" placeholder="" autocomplete="off" class="layui-input layui-disabled">
+	      <input type="text" name="roleId" readonly="readonly" value="${roleInfo.roleId }" required="required" placeholder="" autocomplete="off" class="layui-input layui-disabled">
 	    </div> 	
 	  </div>
   </c:if>
   <div class="layui-form-item">
-    <label class="layui-form-label">员工姓名：</label>
+    <label class="layui-form-label">角色名称：</label>
     <div class="layui-input-block">
-      <input type="text" name="staffName" value="${staffInfo.staffName }" required="required" placeholder="" autocomplete="off" class="layui-input">
+      <input type="text" name="roleName" value="${roleInfo.roleName }" required="required" placeholder="" autocomplete="off" class="layui-input">
     </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">员工性别：</label>
-    <div class="layui-input-block">
-    	<input type="radio" name="sex" value="男" title="男" ${staffInfo.sex eq '男'?'checked':''}>
-		<input type="radio" name="sex" value="女" title="女" ${staffInfo.sex eq '女'?'checked':''}>
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">员工状态：</label>
-    <div class="layui-input-block">
-    	<input type="radio" name="state" value="0" title="冻结" ${staffInfo.state eq '0'?'checked':''}>
-		<input type="radio" name="state" value="1" title="正常" ${staffInfo.state eq '1'?'checked':''}>
-	</div>
   </div>
   <div class="layui-form-item" style="width: 460px;">
     <label class="layui-form-label">所属部门：</label>
     <div class="layui-input-block">
-   		<select name="departmentId" lay-verify="" lay-search>
-   			<c:if test="${staffInfo eq null }">
-   				<option value="">--请选择部门--</option>
-   			</c:if>
+   		<select name="departmentId" lay-verify="" lay-search required="required">
 			<c:forEach items="${departmentList }" var = "d">
 				<c:choose>
-					<c:when test="${d.departmentAbbreviation eq staffInfo.departmentAbbreviation }">
+					<c:when test="${d.departmentId eq roleInfo.departmentId }">
 						<option value="${d.departmentId }" selected>${d.departmentAbbreviation }</option>
 					</c:when>
 					<c:otherwise>
@@ -81,26 +64,9 @@
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">角色身份：</label>
-    <div class="layui-input-block">
-    	<select name="roleIdentity" lay-verify="" lay-search>
-  			<c:forEach items="${roleList }" var = "r">
-  				<c:choose>
-					<c:when test="${r.roleName eq staffInfo.roleName }">
-						<option value="${r.roleId }" selected>${r.roleName }</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${r.roleId }">${r.roleName }</option>
-					</c:otherwise>
-				</c:choose>
-  			</c:forEach>
-		</select> 
-    </div>
-  </div>
-  <div class="layui-form-item">
     <label class="layui-form-label">备注信息：</label>
     <div class="layui-input-block">
-    	<textarea name="remarksInfo">${staffInfo.remarksInfo}</textarea>
+    	<textarea name="remarksExplain">${roleInfo.remarksExplain}</textarea>
     </div>
   </div>
   <div class="layui-form-item" style="margin-left:20px;">
@@ -114,17 +80,24 @@
 <script type="text/javascript">
 $(".addOrUpdateBtn").on('click',function(){
 	$.ajax({
-		url:"<%=request.getContextPath()%>/addOrUpdateStaff",
+		url:"<%=request.getContextPath()%>/addOrUpdateRole",
 		type:"post",
 		data:$("#addOrUpdateStaff").serialize(),
 		success:function(data){
-			layui.use('layer', function(){
-   				var layer = layui.layer;
-   				layer.msg(""+data.msg,{time:1100,icon:1},function(){
-   					var index=parent.layer.getFrameIndex(window.name);
-       				parent.layer.close(index);
-   				})
-    		});
+			if (data.code == "1") {
+				layui.use('layer', function(){
+	   				var layer = layui.layer;
+	   				layer.msg(""+data.msg,{time:1100,icon:1},function(){
+	   					var index=parent.layer.getFrameIndex(window.name);
+	       				parent.layer.close(index);
+	   				})
+	    		});
+			}else{
+				layui.use('layer', function(){
+	   				var layer = layui.layer;
+	   				layer.msg(""+data.msg)
+	    		});
+			}
 		}
 	})
 })

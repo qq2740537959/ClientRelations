@@ -35,7 +35,7 @@ public interface IssueDao {
 	    * @throws
 	    */
 	    
-	List<Issue> issueQuery();
+	List<Issue> issueQuery(Issue issue);
 
 		
 		    /**

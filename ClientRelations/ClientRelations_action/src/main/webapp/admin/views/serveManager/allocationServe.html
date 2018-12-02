@@ -27,13 +27,25 @@
 				<div class="layui-card-body">
 					<div class="form-box">
 						<div class="layui-form layui-form-item">
-							<div class="layui-inline">
-								<div class="layui-form-mid">服务名称：</div>
-								<div class="layui-input-inline">
-							       <input type="text" name="" class="layui-input staffName">   
-							    </div>
-								<button class="layui-btn layui-btn-blue refer_but">查询</button>
-							</div>
+							<form class="selectAllUserAction">
+	                            <div class="layui-inline">
+	                            	<div class="layui-form-mid">服务名称：</div>
+									<div class="layui-input-inline">
+								       <input type="text" name="serveNames" class="layui-input serveNames">   
+								    </div>
+	                            	<div class="layui-form-mid">服务类型:</div>
+	                                <div class="layui-input-inline" style="width: 100px;">
+	                                    <select name="serveType" class="serveType">
+	                                        <option value="">不限</option>
+									        <option value="咨询服务">咨询服务</option>
+									        <option value="投诉服务">投诉服务</option>
+									        <option value="售前服务">售前服务</option>
+									        <option value="售后服务">售后服务</option>
+	                                    </select>
+	                                </div>
+	                                <button type="button" class="layui-btn layui-btn-blue typesearch" id="qqq">查询</button>
+	                            </div>
+	                        </form>
 						</div>
 						
 						<table class="layui-hide" id="test" lay-filter="test"></table>
@@ -57,18 +69,21 @@ layui.use(['table'], function(){
   var table = layui.table;
   table.render({
 	     elem: '#test'
-	    ,url:'../../../serveQuery'
+	    ,url:'../../../serveStateQuery?state=已提交'
 	    ,toolbar: '#toolbarDemo'
+	    ,id:'userReload'
 	    ,cols: [[
 	       {type: 'numbers', fixed: 'left'}
 	      ,{field:'id', width:80, title: 'ID',hide:true}
 	      ,{field:'serveName', width:200, title: '服务名称'}
 	      ,{field:'serveType', width:120, title: '类型'}
 	      ,{field:'serveState', width:120, title: '状态'}
-	      ,{field:'endTime',width:170, title: '最后操作时间', minWidth: 100,templet:'<div>{{ Format(d.endTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
-	      ,{field:'updateBy', width:85, title: '操作人'}
+	      ,{field:'endTime',width:218, title: '最后操作时间', minWidth: 100,templet:'<div>{{ Format(d.endTime,"yyyy-MM-dd hh:mm:ss")}}</div>',sort: true}
+	      ,{field:'updateBy', width:120, title: '操作人'}
 	      ,{field:'pendingPeople', width:120, title: '待处理人'}
-	      ,{width:160,title:"操作",toolbar:"#barDemo"}
+	      ,{field:'createBy',title: '创建人',hide:true}
+	      ,{field:'createTime', title: '创建时间',templet:'<div>{{ Format(d.createTime,"yyyy-MM-dd hh:mm:ss")}}</div>',hide:true}
+	      ,{width:160,title:"操作",toolbar:"#barDemo", align: 'center'}
 	    ]]
 	    ,page: true
 	  });
@@ -98,18 +113,42 @@ layui.use(['table'], function(){
 				shadeClose:true,
 				success:function(layero,index){
 					 var body = layer.getChildFrame('body', index);
-					 body.find(".serveName").val(data.serveName);
+					 console.log(data);
+					 body.find(".aid").val(data.id);
+					 body.find(".serveName").text(data.serveName);
 					 body.find(".serveType").text(data.serveType);
 					 body.find(".serveState").text(data.serveState);
 					 body.find(".phone").text(data.phone);
-					 body.find(".createBy").text(data.handleName);
-					 body.find(".createTime").text(data.lastTime);
 					 body.find(".pendingPeople").text(data.pendingPeople);
 					 body.find(".serveContent").text(data.serveContent);
-				}
+				},
+				end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+	  	        	/* location.reload();　 */　//layer.open关闭刷新
+	            	 layui.use('table', function(){
+		           		 var table = layui.table;
+		           		 layui.table.reload('userReload');
+	           		});
+	  	        }
 	   		})
 	   	}
 	});
+	
+	$('.typesearch').on('click', function(){
+  		layui.use('table', function(){
+  		  	var table = layui.table;
+  		 	table.reload('userReload', {
+			  where: { //设定异步数据接口的额外参数，任意设
+				  'serveName':$(".serveNames").val(),
+				  'serveType':$(".serveType").val()
+			  }
+			  ,page: {
+			    curr: 1 //重新从第 1 页开始
+			  }
+			});
+  		});
+  		return false;
+     });
+	
 	$(".add_but").click(function(){
 		
 	})

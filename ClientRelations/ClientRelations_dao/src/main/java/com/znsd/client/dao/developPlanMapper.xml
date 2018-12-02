@@ -25,7 +25,7 @@
 	
 	<select id="selectDevelopPlan" resultMap="planMap">
 		select d.plan_id,d.plan_name,d.client_id,d.staff_id,d.plan_content,DATE_FORMAT(d.plan_month,'%Y-%m') as planMonth,DATE_FORMAT(d.found_time,'%Y-%m-%d') as found_time,DATE_FORMAT(d.last_opterate_time,'%Y-%m-%d') as last_opterate_time,d.plan_status,s.staff_name  
-		from develop_plan d INNER JOIN staff s ON d.staff_id = s.staff_id 
+		from develop_plan d LEFT JOIN staff s ON d.staff_id = s.staff_id 
 		<where>
 			<choose>
 				<when test="month != null and month != ''">
@@ -60,6 +60,9 @@
 	</select>
 	
 	<select id="selectPlanInClientName" resultMap="clientNameMap">
-		select client_id,client_name from client_resource where client_id NOT in(select client_id from develop_plan)
+		select client_id,client_name from client_resource c LEFT JOIN staff s ON c.staff_id = s.staff_id where c.client_id NOT in(select client_id from develop_plan)
+		<if test="roleId == 4">
+			and s.staff_id = #{staffId}
+		</if>
 	</select>
 </mapper>

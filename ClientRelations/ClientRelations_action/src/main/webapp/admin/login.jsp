@@ -48,7 +48,24 @@
          0%{ background-position: 0 0;}
          100% { background-position: -100% 0;}
     }
-    	
+    
+    .img_span{
+    	width:30px;
+    	height:30px;
+	    position: absolute;
+	    top: 29px;
+	    right:-3px;
+	    cursor: pointer;
+	    z-index:5;
+    }
+    
+    .img_span:hover{
+    	opacity: 0.8;
+    }
+    
+    .img{
+    	width: 25px;
+    }
     </style>
 </head>
 <body class="login-wrap">
@@ -65,6 +82,9 @@
                 </label>
             </div>
             <div class="input-group">
+               	<span class="img_span">
+               	   <img alt="" class="img" onclick="show_hidePwd(this)" src="<%=request.getContextPath()%>/admin/assets/images/visible.png">
+               	</span>
                 <input type="password" id="password" name="password" class="input-field">
                 <label for="password" class="input-label">
                     <span class="label-title">密码</span>
@@ -76,5 +96,15 @@
 </body>
 <script src="<%=request.getContextPath() %>/admin/assets/layui.js"></script>
 <script src="<%=request.getContextPath() %>/admin/login.js" ></script>
-
+<script type="text/javascript">
+	function show_hidePwd(th){
+		if ($("#password").attr("type") == "password") {
+			document.getElementById("password").type="text";
+			$(th).attr("src","<%=request.getContextPath()%>/admin/assets/images/invisible.png");
+		}else{
+			document.getElementById("password").type="password";
+			$(th).attr("src","<%=request.getContextPath()%>/admin/assets/images/visible.png");
+		}
+	}
+</script>
 </html>

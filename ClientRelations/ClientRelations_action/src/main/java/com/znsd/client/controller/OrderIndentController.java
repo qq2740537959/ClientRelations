@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.alipay.config.AlipayConfig;
 import com.znsd.client.bean.ResultData;
-import com.znsd.client.bean.SellPlan;
 import com.znsd.client.service.OrderIndentService;
 import com.znsd.client.vo.OrderIndentVo;
 import com.znsd.client.vo.OrderStatisticsVo;
@@ -32,8 +30,12 @@ import com.znsd.client.vo.OrderStatisticsVo;
 public class OrderIndentController{
 	@Autowired
 	private OrderIndentService orderIndentService;
-	
-	
+	@RequestMapping("/updateOrderByIdesStatus")
+	public @ResponseBody String updateOrderByIdesStatus(@RequestParam(value="status")String status,@RequestParam("id") String id) {
+		//修改订单状态
+		int result = orderIndentService.updateOrderByIdesStatus(status, id);
+		return "success";
+	}
 	@RequestMapping("/selectOrder")
 	public @ResponseBody ResultData selectOrder(@RequestParam(value="staffId")String staffId,@RequestParam("page") Integer page,@RequestParam(value="limit",required=false) Integer limit,@RequestParam(value="differentiate",required=false) String differentiate,@RequestParam(value="inputSelect",required=false) String inputSelect,@RequestParam(value="dealTime",required=false) String dealTime,@RequestParam(value="status",required=false) String status) {
 		//订单查询

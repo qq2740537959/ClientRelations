@@ -196,7 +196,7 @@ public class ClientResourceController{
 		String orderCode = getOrderNumber();
 		orderIndent.setOrderCode(orderCode);
 		orderIndent.setModeOfPayment("货到付款");
-		orderIndent.setOrderStatus("待收货");
+		orderIndent.setOrderStatus("等待收货");
 		orderIndent.setModeOfDistribution("公司送货上门");
 		int resu = orderIndentService.addOrder(orderIndent);
 		return "admin/views/orderManager/changeHands.jsp";
@@ -239,7 +239,6 @@ public class ClientResourceController{
 	@RequestMapping("/reduceProductNumber")
 	public @ResponseBody String reduceProductNumber(@RequestParam(value="productNumber",required=false) String productNumber) {
 		//商品购买后减少
-		System.out.println("productNumber"+productNumber);
 		int result = -1;
 		String [] ary = productNumber.split("-");
 		String [][] arr = new String [ary.length][];

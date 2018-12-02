@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 保证唯一性 
+       使用接口方式加载命名空间 使用代理模式
+   -->
+ <mapper namespace="com.znsd.client.dao.ClientSurveyDao">
+ 	<sql id="selectSurveySql">
+ 		select s.survey_id,c.client_id,s.quality_pleased,s.serve_pleased,s.benefit_pleased,s.credit_grade,s.feedback,DATE_FORMAT(s.survey_time,'%Y-%m-%d') as survey_time,s.greet_id,c.client_name,c.client_type
+		FROM client_survey s INNER JOIN client_resource c on s.client_id = c.client_id INNER JOIN staff st ON c.staff_id = st.staff_id
+ 	</sql>
+ 	
+ 	<resultMap type="java.util.HashMap" id="surveyMap">
+ 		<id column="survey_id" property="surveyId"/>
+ 		<result column="client_id" property="clientId"/>
+ 		<result column="quality_pleased" property="qualityPleased"/>
+ 		<result column="serve_pleased" property="servePleased"/>
+ 		<result column="benefit_pleased" property="benefitPleased"/>
+ 		<result column="credit_grade" property="creditGrade"/>
+ 		<result column="feedback" property="feedback"/>
+ 		<result column="survey_time" property="surveyTime"/>
+ 		<result column="greet_id" property="greetId"/>
+ 		<result column="client_name" property="clientName"/>
+ 		<result column="client_type" property="clientType"/>
+ 	</resultMap>
+ 	
+ 	<select id="selectAllClientSurveyByPage" resultMap="surveyMap">
+ 		<include refid="selectSurveySql"/>
+ 		<where>
+			<choose>
+				<when test="clientName != null and clientName != ''">
+					c.client_name = #{clientName}
+					<if test="roleId == 4">
+						and st.staff_id = #{staffId}
+					</if>
+				</when>
+				<when test="roleId == 4">
+					st.staff_id = #{staffId}
+				</when>
+			</choose>
+ 		</where>
+ 	</select>
+ </mapper>

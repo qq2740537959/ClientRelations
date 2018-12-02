@@ -16,9 +16,14 @@
 		<result column = "staff_name" property="releasePersonName"></result>
 	</resultMap>
  	
+ 	<!-- 查询公共字段 -->
+ 	<sql id="queryNotice">
+ 		select n.notice_id,n.notice_title,n.notice_type,n.release_time,s.staff_name,n.release_content from notice n,staff s where n.release_person = s.staff_id
+ 	</sql>
+ 	
  	<!-- 分页条件查询公告 -->
  	<select id="selectNoticeByPage" resultMap="NoticeResultMap">
-		select n.notice_id,n.notice_title,n.notice_type,n.release_time,s.staff_name,n.release_content from notice n,staff s where n.release_person = s.staff_id		
+		<include refid="queryNotice"></include>
 		<if test="noticeTitle != null and noticeTitle != ''">
 			and n.notice_title like CONCAT('%',#{noticeTitle},'%')
 		</if>
@@ -29,7 +34,7 @@
  	
  	<!-- 根据公告Id获取公告信息 -->
 	<select id="selectNoticeById" resultMap="NoticeResultMap">
-		select n.notice_id,n.notice_title,n.notice_type,n.release_time,s.staff_name,n.release_content from notice n,staff s where n.release_person = s.staff_id
+		<include refid="queryNotice"></include>
 		and n.notice_id = #{noticeId}
  	</select>
  	

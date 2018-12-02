@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.bean.Issue;
 import com.znsd.client.service.IssueService;
+import com.znsd.client.vo.StaffLoginVo;
+import com.znsd.client.vo.StaffVo;
 
 /**
     * @ClassName: IssueAction
@@ -46,9 +50,9 @@ public class IssueAction{
 	
 	@RequestMapping("/issueQuery")
 	@ResponseBody
-	public Map<String,Object> issueQuery(@RequestParam("page") int page,@RequestParam("limit")int limit,Map<String,Object> map){
+	public Map<String,Object> issueQuery(@RequestParam("page") int page,@RequestParam("limit")int limit,Map<String,Object> map,Issue issue){
 		Page<Object> pages = PageHelper.startPage(page, limit);
-		List<Issue> list = issueService.issueQuery();
+		List<Issue> list = issueService.issueQuery(issue);
 		map = new HashMap<String,Object>();
 		map.put("data",list);
 		map.put("count",pages.getTotal());
@@ -58,10 +62,9 @@ public class IssueAction{
 	
 	@RequestMapping("/issuesAdd")
 	@ResponseBody
-	public Map<String,Object> issuesAdd(Issue issue){
-		System.out.println(".............issueAdd========="+issue);
-		issue.setCreateBy("admin");
-		issue.setUpdateBy("admin");
+	public Map<String,Object> issuesAdd(Issue issue,HttpServletRequest request){
+		issue.setCreateBy(getUser(request).getStaffName());
+		issue.setUpdateBy(getUser(request).getStaffName());
 		issueService.issueAdd(issue);
 		map.put("code", 1);
 		return map;
@@ -69,8 +72,7 @@ public class IssueAction{
 	
 	@RequestMapping("/issuesDelete")
 	@ResponseBody
-	public Map<String,Object> issuesDelete(@RequestParam("id")int id){
-		System.out.println("............id=="+id);
+	public Map<String,Object> issuesDelete(@RequestParam("id")int id,HttpServletRequest request){
 		Issue issue = new Issue();
 		issue.setId(id);
 		issueService.issueDelete(issue);
@@ -80,11 +82,16 @@ public class IssueAction{
 	
 	@RequestMapping("/issuesUpdate")
 	@ResponseBody
-	public Map<String,Object> issuesUpdate(Issue issue){
-		issue.setUpdateBy("admin");
+	public Map<String,Object> issuesUpdate(Issue issue,HttpServletRequest request){
+		issue.setUpdateBy(getUser(request).getStaffName());
 		issueService.issueUpdate(issue);
 		map.put("code", 1);
 		return map;
+	}
+	
+	public StaffLoginVo getUser(HttpServletRequest request){
+		StaffLoginVo staff = (StaffLoginVo) request.getSession().getAttribute("userInfo");
+		return staff;
 	}
 	
 	public IssueService getIssueService() {

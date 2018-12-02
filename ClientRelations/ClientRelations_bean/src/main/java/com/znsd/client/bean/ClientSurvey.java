@@ -18,7 +18,7 @@ public class ClientSurvey implements Serializable {
 	private int greetId;
 	private String qualityPleased;
 	private String servePleased;
-	private String totalPleased;
+	private String surveyTime;
 
 	public ClientSurvey() {
 	}
@@ -94,12 +94,12 @@ public class ClientSurvey implements Serializable {
 
 
 	
-	public String getTotalPleased() {
-		return this.totalPleased;
+	public String getSurveyTime() {
+		return this.surveyTime;
 	}
 
-	public void setTotalPleased(String totalPleased) {
-		this.totalPleased = totalPleased;
+	public void setSurveyTime(String surveyTime) {
+		this.surveyTime = surveyTime;
 	}
 
 }

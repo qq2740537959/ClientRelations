@@ -123,7 +123,7 @@
 	  	             shadeClose: false,
 	  	             shade: 0.3,
 	  	             area: ['550px', '570px'],
-	  	             content: "addOrUpdateOrganization.html",//跳转的页面
+	  	             content: "../../../intoAddOrUpdateDepartmentPage",//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
 	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];
@@ -154,22 +154,42 @@
 		   	}else if (layEvent === 'del') {
 		   		var data = checkStatus.data;  //获取选中行数据
 		   		if (data.length > 0) {
-		   			var getIdString = "";
-		   			for (var i = 0; i < data.length; i++) {
-		   				getIdString += data[i].departmentId+",";
-		   				console.log(data[i].departmentId)
-		   			}
-		   			console.log(getIdString);
-		   			$.ajax({
-		   				type:"get",
-		   				url:"",
-		   				async:true
-		   			});
+		   			layer.confirm('确定要删除选择的部门么?', function(index){
+				  		layer.close(index);
+					  	var getIdString = "";
+			   			for (var i = 0; i < data.length; i++) {
+			   				getIdString += data[i].departmentId+",";
+			   			}
+			   			$.ajax({
+			   				type:"post",
+			   				data:{
+			   					"nArray":getIdString
+			   				},
+			   				url:"../../../deleteDepartmentById",
+			   				async:true,
+			   				success:function(data){
+			   					if (data.code == 1) {
+			   						layui.use('layer', function(){
+				  	    				var layer = layui.layer;
+				  	    				layer.msg(""+data.msg,{icon:1});
+				  	    				table.reload('organization', {
+				  		  				  where: { //设定异步数据接口的额外参数，任意设
+				  		  				  
+				  		  				  }
+				  		  				  ,page: {
+				  		  				    curr: 1 //重新从第 1 页开始
+				  		  				  }
+				  		  				});
+				  	    			});    	
+								}else{
+									layer.msg("删除失败！",{icon:2});
+								}
+			   				}
+			   			});
+		   			})
 		   		}else{
 		   			layer.msg("请选择一个或多个选项",{icon:3});
 		   		}
-			    /*layer.alert(JSON.stringify(data));
-			    console.log(data.length);*/
 		   	}
 		  });
 		  
@@ -179,12 +199,15 @@
 		  	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 		  	  var tr = obj.tr; //获得当前行 tr 的DOM对象
 		  	 if(layEvent === 'del'){ //删除
-		  	    layer.confirm('确定要删除此组织结构么?', function(index){
+		  	    layer.confirm('确定要删除此部门么?', function(index){
 		  	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 		  	      layer.close(index);
 		  	      //向服务端发送删除指令
 		  	      $.ajax({
-		  	    	  url:"../../delUserInfoAction?userId="+data.userId+"",
+			  	    	url:"../../../deleteDepartmentById",
+			  	    	data:{
+		   					"nArray":data.departmentId
+		   				},
 		  	    	  type:"post",
 		  	    	  success:function(data){
 		  	    		if (data.code == 1) {
@@ -218,8 +241,8 @@
 	  	             skin: 'layui-layer-molv',
 	  	             shadeClose: false,
 	  	             shade: 0.3,
-	  	             area: ['600px', '630px'],
-	  	             content: "../../queryUserByIdAction?userId="+data.userId+"",//跳转的页面
+	  	             area: ['600px', '590px'],
+	  	             content: "../../../intoAddOrUpdateDepartmentPage?departmentId="+data.departmentId,//跳转的页面
 	  	            yes: function (index, layero) {
 	  	        	//得到iframe页的窗口对象（2种方式）-----------推荐使用第二种方式获得对象
 	  	        	var iframeWin1 = window[layero.find('iframe')[0]['name']];

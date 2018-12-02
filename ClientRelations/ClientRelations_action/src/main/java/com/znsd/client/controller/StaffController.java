@@ -19,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.bean.Staff;
+import com.znsd.client.dao.MD5Util;
 import com.znsd.client.dao.PinYinHeadUtil;
 import com.znsd.client.service.DepartmentService;
 import com.znsd.client.service.RoleService;
@@ -136,29 +137,30 @@ public class StaffController {
 			map.put("msg", "请将表单填写完整后提交！");
 			return map;
 		}
-		if (!(ypassword.equals(staffLoginVo.getPassword()))) {
+		if (!(MD5Util.getMd5(ypassword).equals(staffLoginVo.getPassword()))) {
 			map.put("code", 2);
 			map.put("msg", "原密码输入错误!");
 			return map;
 		}
-		if (npassword.equals(ypassword)) {
+		if (MD5Util.getMd5(npassword).equals(MD5Util.getMd5(ypassword))) {
 			map.put("code", 3);
 			map.put("msg", "新密码不能跟旧密码相等!");
 			return map;
 		}
-		if (!(npassword.matches("^[a-zA-Z]\\\\w{5,17}$"))) {
+		if (!(npassword.matches("^[a-zA-Z]\\w{5,17}$"))) {
 			map.put("code", 4);
 			map.put("msg", "新密码格式不正确!");
 			return map;
 		}
-		if (npassword != twoNewPwd) {
+		if (!(npassword.equals(twoNewPwd))) {
 			map.put("code", 5);
 			map.put("msg", "两次密码输入不一致!");
 			return map;
 		}
-		if (ypassword.equals(staffLoginVo.getPassword())) {
+		if (MD5Util.getMd5(ypassword).equals(staffLoginVo.getPassword())) {
 			Staff staff = new Staff();
 			staff.setStaffId(staffLoginVo.getStaffId());
+			npassword = MD5Util.getMd5(npassword);
 			staff.setPassword(npassword);
 			staffBiz.updateStaffUserName(staff);
 			staffLoginVo.setPassword(npassword);
@@ -180,7 +182,9 @@ public class StaffController {
 			map.put("msg", "请将表单填写完整后提交！");
 			return map;
 		}
+		password = MD5Util.getMd5(password);
 		StaffLoginVo staffLoginVo = staffBiz.staffLogin(userName, password);
+		System.out.println(staffLoginVo);
 		if (staffLoginVo == null) {
 			map.put("code", 1);
 			map.put("msg", "用户名或密码错误！");
@@ -233,7 +237,7 @@ public class StaffController {
 	@RequestMapping("/intoAddOrUpdateStaffPage")
 	public String intoAddOrUpdateStaffPage(Staff staff,ModelMap map) {
 		if (staff.getStaffId() != 0) {
-			map.put("staff", staffBiz.selectStaffByUserName(staff));
+			map.put("staffInfo", staffBiz.selectStaffByUserName(staff));
 		}
 		map.put("roleList", roleBiz.selectRoleByPage(null));
 		map.put("departmentList", departmentBiz.selectDepartmentByPage(null));
@@ -244,17 +248,18 @@ public class StaffController {
 	@RequestMapping("/addOrUpdateStaff")
 	@ResponseBody
 	public Map<String, Object> addOrUpdateStaff(Staff staff,HttpSession session) {
+		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
 		Map<String, Object> map = new HashMap<>();
 		if (staff.getStaffId() != 0) {
 			staff.setLastTime(new Date());
+			staff.setOperationPerson(staffLoginVo.getStaffId());
 			staffBiz.updateStaffUserName(staff);
 			map.put("msg", "修改成功！");
 		}else {
-			StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
 			String nameHeadPy = PinYinHeadUtil.getPinYinHeadChar(staff.getStaffName());
 			staff.setUserName("admin"+nameHeadPy);
 			staff.setPassword("admin"+nameHeadPy);
-			staff.setLastTime(new Date());
+			staff.setCreateTime(new Date());
 			staff.setOperationPerson(staffLoginVo.getStaffId());
 			staffBiz.addStaff(staff);
 			map.put("msg", "增加成功！");

@@ -1,27 +1,35 @@
 package com.znsd.client.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.znsd.client.bean.Role;
 import com.znsd.client.service.DepartmentService;
 import com.znsd.client.service.RoleService;
-import com.znsd.client.vo.DepartmentVo;
 import com.znsd.client.vo.RoleQueryVo;
+import com.znsd.client.vo.StaffLoginVo;
 
 @Controller
 public class RoleController {
 
 	@Autowired
 	private RoleService roleBiz;
+	
+	@Autowired
+	private DepartmentService departmentBiz;
 	
 	//分页条件查询组织结构
 	@RequestMapping("/queryRoleByPage")
@@ -37,4 +45,53 @@ public class RoleController {
 		return map;
 	}
 	
+	//根据角色Id删除该角色
+	@RequestMapping("/deleteRoleById")
+	@ResponseBody
+	public Map<String, Object> deleteRoleById(@RequestParam("nArray")String nArray){
+		Map<String, Object> map = new HashMap<>();
+		String[] spli = nArray.split(",");
+		roleBiz.deleteRoleById(spli);
+		map.put("code", 1);
+		map.put("msg", "删除成功！");
+		return map;
+	}
+	
+	//修改或增加员工信息跳转此页面
+	@RequestMapping("/intoAddOrUpdateRolePage")
+	public String intoAddOrUpdateStaffPage(Role role,ModelMap map) {
+		if (role.getRoleId() != 0) {
+			List<Role> roleList = roleBiz.selectRoleByField(role);
+			map.put("roleInfo", roleList.get(0));
+		}
+		map.put("departmentList", departmentBiz.selectDepartmentByPage(null));
+		return "admin/views/systemManager/addOrUpdateRole.jsp";
+	}
+	
+	//增加或者修改公告信息
+	@RequestMapping("/addOrUpdateRole")
+	@ResponseBody
+	public Map<String, Object> addOrUpdateStaff(Role role,HttpSession session) {
+		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
+		Map<String, Object> map = new HashMap<>();
+		if (role.getRoleId() != 0) {
+			role.setLastTime(new Date());
+			role.setOperationPerson(staffLoginVo.getStaffId());
+			roleBiz.updateRoleByField(role);
+			map.put("msg", "修改成功！");
+		}else {
+			List<Role> rList = roleBiz.selectRoleByField(role);
+			if (rList.get(0) != null) {
+				map.put("code", "0");
+				map.put("msg", "已存在！");
+				return map;
+			}
+			role.setOperationPerson(staffLoginVo.getStaffId());
+			role.setLastTime(new Date());
+			roleBiz.addRole(role);
+			map.put("msg", "增加成功！");
+		}
+		map.put("code", "1");
+		return map;
+	}
 }
