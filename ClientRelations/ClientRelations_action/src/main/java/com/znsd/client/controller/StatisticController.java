@@ -47,6 +47,32 @@ public class StatisticController {
 		return map;
 	}
 	
+	@RequestMapping("selectLoss")
+	public @ResponseBody Map<String,Object>selectLoss(@RequestParam(value="startTime",required=false) String startTime,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit){
+		Map<String,Object>map=new HashMap();
+		if(page==null) {
+			page=1;
+		}
+		if(limit==null) {
+			limit=5;
+		}
+		if(startTime==null || startTime=="") {
+			startTime="";
+		}
+		System.out.println("startTime=="+startTime);
+		System.out.println("page=="+page);
+		System.out.println("limit=="+limit);
+		Page<Object> pages = PageHelper.startPage(page, limit);
+		List<Statistic>list=statisticService.lossListByPage(startTime);
+		for (Statistic statistic : list) {
+			System.out.println(statistic);
+		}
+		map.put("data",list);
+		map.put("code",0);
+		map.put("count",pages.getTotal());
+		return map;
+	}
+	
 	@RequestMapping(value="/selectbution")
 	public @ResponseBody Map<String,Object>selectbution(@RequestParam(value="startTime",required=false) String startTime,@RequestParam(value="endTime",required=false)String endTime,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit){
 		Map<String,Object>map=new HashMap();

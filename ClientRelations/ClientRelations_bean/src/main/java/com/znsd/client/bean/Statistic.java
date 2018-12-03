@@ -15,7 +15,7 @@ public class Statistic implements Serializable {
 	private int statisticsId;
 	private int statisticsContribution;
 	private int statisticsCustomerNumber;
-	private Date statisticsDate;
+	private String statisticsDate;
 	private int statisticsLossQuantity;
 	private double statisticsRingRatio;
 	private double statisticsSameTimeRatio;
@@ -24,10 +24,6 @@ public class Statistic implements Serializable {
 	public Statistic() {
 	}
 
-
-	
-	
-	
 	public int getStatisticsId() {
 		return this.statisticsId;
 	}
@@ -35,8 +31,6 @@ public class Statistic implements Serializable {
 	public void setStatisticsId(int statisticsId) {
 		this.statisticsId = statisticsId;
 	}
-
-
 	
 	public int getStatisticsContribution() {
 		return this.statisticsContribution;
@@ -45,8 +39,6 @@ public class Statistic implements Serializable {
 	public void setStatisticsContribution(int statisticsContribution) {
 		this.statisticsContribution = statisticsContribution;
 	}
-
-
 	
 	public int getStatisticsCustomerNumber() {
 		return this.statisticsCustomerNumber;
@@ -55,20 +47,15 @@ public class Statistic implements Serializable {
 	public void setStatisticsCustomerNumber(int statisticsCustomerNumber) {
 		this.statisticsCustomerNumber = statisticsCustomerNumber;
 	}
-
-
 	
-	
-	public Date getStatisticsDate() {
+	public String getStatisticsDate() {
 		return this.statisticsDate;
 	}
 
-	public void setStatisticsDate(Date statisticsDate) {
+	public void setStatisticsDate(String statisticsDate) {
 		this.statisticsDate = statisticsDate;
 	}
 
-
-	
 	public int getStatisticsLossQuantity() {
 		return this.statisticsLossQuantity;
 	}
@@ -77,8 +64,6 @@ public class Statistic implements Serializable {
 		this.statisticsLossQuantity = statisticsLossQuantity;
 	}
 
-
-	
 	public double getStatisticsRingRatio() {
 		return this.statisticsRingRatio;
 	}
@@ -87,8 +72,6 @@ public class Statistic implements Serializable {
 		this.statisticsRingRatio = statisticsRingRatio;
 	}
 
-
-	
 	public double getStatisticsSameTimeRatio() {
 		return this.statisticsSameTimeRatio;
 	}
@@ -96,8 +79,6 @@ public class Statistic implements Serializable {
 	public void setStatisticsSameTimeRatio(double statisticsSameTimeRatio) {
 		this.statisticsSameTimeRatio = statisticsSameTimeRatio;
 	}
-
-
 	
 	public int getStatisticsServiceQuantity() {
 		return this.statisticsServiceQuantity;
@@ -107,4 +88,12 @@ public class Statistic implements Serializable {
 		this.statisticsServiceQuantity = statisticsServiceQuantity;
 	}
 
+	@Override
+	public String toString() {
+		return "Statistic [statisticsId=" + statisticsId + ", statisticsContribution=" + statisticsContribution
+				+ ", statisticsCustomerNumber=" + statisticsCustomerNumber + ", statisticsDate=" + statisticsDate
+				+ ", statisticsLossQuantity=" + statisticsLossQuantity + ", statisticsRingRatio=" + statisticsRingRatio
+				+ ", statisticsSameTimeRatio=" + statisticsSameTimeRatio + ", statisticsServiceQuantity="
+				+ statisticsServiceQuantity + "]";
+	}
 }

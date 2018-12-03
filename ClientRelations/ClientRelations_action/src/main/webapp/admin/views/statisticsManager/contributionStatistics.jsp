@@ -47,7 +47,7 @@
 							</div>
 						</div>
 						<hr/>
-						<div style="width: 500px;float: left;line-height: 38px;">客户构成统计信息列表</div><button class="layui-btn layui-btn-blue refer_but">查看</button>
+						<div style="width: 500px;float: left;line-height: 38px;">客户构成统计信息列表</div>
 						<table id="demo" lay-filter="test"></table>
 					</div>
 				</div>
@@ -58,25 +58,41 @@
 	<script>
     layui.use('table', function(){
 	  var table = layui.table;
+	  table.on('toolbar(test)', function(obj){
+		    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+		    switch(obj.event){
+		      case 'details':
+		        var data = checkStatus.data;  //获取选中行数据
+		        layer.open({
+			   		 type:2,
+			   		 area: ['800px', '600px'],
+			   		 content:'index.html',
+			   		 success:function(layero,index){
+						 var body = layer.getChildFrame('body',index);
+						 console.log(data[0]);
+						/*  body.find(".planId").text(data[0].planId); */
+						 
+					}
+			   		}); 
+		      break;
+		    };
+		  });
 	   	//第一个实例
 	   	table.render({
 	   	  elem: '#demo'
 	   	  ,url: '../../../selectbution' //数据接口
 	   	  ,page: true //开启分页
 	   	  ,limit:5
+	   	  ,toolbar: '#toolbarDemo'
 	   	  ,limits:[5,10,15,20]
 	   	  ,cols: [[ //表头
 	   	  	{type:'radio'}
 	   	    ,{field: 'statisticsId', title: '编号',sort: true,width:100}
 	   	    ,{field: 'statisticsContribution', title: '贡献业绩(万)',width:150,templet: "<div>{{a(d.statisticsContribution)}}</div>"}
 	   	    ,{field: 'statisticsDate',title: '月份',width:100}
-	   	    ,{field: 'yearOnYear', title: '同比',width:100}
-	   	    ,{field: 'ringRatio', title: '环比',width:100}
-	   	  ]],
-	   	  data:[
-			{id:'1',customerNumber:'1',month:'2018-9-16',yearOnYear:'10',ringRatio:'30%'},
-			{id:'2',customerNumber:'2',month:'2018-8-16',yearOnYear:'20',ringRatio:'40%'},
-	   	  ]
+	   	    ,{field: 'statisticsSameTimeRatio', title: '环比',width:100,templet: "<div>{{hb(d.statisticsContribution,d.statisticsSameTimeRatio)}}%</div>"}
+	   	    ,{field: 'statisticsRingRatio', title: '同比',width:100,templet: "<div>{{tb(d.statisticsContribution,d.statisticsRingRatio)}}%</div>"}
+	   	  ]]
 	   	});
 	   	$(".refer_but").click(function(){
 	   		layui.use('table', function(){
@@ -212,6 +228,22 @@
 	function a(number){
 		var b=number/10000;
 		return b;
+	}
+	function tb(number,numberTwo){
+		if(numberTwo==0){
+			return 0;
+		} else {
+			var tb=(number-numberTwo)/numberTwo*0.1;
+			return tb;
+		}
+	}
+	function hb(number,numberTwo){
+		if(numberTwo==0){
+			return 0;
+		} else {
+			var hb=(number-numberTwo)/numberTwo*0.1;
+			return hb;
+		}
 	}
     </script>
 </body>

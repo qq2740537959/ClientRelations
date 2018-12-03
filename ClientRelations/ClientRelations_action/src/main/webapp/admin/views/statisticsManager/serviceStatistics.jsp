@@ -47,7 +47,7 @@
 							</div>
 						</div>
 						<hr/>
-						<div style="width: 500px;float: left;line-height: 38px;">客户构成统计信息列表</div><button class="layui-btn layui-btn-blue details">查看</button>
+						<div style="width: 500px;float: left;line-height: 38px;">客户构成统计信息列表</div>
 						<table id="demo" lay-filter="test"></table>
 					</div>
 				</div>
@@ -58,20 +58,40 @@
 	<script>
     layui.use('table', function(){
 	  var table = layui.table;
+	  table.on('toolbar(test)', function(obj){
+		    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+		    switch(obj.event){
+		      case 'details':
+		        var data = checkStatus.data;  //获取选中行数据
+		        layer.open({
+			   		 type:2,
+			   		 area: ['800px', '600px'],
+			   		 content:'index.html',
+			   		 success:function(layero,index){
+						 var body = layer.getChildFrame('body',index);
+						 console.log(data[0]);
+						/*  body.find(".planId").text(data[0].planId); */
+						 
+					}
+			   		}); 
+		      break;
+		    };
+		  });
 	   	//第一个实例
 	   	table.render({
 	   	  elem: '#demo'
 	   	  ,url: '../../../selectService' //数据接口
 	   	  ,page: true //开启分页
 	   	  ,limit:5
+	   	  ,toolbar: '#toolbarDemo'
 	   	  ,limits:[5,10,15,20]
 	   	  ,cols: [[ //表头
 	   	  	{type:'radio'}
 	   	    ,{field: 'statisticsId', title: '编号',sort: true,width:100}
 	   	    ,{field: 'statisticsServiceQuantity', title: '服务数量',width:100}
 	   	    ,{field: 'statisticsDate',title: '月份',width:100}
-	   	    ,{field: 'yearOnYear', title: '同比',width:100}
-	   	    ,{field: 'ringRatio', title: '环比',width:100}
+	   	    ,{field: 'statisticsSameTimeRatio', title: '环比',width:100,templet: "<div>{{hb(d.statisticsServiceQuantity,d.statisticsSameTimeRatio)}}%</div>"}
+	   	    ,{field: 'statisticsRingRatio', title: '同比',width:100,templet: "<div>{{tb(d.statisticsServiceQuantity,d.statisticsRingRatio)}}%</div>"}
 	   	  ]]
 	   	});
 	   	$(".refer_but").click(function(){
@@ -134,7 +154,7 @@
 	        "H+": this.getHours(), //小时 
 	        "m+": this.getMinutes(), //分 
 	        "s+": this.getSeconds(), //秒 
-	        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+	        "q+": Math.floor((this.getMonth()+3)/3), //季度 
 	        "S": this.getMilliseconds() //毫秒 
 	    };
 	    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -196,6 +216,22 @@
    		 content:'index.html'
    		}); 
    	})
+	function tb(number,numberTwo){
+		if(numberTwo==0){
+			return 0;
+		} else {
+			var tb=(number-numberTwo)/numberTwo*0.1;
+			return tb;
+		}
+	}
+	function hb(number,numberTwo){
+		if(numberTwo==0){
+			return 0;
+		} else {
+			var hb=(number-numberTwo)/numberTwo*0.1;
+			return hb;
+		}
+	}
     </script>
 </body>
 </html>
