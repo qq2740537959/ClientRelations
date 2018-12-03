@@ -39,11 +39,26 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
+			div.layui-form.layui-border-box.layui-table-view{
+				margin-left: 100px;
+			}
+			div.layui-form.layui-border-box.layui-table-view{
+				width:900px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="div_total">
-			<h3>合同管理 >> 合同审核</h3>
+			<br/>
+			<br/>
+			<br/>
+			<h3 style = "margin-left: 50px">合同管理 >> 合同审核</h3>
 			<div class="layui-inline">
 		      <div class="layui-input-inline">
 		      	<form class="layui-form">
@@ -78,10 +93,10 @@
 		      	</form>
 		      </div>
 		    </div><br>
-		    <div style="width: 1097px;">
+		    <div style="width: 1000px;">
 		    	<hr>
 		    </div>
-			<table class="layui-hide" id="test" lay-filter="test"></table>
+			<table class="layui-hide" id="test" lay-filter="test" style = "margin-left: 100px;"></table>
 		</div>
 		 
 		<script type="text/html" id="toolbarDemo">
@@ -125,18 +140,42 @@
 					})
 			   	} else if(layEvent === 'verification') { //审核
 			   		if(data.shapeName == '已提交'){
-			   			layer.open({
-							type:2,
-							area:['800px','600px'],
-							content:"pelulus.jsp?contractId="+con,
-						})
+			   			$.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 3){
+		   							layer.open({
+		   								type:2,
+		   								area:['800px','600px'],
+		   								content:"pelulus.jsp?contractId="+con,
+		   							})
+			   					 }else{
+			   						 alert("已提交合同只能由销售经理审核！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
 			   		}
 			   		else if(data.shapeName == '待审核'){
-			   			layer.open({
-			   				type:2,
-			   				area:['800px','600px'],
-			   				content:"favourable.jsp?contractId="+con,
-			   			})
+			   			$.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 2){
+			   						 layer.open({
+			   			 				type:2,
+			   			 				area:['800px','600px'],
+			   			 				content:"favourable.jsp?contractId="+con,
+			   			 			})
+			   					 }else{
+			   						 alert("待审核合同只能由销售总监审核！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
 			   		}else{
 			   			alert("合同已提交和待审核才能审核");
 			   		}

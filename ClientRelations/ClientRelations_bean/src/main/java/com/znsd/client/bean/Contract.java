@@ -29,7 +29,7 @@ public class Contract implements Serializable {
 	private String relieve;
 	private String remarks;
 	private String transferPossession;
-	private int establish;
+	private String establish;
 	
 	public Contract() {
 	}
@@ -58,7 +58,12 @@ public class Contract implements Serializable {
 
 	
 	
-	public int getEstablish() {
+	
+
+
+
+
+	public String getEstablish() {
 		return establish;
 	}
 
@@ -66,7 +71,7 @@ public class Contract implements Serializable {
 
 
 
-	public void setEstablish(int establish) {
+	public void setEstablish(String establish) {
 		this.establish = establish;
 	}
 
@@ -270,7 +275,7 @@ public class Contract implements Serializable {
 	public Contract(int contractId, String anotherLicence, String contractContent, double contractMoney,
 			String contractName, int contractState, int contractType, String examine, int staffId, String lastTime,
 			String myselfLicence, String otherCompany, String ownCompany, String performance, String reasonsChange,
-			String relieve, String remarks, String transferPossession, int establish) {
+			String relieve, String remarks, String transferPossession, String establish) {
 		super();
 		this.contractId = contractId;
 		this.anotherLicence = anotherLicence;
@@ -293,5 +298,7 @@ public class Contract implements Serializable {
 		this.establish = establish;
 	}
 
+
+	
 	
 }

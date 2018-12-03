@@ -38,7 +38,7 @@
 				<div style="float:left">
 					<label>合同金额：</label>
 					<div class = "layui-input-inline">
-						<input type="text"  style="width: 75px;" name = "contractMoney" class = "layui-input  contractMoney"/>
+						<input type="text"  style="width: 75px;" name = "contractMoney" class = "layui-input contractMoney"/>
 					</div>
 				</div>
 				<div style="float: left;margin-left: 282px;">
@@ -57,7 +57,7 @@
 						<input type = "text" name = "otherCompany" class = "layui-input otherCompany"/>
 					</div>
 				</div>
-				<div style="float: left;margin-left: 191px;">
+				<div style="float: left;margin-left: 190px;">
 					<label>合同状态：</label>
 					<div class = "layui-input-inline">
 						<select name = "contractState" class = "layui-select contractState">
@@ -105,11 +105,11 @@
 				<textarea style="width: 508px;height: 50px;margin-top: 20px;" name = "remarks" class = "remarks"></textarea>
 			</div>
 			<div style="margin-top: 30px;float: left;margin-left: 62px;">
-				<label  class = "layui-form-label" style = "margin-top:48px;">解除原因：</label>
-				<textarea style="width: 508px;height: 100px;margin-top: 20px;" name = "relieve" class = "relieve"></textarea>
+				<label class = "layui-form-label" style = "margin-top:48px;">转让原因：</label>
+				<textarea style="width: 508px;height: 100px;margin-top: 20px;" name = "transferPossession" class = "transferPossession"></textarea>
 			</div>
 			<div style="float: left;margin-top: 39px;width:200px ;height: 100px;margin-left: 325px;">
-				<input type="button" value="保存"  id = "Ability" class = "layui-btn"/>
+				<input type="button" value="转让"  id = "Ability" class = "layui-btn"/>
 				
 				<input type="button" value="返回"  id = "back" class = "layui-btn"/>
 			</div>
@@ -186,42 +186,6 @@
 			}
 			appState();
 			
-			function voice(){
-				$.ajax({
-					url:'../../../voiceAction',
-					type:'post',
-					success:function(data){
-						$(".contractType").empty();
-						var arr = "";
-						for(var i = 0;i<data.length;i++){
-							arr+="<option value = "+data[i].genreId+">"+data[i].genreName+"</option>";
-						}
-						$(".contractType").html(arr);
-					},error:function(){
-						alert("网络错误！");
-					}
-				})
-			}
-			voice();
-			
-			function pattern(){
-				$.ajax({
-					url:'../../../patternAction',
-					type:'post',
-					success:function(data){
-						$(".contractState").empty();
-						var pdd = "";
-						for(var i = 0;i<data.length;i++){
-							pdd+="<option value = "+data[i].shapeId+">"+data[i].shapeName+"</option>";
-						}
-						$(".contractState").html(pdd);
-					},error:function(){
-						alert("网络错误！");
-					}
-				})
-			}
-			pattern();
-			
 			function Antrag(){
 				$.ajax({
 					url:'../../../presentAction',
@@ -263,12 +227,12 @@
 			function easyTable(){
 				$("#Ability").on("click",function(){
 					$.ajax({
-						url:'../../../cancelAction?con.contractId='+$(".contractId").val(),
+						url:'../../../periodAction?con.contractId='+$(".contractId").val(),
 						data:$("#huy").serialize(),
 						type:'post',
 						success:function(data){
 							var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-							parent.layer.msg("合同解除成功！");
+							parent.layer.msg("合同转让成功！");
 							parent.layer.close(index);
 							parent.referkop();
 						},error:function(){

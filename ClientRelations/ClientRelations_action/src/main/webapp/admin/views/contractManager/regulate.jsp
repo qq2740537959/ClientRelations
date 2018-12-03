@@ -39,11 +39,27 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
+			div.layui-form.layui-border-box.layui-table-view{
+				margin-left: 70px;
+			}
+			div.layui-form.layui-border-box.layui-table-view{
+				width:1050px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="div_total">
-			<h3>合同管理 >> 合同管理</h3>
+			<br/>
+			<br/>
+			<br/>
+			<h3 style = "margin-left: 50px">合同管理 >> 合同管理</h3>
 			<div class="layui-inline">
 		      <div class="layui-input-inline">
 		      	<form class="layui-form">
@@ -78,7 +94,7 @@
 		      	</form>
 		      </div>
 		    </div><br>
-		    <div style="width: 1097px;">
+		    <div style="width: 1120px;">
 		    	<hr>
 		    </div>
 			<table class="layui-hide" id="test" lay-filter="test"></table>
@@ -130,33 +146,91 @@
 					})
 			   	} else if(layEvent === 'modify') { //变更
 			   		if(shapeName == '履行中'){
-			   			layer.open({
-							type:2,
-							area:['800px','600px'],
-							content:"alteration.jsp?contractId="+con,
-						})
+			   			$.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 2){
+			   						layer.open({
+										type:2,
+										area:['800px','600px'],
+										content:"alteration.jsp?contractId="+con,
+									})
+			   					 }else{
+			   						 alert("合同变更只能由销售总监变更！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
 			   		}else{
 			   			alert("合同履行中才能变更");
 			   		}
 			   	}else if(layEvent === 'carry'){
 			   		 if(shapeName == '已审核'){
-			   			layer.open({
-				   			type:2,
-				   			area:['800px','600px'],
-				   			content:"enforcer.jsp?contractId="+con,
-				   		})
+			   			$.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 2){
+			   						layer.open({
+							   			type:2,
+							   			area:['800px','600px'],
+							   			content:"enforcer.jsp?contractId="+con,
+									})
+			   					 }else{
+			   						 alert("合同执行只能由销售总监执行！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
 			   		}else{
 			   			alert("合同审核才能执行");
 			   		}
 			   	}else if(layEvent === 'relieve'){
 			   		if(shapeName == '履行中'){
-			   			layer.open({
-							type:2,
-							area:['800px','600px'],
-							content:"discharge.jsp?contractId="+con,
-						})
+			   			$.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 2){
+			   						layer.open({
+										type:2,
+										area:['800px','600px'],
+										content:"discharge.jsp?contractId="+con,
+									})
+			   					 }else{
+			   						 alert("合同解除只能由销售总监解除！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
 			   		}else{
 			   			alert("合同履行中才能解除");
+			   		}
+			   	}else if(layEvent === 'transfer'){
+			   		if(shapeName === '履行中'){
+			   			$.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 2){
+			   						layer.open({
+						   				type:2,
+						   				area:['800px','600px'],
+						   				content:'skill.jsp?contractId='+con,
+						   			})
+			   					 }else{
+			   						 alert("合同转让只能由销售总监转让！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
+			   		}else{
+			   			alert("合同履行中才能转让");
 			   		}
 			   	}
 			});
@@ -168,6 +242,7 @@
 					content:"details.jsp",
 				})
 			})
+			
 		});
 		renderForm();
 		function renderForm(){

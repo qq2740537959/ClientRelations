@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +22,23 @@ import com.znsd.client.bean.Contract;
 import com.znsd.client.bean.Genre;
 import com.znsd.client.bean.Shape;
 import com.znsd.client.bean.Staff;
+import com.znsd.client.bean.TopTree;
 import com.znsd.client.service.ContractService;
-import com.znsd.client.vo.RoleVo;
+import com.znsd.client.service.TopTreeService;
+import com.znsd.client.vo.StaffLoginVo;
 import com.znsd.client.vo.StaffVo;
+
 @Controller
 public class ContractAction{
 	@Autowired
 	private ContractService contractService;
 	
+	@Autowired
+	private TopTreeService topTreeService;
+	
 	@ResponseBody
 	@RequestMapping(value = "/fortifyAction")
-	public Map<String,Object> fortifyAction(Contract con,@RequestParam(value = "list",required=false) List<Contract> list,@RequestParam(value = "msg",required = false) String msg,Map<String,Object> map) {
+	public Map<String,Object> fortifyAction(Contract con,@RequestParam(value = "list",required=false) List<Contract> list,@RequestParam(value = "msg",required = false) String msg,Map<String,Object> map,HttpServletRequest request) {
 		 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		 	String dateString = formatter.format(new Date());
 		 	
@@ -38,7 +46,8 @@ public class ContractAction{
 			list.add(con);
 			con.setLastTime(dateString);
 			con.setContractState(1);
-			con.setStaffId(1);
+			con.setStaffId(getUser(request).getStaffId());
+			con.setEstablish(getUser(request).getStaffName());
 			int addContract = contractService.addContract(list);
 			if(addContract > 0) {
 				msg = "增加成功！";
@@ -116,9 +125,17 @@ public class ContractAction{
 	
 	@ResponseBody
 	@RequestMapping(value = "/delegateAction")
-	public List<RoleVo> delegateAction(){
-		List<RoleVo> selectRole = contractService.selectRole();
-		return selectRole;
+	public Map<String,Object> delegateAction(Map<String,Object> map,HttpServletRequest request,@RequestParam(value = "msg",required = false) String msg){
+		int a = getUser(request).getRoleId();
+		if(a == 1) {
+			msg = "合同创建";
+		}else {
+			msg = "合同只能由销售代表创建！";
+		}
+		map = new HashMap<String,Object>();
+		map.put("msg", msg);
+		map.put("a", a);
+		return map;
 	}
 	
 	@ResponseBody
@@ -137,10 +154,9 @@ public class ContractAction{
 	
 	@ResponseBody
 	@RequestMapping(value = "/someBodyAction")
-	public Map<String,Object> someBodyAction(Contract con,@RequestParam(value = "msg",required = false) String msg,Map<String,Object> map){
-		con.setContractState(2);
-		System.out.println("-----------------------"+con.getStaffId());
-		int updateSubmit = contractService.updateSubmit(con);
+	public Map<String,Object> someBodyAction(Contract cons,@RequestParam(value = "msg",required = false) String msg,Map<String,Object> map,HttpServletRequest request){
+		cons.setContractState(2);
+		int updateSubmit = contractService.updateSubmit(cons);
 		if(updateSubmit > 0) {
 			msg = "合同提交成功！";
 		}else {
@@ -241,18 +257,36 @@ public class ContractAction{
 	
 	@ResponseBody
 	@RequestMapping(value = "/beachAction")
-	public Map<String,Object> beachAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map){
+	public Map<String,Object> beachAction(Contract con,@RequestParam(value = "msg",required = false)String msg,Map<String,Object> map,HttpServletRequest request){
 		con.setContractState(1);
 		int updateRepulse = contractService.updateRepulse(con);
 		if(updateRepulse >0) {
-			msg = "审核成功！";
+			msg = "打回成功！";
 		}else {
-			msg = "审核失败！";
+			msg = "打回失败！";
 		}
 		map = new HashMap<String,Object>();
 		map.put("code", updateRepulse);
 		map.put("msg", msg);
 		return map;
+	}
+	
+	public StaffLoginVo getUser(HttpServletRequest request) {
+		return (StaffLoginVo)request.getSession().getAttribute("userInfo");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/princeAction")
+	public List<Contract> princeAction(){
+		List<Contract> Institution = contractService.Institution();
+		return Institution;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/proviceAction")
+	public List<TopTree> proviceAction(){
+		List<TopTree> selectToptreeAll = topTreeService.selectToptreeAll();
+		return selectToptreeAll;
 	}
 	
 }

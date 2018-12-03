@@ -78,7 +78,7 @@ public class ClientResourceController{
 		return client;
 	}
 	@RequestMapping("/selectProduct")
-	public @ResponseBody ResultData selectProduct(@RequestParam("limit") Integer limit,@RequestParam("page") Integer page) {
+	public @ResponseBody ResultData selectProduct(@RequestParam(" limit") Integer limit,@RequestParam("page") Integer page) {
 		//查询所有商品 
 		Page<Object> pages = PageHelper.startPage(page, limit);
 		List<Product> productList = productService.selectProductByPage();

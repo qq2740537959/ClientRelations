@@ -9,6 +9,7 @@ import com.znsd.client.bean.Contract;
 import com.znsd.client.bean.Genre;
 import com.znsd.client.bean.Shape;
 import com.znsd.client.bean.Staff;
+import com.znsd.client.bean.TopTree;
 import com.znsd.client.dao.ContractMapperDao;
 import com.znsd.client.service.ContractService;
 import com.znsd.client.vo.ContractVo;
@@ -102,5 +103,15 @@ public class ContractServiceImp implements ContractService{
 	@Override
 	public int updateRepulse(Contract con) {
 		return dao.updateRepulse(con);
+	}
+
+	@Override
+	public int updateLetter(Contract con) {
+		return dao.updateLetter(con);
+	}
+
+	@Override
+	public List<Contract> Institution() {
+		return dao.Institution();
 	}
 }

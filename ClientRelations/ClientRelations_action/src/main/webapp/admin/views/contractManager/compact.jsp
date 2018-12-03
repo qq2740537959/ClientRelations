@@ -39,11 +39,26 @@
 			.layui-form-select{
 				width: 100px;
 			}
+			.layui-btn{
+				background-color:rgb(31,147,231);
+			}
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color:rgb(31,147,231);
+			}
+			div.layui-form.layui-border-box.layui-table-view{
+				margin-left: 100px;
+			}
+			div.layui-form.layui-border-box.layui-table-view{
+				width:950px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="div_total">
-			<h3>合同管理 >> 合同创建</h3>
+			<br/>
+			<br/>
+			<br/>
+			<h3 style = "margin-left: 50px;">合同管理 >> 合同创建</h3>
 			<div class="layui-inline">
 		      <div class="layui-input-inline">
 		      	<form class="layui-form">
@@ -78,11 +93,11 @@
 		      	</form>
 		      </div>
 		    </div><br>
-		    <div style="width: 1097px;">
+		    <div style="width: 1052px;">
 		    	<hr>
 		    </div>
 		    <div class="div_title_btn">
-			    <div class="span_btn" style="margin-left: -334px">
+			    <div class="span_btn" style="margin-left: -251px">
 			    	<button class="layui-btn fabricate">创建</button>
 			    </div>
 		    </div>
@@ -123,7 +138,7 @@
 			   	var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 			   	var tr = obj.tr; //获得当前行 tr 的DOM对象
 			   	var con = data.contractId;
-			   	//console.log(data)
+			   	var staff = data.staffId;
 			   	if(layEvent == 'query') { //查看
 					layer.open({
 						type:2,
@@ -131,50 +146,72 @@
 						content:"details.jsp?contractId="+con,
 					})
 			   	} else if(layEvent === 'update') { //修改
-					layer.open({
-						type:2,
-						area:['800px','600px'],
-						content:"clearly.jsp?contractId="+con,
-					})
+		   			 $.ajax({
+		   				 url:'../../../delegateAction',
+		   				 type:'post',
+		   				 success:function(data){
+		   					 if(data.a == 4){
+		   						layer.open({
+		   							type:2,
+		   							area:['800px','600px'],
+		   							content:"clearly.jsp?contractId="+con,
+		   						})
+		   					 }else{
+		   						 alert("修改合同只能由销售代表修改！");
+		   					 }
+		   				 },error:function(){
+		   					 alert("网络错误！");
+		   				 }
+		   			 })
 			   	}else if(layEvent === 'audit'){
 			   		 if(data.shapeName == '已订立'){
-			   			layer.open({
-				   			type:2,
-				   			area:['800px','600px'],
-				   			content:"tasklet.jsp?contractId="+con,
-				   		})	
+			   			 $.ajax({
+			   				 url:'../../../delegateAction',
+			   				 type:'post',
+			   				 success:function(data){
+			   					 if(data.a == 4){
+			   						layer.open({
+			   				   			type:2,
+			   				   			area:['800px','600px'],
+			   				   			content:"tasklet.jsp?contractId="+con,
+			   				   		})	
+			   					 }else{
+			   						 alert("合同只能由销售代表提交！");
+			   					 }
+			   				 },error:function(){
+			   					 alert("网络错误！");
+			   				 }
+			   			 })
 			   		}else{
 			   			alert("合同已订立才能提交！");
 			   		}
 			   	}
+			   	
 			});
+		  
 		  function fledged(){
-			  $.ajax({
-				  url:'../../../delegateAction',
-				  type:'post',
-				  success:function(data){
-					  for(var i = 0 ;i<data.length;i++){
-						  /* if(data[i].roleId == 4){
-							  
+			  $(".fabricate").on("click",function(){
+				  $.ajax({
+					  url:'../../../delegateAction',
+					  type:'post',
+					  success:function(data){
+						  if(data.a == 4){
+								 layer.open({
+									type:2,
+									area:['800px','600px'],
+									content:"revamp.jsp",
+								})
 						  }else{
-							  alert("只能由销售代表创建合同");
-						  } */
+							  alert(data.msg);
+						  }
+						  console.log(data)
+					  },error:function(){
+						  alert("网络错误！");
 					  }
-					  //console.log(data)
-				  },error:function(){
-					  alert("网络错误！");
-				  }
+				  })
 			  })
 		  }
 		  fledged();
-		  
-		  $(".fabricate").on("click",function(){
-				 layer.open({
-					type:2,
-					area:['800px','600px'],
-					content:"revamp.jsp",
-				})
-			}) 
 			
 		});
 		renderForm();
@@ -223,9 +260,11 @@
 			})
 		}
 		voice();
+		
 		function refershuaxin(){
 			$("#refer").click();
 		}
+		
 		$('#refer').on('click', function(){
 			layui.use('table', function(){
 				var table = layui.table;
