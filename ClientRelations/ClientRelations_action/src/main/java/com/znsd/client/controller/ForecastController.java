@@ -68,12 +68,13 @@ public class ForecastController {
 	 */
 	@RequestMapping("addForecast")
 	@ResponseBody
-	public Map<String,Object> addForecast(Forecast forecast){
+	public Map<String,Object> addForecast(Forecast forecast,HttpServletRequest request){
 		StringBuffer content = new StringBuffer("目前公司共有客户"+forecast.getClientNumber()+",");
 		getClientNumber(forecast.getBranchId(),forecast.getClientNumber(),content);
 		content.append(forecast.getSectorScale()+"人,");
 		getSectorScale(forecast.getBranchId(),forecast.getSectorScale(),content);
 		forecast.setForecastContent(content.toString());
+		forecast.setOperatorId(getUser(request).getStaffId());
 		forecastBiz.addForecast(forecast);
 		map.put("msg","已成功预测");
 		map.put("code",0);

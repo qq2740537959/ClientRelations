@@ -37,7 +37,7 @@
 		
 	</select> -->
  	<insert id="addForecast" parameterType="com.znsd.client.bean.Forecast">
- 		insert into sell_forecast(title,branch_id,forecast_month,found_time,operator_id,sector_scale,client_number,forecast_content) values (#{title},#{branchId},#{forecastMonth},now(),#{operatorId},#{sectorScale},#{clientNumber},#{forecastContent})
+ 		insert into sell_forecast(title,branch_id,forecast_month,found_time,operator_id,sector_scale,client_number,forecast_content,type_name) values (#{title},#{branchId},now(),now(),#{operatorId},#{sectorScale},#{clientNumber},#{forecastContent},'部门预测')
  	</insert>
 	<select id="selectDateClientNumber" resultType="java.lang.Integer">
  		select count(c.staff_id) as clientNumber from staff as s  inner JOIN client_resource as c on s.staff_id = c.staff_id where s.department_id = #{branceId} and DATE_FORMAT(in_time,'%Y-%m') &lt;= #{referDate}
