@@ -126,7 +126,7 @@ public class ContractAction{
 	@ResponseBody
 	@RequestMapping(value = "/delegateAction")
 	public Map<String,Object> delegateAction(Map<String,Object> map,HttpServletRequest request,@RequestParam(value = "msg",required = false) String msg){
-		int a = getUser(request).getStaffId();
+		int a = getUser(request).getRoleId();
 		if(a == 1) {
 			msg = "合同创建";
 		}else {
