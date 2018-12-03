@@ -19,7 +19,17 @@
  	</resultMap>
  	
 	<select id="constituteListByPage" resultMap="StatisticMap">
-		select client_id as statistics_Id,DATE_FORMAT(in_time,'%Y-%m') AS statistics_Date,COUNT(*) AS statistics_CustomerNumber FROM client_resource
+		select client_id as statistics_Id,DATE_FORMAT(in_time,'%Y-%m') AS statistics_Date,count(client_id) AS statistics_CustomerNumber,(select count(client_id) from client_resource as i where DATE_FORMAT(i.in_time,'%Y-%m')=DATE_FORMAT(DATE_SUB(o.in_time,INTERVAL 1 month),'%Y-%m')) as statistics_SameTimeRatio,(select count(client_id) from client_resource as c where DATE_FORMAT(c.in_time,'%Y-%m')=DATE_FORMAT(DATE_SUB(o.in_time,INTERVAL 1 year),'%Y-%m')) as statistics_RingRatio FROM client_resource as o 
+		<if test="startTime==null || startTime==''">
+				GROUP BY statistics_Date
+		</if>
+		<if test="startTime!=null and startTime!=''">
+				where DATE_FORMAT(in_time,'%Y-%m')=#{startTime} GROUP BY statistics_Date
+		</if>
+	</select>
+	
+	<select id="lossListByPage" resultMap="StatisticMap">
+		select client_id as statistics_Id,DATE_FORMAT(in_time,'%Y-%m') AS statistics_Date,(select count(1) from client_resource where DATE_FORMAT(DATE_SUB(now(),INTERVAL 6 month),'%Y-%m')>DATE_FORMAT(in_time,'%Y-%m')) as statistics_LossQuantity,(select count(1) from client_resource as c where DATE_FORMAT(DATE_SUB(now(),INTERVAL 6 month),'%Y-%m')> DATE_FORMAT(in_time,'%Y-%m')) as statistics_SameTimeRatio,(select count(1) from client_resource as c where DATE_FORMAT(DATE_SUB(now(),INTERVAL 6 month),'%Y-%m')> DATE_FORMAT(in_time,'%Y-%m')) as statistics_RingRatio FROM client_resource as s 
 		<if test="startTime==null || startTime==''">
 				GROUP BY statistics_Date
 		</if>
@@ -29,7 +39,7 @@
 	</select>
 	
 	<select id="contributionListByPage" resultMap="StatisticMap">
-		select id as statistics_Id,DATE_FORMAT(deal_time,'%Y-%m') AS statistics_Date,sum(order_money) AS statistics_Contribution FROM order_indent
+		select id as statistics_Id,DATE_FORMAT(deal_time,'%Y-%m') AS statistics_Date,sum(order_money) AS statistics_Contribution,(select sum(order_money) from order_indent as i where DATE_FORMAT(i.deal_time,'%Y-%m')=DATE_FORMAT(DATE_SUB(o.deal_time,INTERVAL 1 month),'%Y-%m')) as statistics_SameTimeRatio,(select sum(order_money) from order_indent as c where DATE_FORMAT(c.deal_time,'%Y-%m')=DATE_FORMAT(DATE_SUB(o.deal_time,INTERVAL 1 year),'%Y-%m')) as statistics_RingRatio FROM order_indent as o 
 		<if test="startTime==null || startTime=='' and endTime==null || endTime==''">
 			GROUP BY statistics_Date
 		</if>
@@ -39,7 +49,7 @@
 	</select>
 
 	<select id="serviceListByPage" resultMap="StatisticMap">
-		select id as statistics_Id,DATE_FORMAT(create_time,'%Y-%m') AS statistics_Date,COUNT(*) AS statistics_ServiceQuantity FROM serve
+		select id as statistics_Id,DATE_FORMAT(create_time,'%Y-%m') AS statistics_Date,count(id) AS statistics_ServiceQuantity,(select count(id) from serve as i where DATE_FORMAT(i.create_time,'%Y-%m')=DATE_FORMAT(DATE_SUB(o.create_time,INTERVAL 1 month),'%Y-%m')) as statistics_SameTimeRatio,(select count(id) from serve as c where DATE_FORMAT(c.create_time,'%Y-%m')=DATE_FORMAT(DATE_SUB(o.create_time,INTERVAL 1 year),'%Y-%m')) as statistics_RingRatio FROM serve as o 
 		<if test="startTime==null || startTime=='' and endTime==null || endTime==''">
 			GROUP BY statistics_Date
 		</if>
