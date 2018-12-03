@@ -23,6 +23,7 @@
 		<result column = "contract_state" property = "contractState"></result>
 		<result column = "last_time" property = "lastTime"></result>
 		<result column = "staff_id" property = "staffId"></result>
+		<result column = "establish" property = "establish"></result>
 	</resultMap>
 	
 	<resultMap type = "genre" id = "genMap">
@@ -59,9 +60,9 @@
 	</select>
 	
 	<insert id = "addContract" parameterType = "java.util.List">
-		insert into contract(contract_name,contract_type,contract_money,own_company,other_company,myself_licence,another_licence,contract_content,remarks,contract_state,last_time,staff_id)values
+		insert into contract(contract_name,contract_type,contract_money,own_company,other_company,myself_licence,another_licence,contract_content,remarks,contract_state,last_time,staff_id,establish)values
 		<foreach collection = "list" item = "item" index = "index" separator = ",">
-			(#{item.contractName},#{item.contractType},#{item.contractMoney},#{item.ownCompany},#{item.otherCompany},#{item.myselfLicence},#{item.anotherLicence},#{item.contractContent},#{item.remarks},#{item.contractState},#{item.lastTime},#{item.staffId})
+			(#{item.contractName},#{item.contractType},#{item.contractMoney},#{item.ownCompany},#{item.otherCompany},#{item.myselfLicence},#{item.anotherLicence},#{item.contractContent},#{item.remarks},#{item.contractState},#{item.lastTime},#{item.staffId},#{item.establish})
 		</foreach>
 	</insert>
 	
@@ -151,8 +152,13 @@
 	
 	<update id = "updateRepulse" parameterType = "contract">
 		update contract set 
-		contract_state = #{contractState}
-		staff_id = #{staffId}
+		contract_state = #{contractState},
+		establish = #{establish}
 		where contract_id = #{contractId}
 	</update>
+	
+	<select id = "Institution" resultMap = "conMap">
+		select contract_name from contract;
+	</select>
+	
 </mapper>

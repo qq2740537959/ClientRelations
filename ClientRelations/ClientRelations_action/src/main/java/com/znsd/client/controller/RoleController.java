@@ -79,7 +79,7 @@ public class RoleController {
 			role.setOperationPerson(staffLoginVo.getStaffId());
 			roleBiz.updateRoleByField(role);
 			map.put("msg", "修改成功！");
-		}else {
+		}else { 
 			List<Role> rList = roleBiz.selectRoleByField(role);
 			if (rList.get(0) != null) {
 				map.put("code", "0");
