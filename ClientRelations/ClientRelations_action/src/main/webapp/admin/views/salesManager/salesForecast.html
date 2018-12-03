@@ -63,9 +63,9 @@ layui.use('table', function(){
     ,toolbar: '#toolbarDemo'
     ,cols: [[
       {field:'forecastId', width:80, title: 'ID', sort: true}
-      ,{field:'title', minWidth: 210 title: '预测结果'}
+      ,{field:'title', minWidth: 210, title: '预测结果'}
       ,{field:'forecastMonth', width:120, title: '预测月份'}
-      ,{field:'typeName', width:120,minWidth: 120 title: '类型'}
+      ,{field:'typeName', width:120,minWidth: 120 ,title: '类型'}
       ,{field:'foundTime',title: '生成时间', minWidth: 205,sort: true}
       ,{field:'operatorName', minwidth:110, title: '操作人'}
       ,{width:65,title:"操作",toolbar:"#barDemo"}
@@ -100,18 +100,17 @@ table.on('toolbar(test)', function(obj){
 	});
 	
 });
-refreshTable(){
+
 	function refreshTable(){
 		layui.table.reload('test',
         {
              where: { //这里传参  向后台
-             	name:$(".startName").val(),
+             	name:$(".startTime").val(),
              } 
              ,limit:5
  			 ,limits:[5,10,15,20]
         });
 	}
-}
 layui.use('laydate', function(){
   var laydate = layui.laydate;
   
