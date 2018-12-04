@@ -31,7 +31,7 @@ public class RoleController {
 	@Autowired
 	private DepartmentService departmentBiz;
 	
-	//分页条件查询组织结构
+	//分页条件查询角色信息
 	@RequestMapping("/queryRoleByPage")
 	@ResponseBody
 	public Map<String, Object> queryRoleByPage(@RequestParam(value="roleName",required=false) String roleName,@RequestParam("page")Integer page,@RequestParam("limit")Integer limit) {
@@ -57,7 +57,7 @@ public class RoleController {
 		return map;
 	}
 	
-	//修改或增加员工信息跳转此页面
+	//修改或增加角色信息跳转此页面
 	@RequestMapping("/intoAddOrUpdateRolePage")
 	public String intoAddOrUpdateStaffPage(Role role,ModelMap map) {
 		if (role.getRoleId() != 0) {
@@ -68,22 +68,33 @@ public class RoleController {
 		return "admin/views/systemManager/addOrUpdateRole.jsp";
 	}
 	
-	//增加或者修改公告信息
+	//增加或者修改角色信息
 	@RequestMapping("/addOrUpdateRole")
 	@ResponseBody
 	public Map<String, Object> addOrUpdateStaff(Role role,HttpSession session) {
 		StaffLoginVo staffLoginVo = (StaffLoginVo) session.getAttribute("userInfo");
 		Map<String, Object> map = new HashMap<>();
+		List<Role> rList = null;
 		if (role.getRoleId() != 0) {
+			/*rList = roleBiz.selectRoleByField(new Role(role.getRoleName()));
+			if (rList.size() != 0) {
+				if (rList.get(0).getRoleName().equals(role.getRoleName())) {
+					
+				}else {
+					map.put("code", "0");
+					map.put("msg", "角色名称已存在！");
+					return map;
+				}
+			}*/
 			role.setLastTime(new Date());
 			role.setOperationPerson(staffLoginVo.getStaffId());
 			roleBiz.updateRoleByField(role);
 			map.put("msg", "修改成功！");
-		}else { 
-			List<Role> rList = roleBiz.selectRoleByField(role);
-			if (rList.get(0) != null) {
+		}else {
+			rList = roleBiz.selectRoleByField(role);
+			if (rList.size() != 0) {
 				map.put("code", "0");
-				map.put("msg", "已存在！");
+				map.put("msg", "角色名称已存在！");
 				return map;
 			}
 			role.setOperationPerson(staffLoginVo.getStaffId());

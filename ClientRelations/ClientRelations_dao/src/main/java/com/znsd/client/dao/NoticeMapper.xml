@@ -18,7 +18,17 @@
  	
  	<!-- 查询公共字段 -->
  	<sql id="queryNotice">
- 		select n.notice_id,n.notice_title,n.notice_type,n.release_time,s.staff_name,n.release_content from notice n,staff s where n.release_person = s.staff_id
+ 		select 
+ 			n.notice_id,
+ 			n.notice_title,
+ 			n.notice_type,
+ 			n.release_time,
+ 			s.staff_name,
+ 			n.release_content 
+ 		from 
+ 			notice n,staff s 
+ 		where 
+ 			n.release_person = s.staff_id
  	</sql>
  	
  	<!-- 分页条件查询公告 -->
@@ -48,11 +58,25 @@
  	
  	<!-- 根据公告Id修改公告信息 -->
 	<update id="updateNoticeById">
-		update notice set notice_title = #{noticeTitle},notice_type = #{noticeType},release_content = #{releaseContent} where notice_id = #{noticeId}
+		update 
+			notice 
+		set 
+			notice_title = #{noticeTitle},
+			notice_type = #{noticeType},
+			release_content = #{releaseContent} 
+		where notice_id = #{noticeId}
 	</update>
 	
 	<!-- 增加公告信息 -->
 	<insert id="addNotice">
-		insert into notice values(#{noticeId},#{noticeTitle},#{noticeType},#{releaseTime},#{releasePerson},#{releaseContent})
+		insert into notice values
+		(
+			#{noticeId},
+			#{noticeTitle},
+			#{noticeType},
+			#{releaseTime},
+			#{releasePerson},
+			#{releaseContent}
+		)
 	</insert>
  </mapper>

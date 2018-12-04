@@ -22,14 +22,34 @@
  	
  	<!-- 分页条件查询员工信息 -->
  	<select id="selectStaffByPage" resultMap="staffResultMap">
- 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s left join role r ON s.role_identity = r.role_id left join department d ON s.department_id = d.department_id
+ 		select 
+ 			s.staff_id,
+ 			s.staff_name,
+ 			s.sex,
+ 			d.department_abbreviation,
+ 			r.role_name,
+ 			s.state,
+ 			s.last_time,
+ 			(select staff_name from staff where staff_id = s.operation_person) operationPersonName 
+ 		from 
+ 			staff s left join role r 
+ 		ON 
+ 			s.role_identity = r.role_id left join department d 
+ 		ON 
+ 			s.department_id = d.department_id
 		<if test="staffName != null and staffName != ''">
 			and s.staff_name like CONCAT('%',#{staffName},'%')
 		</if>
  	</select>
  	
  	<select id="getStaffDeputyData" resultMap="staffResultMap">
- 		select staff_id,staff_name from staff where role_identity=4 and state = 1
+ 		select 
+ 			staff_id,
+ 			staff_name 
+ 		from 
+ 			staff 
+ 		where 
+ 			role_identity=4 and state = 1
  	</select>
  	
  	<resultMap type="staffLoginVo" id="staffLoginResultMap">
@@ -50,13 +70,42 @@
  	
  	<!-- 员工登录 -->
  	<select id="staffLogin" resultMap = "staffLoginResultMap">
- 		select s.staff_id,s.staff_name,s.sex,s.state,s.user_name,s.`password`,s.contact_mode,s.last_time,s.role_identity,r.role_name,d.department_abbreviation,s.remarks_info from staff s,role r,department d where s.role_identity = r.role_id and s.department_id = d.department_id 
-		and s.user_name = #{userName} and s.password = #{password}
+ 		select 
+ 			s.staff_id,
+ 			s.staff_name,
+ 			s.sex,s.state,
+ 			s.user_name,
+ 			s.password,
+ 			s.contact_mode,
+ 			s.last_time,
+ 			s.role_identity,
+ 			r.role_name,
+ 			d.department_abbreviation,
+ 			s.remarks_info 
+ 		from 
+ 			staff s,role r,department d where s.role_identity = r.role_id 
+ 		and 
+ 			s.department_id = d.department_id 
+		and 
+			s.user_name = #{userName} and s.password = #{password}
  	</select>
  	
  	<!-- 根据员工表字段获取数据 -->
  	<select id="selectStaffByUserName" resultMap="staffResultMap">
- 		select s.staff_id,s.staff_name,s.sex,d.department_abbreviation,r.role_name,s.state,s.last_time,s.remarks_info,(select staff_name from staff where staff_id = s.operation_person) operationPersonName from staff s left join role r ON s.role_identity = r.role_id inner join department d ON s.department_id = d.department_id
+ 		select 
+ 			s.staff_id,
+ 			s.staff_name,
+ 			s.sex,
+ 			d.department_abbreviation,
+ 			r.role_name,
+ 			s.state,
+ 			s.last_time,
+ 			s.remarks_info,
+ 			(select staff_name from staff where staff_id = s.operation_person) operationPersonName 
+ 		from 
+ 			staff s left join role r ON s.role_identity = r.role_id 
+ 		inner join 
+ 			department d ON s.department_id = d.department_id
 		<if test="userName != null and userName != ''">
  			and s.user_name = #{userName}
  		</if>
@@ -72,17 +121,39 @@
  	<update id="updateStaffUserName">
  		update staff
  		<set>
- 		 	<if test="remarksInfo == null or remarksInfo != null">remarks_info = #{remarksInfo},</if>
- 			<if test="departmentId != null and departmentId != 0">department_id = #{departmentId},</if>
- 			<if test="state != null and staffName != null and staffName != ''">state = #{state},</if>
- 			<if test="sex != null and sex != ''">sex = #{sex},</if>
- 			<if test="staffName != null and staffName != ''">staff_name = #{staffName},</if>
-			<if test="contactMode != null and contactMode != ''">contact_mode = #{contactMode},</if>
-			<if test="userName != null and userName != ''">user_name = #{userName},</if>	
-			<if test="password != null and password != ''">password = #{password},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="lastTime != null">last_time = #{lastTime},</if>
-			<if test="operationPerson != null and operationPerson != 0">operation_person = #{operationPerson}</if>
+ 		 	<if test="remarksInfo == null or remarksInfo != null">
+ 		 		remarks_info = #{remarksInfo},
+ 		 	</if>
+ 			<if test="departmentId != null and departmentId != 0">
+ 				department_id = #{departmentId},
+ 			</if>
+ 			<if test="state != null and staffName != null and staffName != ''">
+ 				state = #{state},
+ 			</if>
+ 			<if test="sex != null and sex != ''">
+ 				sex = #{sex},
+ 			</if>
+ 			<if test="staffName != null and staffName != ''">
+ 				staff_name = #{staffName},
+ 			</if>
+			<if test="contactMode != null and contactMode != ''">
+				contact_mode = #{contactMode},
+			</if>
+			<if test="userName != null and userName != ''">
+				user_name = #{userName},
+			</if>	
+			<if test="password != null and password != ''">
+				password = #{password},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="lastTime != null">
+				last_time = #{lastTime},
+			</if>
+			<if test="operationPerson != null and operationPerson != 0">
+				operation_person = #{operationPerson}
+			</if>
 		</set>
  		where staff_id  = #{staffId}
  	</update>
@@ -102,6 +173,22 @@
  	
  	<!-- 增加员工信息 -->
 	<insert id="addStaff">
-		insert into staff values(#{staffId},#{staffName},#{sex},#{state},#{userName},#{password},#{contactMode},#{departmentId},#{roleIdentity},#{remarksInfo},#{createTime},#{lastTime},#{operationPerson})
+		insert into staff
+		values
+		(
+			#{staffId},
+			#{staffName},
+			#{sex},
+			#{state},
+			#{userName},
+			#{password},
+			#{contactMode},
+			#{departmentId},
+			#{roleIdentity},
+			#{remarksInfo},
+			#{createTime},
+			#{lastTime},
+			#{operationPerson}
+		)
 	</insert>
  </mapper>

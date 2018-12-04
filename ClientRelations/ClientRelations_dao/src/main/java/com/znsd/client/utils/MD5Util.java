@@ -1,4 +1,4 @@
-package com.znsd.client.dao;
+package com.znsd.client.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -76,7 +76,7 @@ public interface StaffService {
 	* @desc 根据员工Id删除该员工信息
 	*
 	 */
-	public void deleteStaffById(String[] array);
+	public void deleteStaffById(String nArray);
 	
 	/**
 	 * 

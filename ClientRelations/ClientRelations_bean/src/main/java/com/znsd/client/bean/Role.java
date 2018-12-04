@@ -9,6 +9,11 @@ import java.util.Date;
  */
 
 public class Role implements Serializable {
+	public Role(String roleName) {
+		super();
+		this.roleName = roleName;
+	}
+
 	private static final long serialVersionUID = 1L;
 	private int roleId;
 	private int departmentId;

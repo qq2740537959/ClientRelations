@@ -18,8 +18,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.znsd.client.bean.Department;
 import com.znsd.client.bean.Staff;
-import com.znsd.client.dao.PinYinHeadUtil;
 import com.znsd.client.service.DepartmentService;
+import com.znsd.client.utils.PinYinHeadUtil;
 import com.znsd.client.vo.DepartmentVo;
 import com.znsd.client.vo.StaffLoginVo;
 

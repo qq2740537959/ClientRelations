@@ -18,6 +18,12 @@ public class Staff implements Serializable {
 	private Date lastTime;
 	private int operationPerson;
 	private String password;
+	public Staff(int staffId, String password) {
+		super();
+		this.staffId = staffId;
+		this.password = password;
+	}
+
 	private String remarksInfo;
 	private int roleIdentity;
 	private String sex;
